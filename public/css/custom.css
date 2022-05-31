@@ -1,0 +1,32 @@
+/***********
+LOGIN PAGE
+************/
+
+.login-page{
+    background: url('../images/login-bg2.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.site-color {
+    color: #ffc107;
+}
+
+.login-logo{
+    margin-bottom: 0 !important;
+}
+
+.card.card-outline {
+    background: rgba(255,255,255,0.9);
+}
+
+.custom-nav-dark{
+    background:#272d36 !Important;
+}
+.custom-siderbar-dark{
+    background:#272d36 !Important;
+}
+
+.visiblilty-hidden {
+    visibility: hidden;
+}
