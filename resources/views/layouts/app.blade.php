@@ -18,10 +18,12 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
 </head>
-<body>
+<body class="login-screen-body">
+    <div class="lavalite-overlay"></div>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm d-none">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'Revage Solution') }}
@@ -75,7 +77,7 @@
             </div>
         </nav>
 
-        <main class="py-4">
+        <main class="py-10 m-auto">
             @yield('content')
         </main>
     </div>

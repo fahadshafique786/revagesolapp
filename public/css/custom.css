@@ -1,11 +1,19 @@
 /***********
 LOGIN PAGE
 ************/
-
-.login-page{
-    background: url('../images/login-bg2.jpg');
+.login-screen-body{
+    background: url('../images/login-bg.jpg');
     background-size: cover;
     background-repeat: no-repeat;
+}
+
+.lavalite-overlay{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: linear-gradient(135deg, rgba(46,52,81,0.4) 0%, rgba(52,40,104,0.95) 100%)
 }
 
 .site-color {
@@ -20,7 +28,8 @@ LOGIN PAGE
     background: rgba(255,255,255,0.9);
 }
 
-.custom-nav-dark{
+.custom-nav-dark,
+.primary-bg-dark{
     background:#272d36 !Important;
 }
 .custom-siderbar-dark{
@@ -29,4 +38,8 @@ LOGIN PAGE
 
 .visiblilty-hidden {
     visibility: hidden;
+}
+.py-10 {
+    padding-top: 10rem !important;
+    padding-bottom: 10rem !important;
 }
