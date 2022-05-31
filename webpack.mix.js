@@ -11,6 +11,9 @@ const mix = require('laravel-mix');
  |
  */
 
+mix.copy('node_modules/admin-lte/dist/img', 'public/dist/img');
+
 mix.js('resources/js/app.js', 'public/js')
     .sass('resources/sass/app.scss', 'public/css')
     .sourceMaps();
+	
