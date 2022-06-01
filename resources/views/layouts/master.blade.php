@@ -74,13 +74,7 @@
 @php
 	$link_label_array['dashboard'] = "Dashboard";
 	$link_label_array['users'] = "User Administrator";
-	$link_label_array['customers'] = "Customers";
-	$link_label_array['categories'] = "Categories";
-	$link_label_array['faqs'] = "FAQS";
-	$link_label_array['banners'] = "Banners";
-	$link_label_array['tutorials'] = "Tutorials";
-	$link_label_array['blogs'] = "Blogs";
-	$link_label_array['questions'] = "Questions";
+	$link_label_array['sports'] = "Sports";
 @endphp
 
   <!-- Content Wrapper. Contains page content -->
@@ -91,13 +85,13 @@
         <div class="row mb-2">
           <div class="col-sm-6">
             <h1 class="m-0 text-dark">
-                <i class="d-inline fa-tachometer-alt fas icon-bg nav-icon pl-1"></i>
+                <i class="d-inline fa-list fas icon-bg nav-icon pl-1"></i>
                 {{ $link_label_array[Request::segment(2)] }}
             </h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+              <li class="breadcrumb-item"><a href="javascript:void(0)"> <i class="fa fa-home text-info"> </i> </a></li>
               <li class="breadcrumb-item active">{{ $link_label_array[Request::segment(2)] }}</li>
             </ol>
           </div><!-- /.col -->

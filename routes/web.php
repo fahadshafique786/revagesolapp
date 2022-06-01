@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\SportsController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -34,8 +35,8 @@ Route::group(
         Route::post('/delete-user', [UserController::class, 'destroy']);
         Route::post('/edit-profile', [UserController::class, 'editProfile']);
         Route::post('/update-profile', [UserController::class, 'updateProfile']);
-
-
+        Route::get('/sports', [SportsController::class, 'index']);
+        Route::get('/fetchsportsdata', [SportsController::class, 'fetchsportsdata']);
     });
 
 

@@ -43,7 +43,7 @@
             </li>
             <li class="nav-header py-3">SPORTS MANAGEMENT </li>
             <li class="nav-item">
-                <a href="forms/general.html" class="nav-link">
+                <a href="{{ url('admin/sports') }}" class="nav-link {{ (Request::segment(2) == 'sports') ? 'active' : '' }}">
                     <i class="far fa fa-life-ring nav-icon"></i>
                     <p>Sports</p>
                 </a>
