@@ -40,8 +40,8 @@ class UserController extends Controller
 				'name' => 'required',
 				'user_name' => 'required|unique:users,user_name,'.$request->id,
 				'email' => 'required|email|unique:users,email,'.$request->id,
-				'phone' => 'required',
-				'is_status' => 'required',
+//				'phone' => 'required',
+//				'is_status' => 'required',
 			], $customMessages);
 		}
 		else
@@ -51,7 +51,7 @@ class UserController extends Controller
 				'user_name' => 'required|unique:users,user_name',
 				'email' => 'required|email|unique:users,email',
 				'phone' => 'required',
-				'is_status' => 'required',
+//				'is_status' => 'required',
 			], $customMessages);
 		}
 
@@ -130,8 +130,8 @@ class UserController extends Controller
 					$response[$i]['name'] = $user->name;
 					$response[$i]['user_name'] = $user->user_name;
 					$response[$i]['email'] = $user->email;
-					$response[$i]['phone'] = $user->phone;
-					$response[$i]['status'] = $status;
+//					$response[$i]['phone'] = $user->phone;
+//					$response[$i]['status'] = $status;
 
 					if(auth()->user()->user_type == "superadmin")
 					{

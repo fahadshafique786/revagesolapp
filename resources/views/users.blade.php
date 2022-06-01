@@ -28,8 +28,8 @@
 										<th scope="col">Name</th>
 										<th scope="col">User Name</th>
 										<th scope="col">Email</th>
-										<th scope="col">Phone</th>
-										<th scope="col">Status</th>
+{{--										<th scope="col">Phone</th>--}}
+{{--										<th scope="col">Status</th>--}}
 										<th scope="col">Action</th>
 									</tr>
 								</thead>
@@ -75,23 +75,27 @@
                 </div>
 				<div class="col-sm-6">
 					<label for="name" class="control-label">Password</label>
-					<input type="text" class="form-control" id="password" name="password" placeholder="Enter Password" value="" minlength="8" maxlength="50" required="">
+					<input type="text" class="form-control" id="password" name="password" placeholder="Enter Password" value="" minlength="8" maxlength="50">
                 </div>
               </div>
-			  <div class="form-group row">
-                <div class="col-sm-6">
-					<label for="name" class="control-label">Phone</label>
-					<input type="text" class="form-control phone_number" id="phone" name="phone" placeholder="Enter Phone" value="" maxlength="50" required="">
-                </div>
-				<div class="col-sm-6">
-					<label for="name" class="control-label">Status</label>
-					<select class="form-control" placeholder="Status" name="is_status" id="is_status" >
-					  <option value="">Select Status</option>
-					  <option value="1">Active</option>
-					  <option value="0">In-Active</option>
-					</select>
-                </div>
-              </div>
+
+{{--			  <div class="form-group row">--}}
+{{--                <div class="col-sm-6">--}}
+{{--					<label for="name" class="control-label">Phone</label>--}}
+{{--					<input type="text" class="form-control phone_number" id="phone" name="phone" placeholder="Enter Phone" value="" maxlength="50">--}}
+{{--                </div>--}}
+
+
+{{--				<div class="col-sm-6">--}}
+{{--					<label for="name" class="control-label">Status</label>--}}
+{{--					<select class="form-control" placeholder="Status" name="is_status" id="is_status" >--}}
+{{--					  <option value="">Select Status</option>--}}
+{{--					  <option value="1">Active</option>--}}
+{{--					  <option value="0">In-Active</option>--}}
+{{--					</select>--}}
+{{--                </div>--}}
+{{--              </div>--}}
+
               <div class="col-sm-offset-2 col-sm-12 text-right">
                 <button type="submit" class="btn btn-dark" id="btn-save" >
                     <i class="fa fa-save"></i>&nbsp; Save
@@ -142,8 +146,8 @@ function fetchData()
 		{ data: 'name', name: 'name' },
 		{ data: 'user_name', name: 'user_name' },
 		{ data: 'email', name: 'email' },
-		{ data: 'phone', name: 'phone' },
-		{ data: 'status', name: 'status' },
+		// { data: 'phone', name: 'phone' },
+		// { data: 'status', name: 'status' },
 		{data: 'action', name: 'action', orderable: false},
 		],
 		order: [[0, 'asc']]
