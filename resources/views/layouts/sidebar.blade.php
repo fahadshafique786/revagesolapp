@@ -1,8 +1,5 @@
   <!-- Main Sidebar Container -->
-
-{{--  <i class="d-inline fa-tachometer-alt fas icon-bg nav-icon pl-1"></i>--}}
-
-  <aside class="main-sidebar sidebar-dark-maroon elevation-4 custom-siderbar-dark">
+  <aside class="main-sidebar sidebar-dark-info elevation-4 custom-siderbar-dark">
 
 	<a class="brand-link" href="{{ url('/') }}">
 		<img src="{{ asset('images/logo.png') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
@@ -36,6 +33,14 @@
               </p>
             </a>
           </li>
+            <li class="nav-item">
+                    <a class="nav-link {{ (Request::segment(2) == 'users') ? 'active' : '' }}" href="{{ url('admin/users') }}">
+                        <i class="nav-icon fas fa-user"></i>
+                        <p>
+                            User Administrator
+                        </p>
+                    </a>
+            </li>
             <li class="nav-header py-3">SPORTS MANAGEMENT </li>
             <li class="nav-item">
                 <a href="forms/general.html" class="nav-link">
@@ -92,7 +97,6 @@
 			<li class="nav-item"><a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a></li>
 			<li><a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a></li>
 		@else
-{{--			<li class="nav-item"><a class="nav-link {{ (Request::segment(2) == 'users') ? 'active' : '' }}" href="{{ url('admin/users') }}">Users</a></li>--}}
 {{--			<li class="nav-item"><a class="nav-link {{ (Request::segment(2) == 'categories') ? 'active' : '' }}" href="{{ url('admin/categories') }}">Categories</a></li>--}}
 {{--			<li class="nav-item"><a class="nav-link {{ (Request::segment(2) == 'faqs') ? 'active' : '' }}" href="{{ url('admin/faqs') }}">FAQS</a></li>--}}
 {{--			<li class="nav-item"><a class="nav-link {{ (Request::segment(2) == 'tutorials') ? 'active' : '' }}" href="{{ url('admin/tutorials') }}">Tutorials</a></li>--}}

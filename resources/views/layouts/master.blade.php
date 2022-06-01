@@ -73,7 +73,7 @@
 
 @php
 	$link_label_array['dashboard'] = "Dashboard";
-	$link_label_array['users'] = "Admin Users";
+	$link_label_array['users'] = "User Administrator";
 	$link_label_array['customers'] = "Customers";
 	$link_label_array['categories'] = "Categories";
 	$link_label_array['faqs'] = "FAQS";
@@ -90,7 +90,10 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0 text-dark">{{ $link_label_array[Request::segment(2)] }}</h1>
+            <h1 class="m-0 text-dark">
+                <i class="d-inline fa-tachometer-alt fas icon-bg nav-icon pl-1"></i>
+                {{ $link_label_array[Request::segment(2)] }}
+            </h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
