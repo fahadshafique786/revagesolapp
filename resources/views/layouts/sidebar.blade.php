@@ -1,4 +1,7 @@
   <!-- Main Sidebar Container -->
+
+{{--  <i class="d-inline fa-tachometer-alt fas icon-bg nav-icon pl-1"></i>--}}
+
   <aside class="main-sidebar sidebar-dark-maroon elevation-4 custom-siderbar-dark">
 
 	<a class="brand-link" href="{{ url('/') }}">
@@ -33,7 +36,58 @@
               </p>
             </a>
           </li>
-		<!-- Authentication Links -->
+            <li class="nav-header py-3">SPORTS MANAGEMENT </li>
+            <li class="nav-item">
+                <a href="forms/general.html" class="nav-link">
+                    <i class="far fa fa-life-ring nav-icon"></i>
+                    <p>Sports</p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="forms/general.html" class="nav-link">
+                    <i class="far fa fa-bolt nav-icon"></i>
+                    <p>Leagues</p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="nav-icon fas fa-users"></i>
+                    <p>
+                        Teams
+                        <i class="fas fa-angle-left right"></i>
+                    </p>
+                </a>
+                <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                        <a href="forms/general.html" class="nav-link">
+                            <i class="far fa fa-minus nav-icon text-sm"></i>
+                            <p>Cricket</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="forms/advanced.html" class="nav-link">
+                            <i class="far fa fa-minus nav-icon text-sm"></i>
+                            <p>Badminton</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="forms/editors.html" class="nav-link">
+                            <i class="far fa fa-minus nav-icon text-sm"></i>
+                            <p>Tennis</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="forms/validation.html" class="nav-link">
+                            <i class="far fa fa-minus nav-icon text-sm"></i>
+                            <p>Soccer</p>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+
+
+            <!-- Authentication Links -->
 		@guest
 			<li class="nav-item"><a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a></li>
 			<li><a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a></li>

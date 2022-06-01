@@ -43,3 +43,45 @@ LOGIN PAGE
     padding-top: 10rem !important;
     padding-bottom: 10rem !important;
 }
+
+.nav-sidebar li a,
+.custom-menu-color,
+.sidebar-dark-maroon .nav-sidebar>.nav-item>.nav-link.active, .sidebar-light-maroon .nav-sidebar>.nav-item>.nav-link.active{
+    color:#ccd3e4 !Important;
+}
+
+.icon-bg {
+    background: #61b0cd;
+    padding: 0.25em 0.25em;
+    color: #fff;
+    border-radius: 4px;
+    display: inline-block;
+    font-size: 22px;
+    box-shadow: 2px 2px 8px #c8c8c9;
+}
+
+/*************** INNER PAGES *****************/
+
+.table {
+    /*width: 100%;*/
+    /*margin-bottom: 1rem;*/
+    background-color: transparent;
+}
+
+.table thead {
+    background-color: #f6f8fb;
+}
+
+.table thead th {
+    font-weight: 600;
+    color: #879099;
+    font-size: 14px;
+}
+
+.table tbody td {
+    color: #212121;
+    font-size: .8rem;
+    line-height: 1.5;
+    font-weight: 400;
+}
+
