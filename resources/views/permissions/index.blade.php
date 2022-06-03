@@ -13,12 +13,11 @@
 							<div class="row">
 								<div class="col-12 text-left">
 									<div class="pull-left">
-
-                                        @if(auth()->user()->hasRole('super-admin') || auth()->user()->can('manage-sports'))
-                                        <a class="btn btn-info" href="javascript:void(0)" id="addNew">
-                                            Add Sport
+                                        @if(auth()->user()->hasRole('super-admin') || auth()->user()->can('manage-permissions'))
+										<a class="btn btn-info" href="javascript:void(0)" id="addNew">
+                                            Add Permission
                                         </a>
-                                        @endif
+                                            @endif
 									</div>
 								</div>
 							</div>
@@ -29,10 +28,10 @@
 									<tr>
 										<th scope="col">#</th>
 										<th scope="col">Name</th>
-										<th scope="col">Sport Name</th>
-										<th scope="col">Email</th>
-										<th scope="col">Phone</th>
-										<th scope="col">Status</th>
+										<th scope="col">Roles</th>
+										{{--<th scope="col">Email</th>--}}
+{{--										<th scope="col">Phone</th>--}}
+{{--										<th scope="col">Status</th>--}}
 										<th scope="col">Action</th>
 									</tr>
 								</thead>
@@ -63,28 +62,19 @@
                 <div class="col-sm-6">
 					<label for="name" class="control-label">Name</label>
 					<input type="text" class="form-control" id="name" name="name" placeholder="Enter Name" value="" maxlength="50" required="">
+                    <span class="text-danger" id="user_nameError"></span>
                 </div>
 				<div class="col-sm-6">
-					<label for="name" class="control-label">Sports Type</label>
-					<span class="text-danger" id="sport_nameError"></span>
+					<label for="name" class="control-label">Attach Roles</label><br/>
+                    <select class="js-example-basic-single" id="roles" name="role_id"  required>
+                        @foreach($roles as $role)
+                        <option value="{{$role->id}}">{{$role->name}}</option>
+                        @endforeach
+                    </select><br/>
+					<span class="text-danger" id="roleError"></span>
                 </div>
               </div>
-			  <div class="form-group row">
-                <div class="col-sm-6">
-					<label for="name" class="control-label">Multi League</label>
-					<input type="email" class="form-control" id="email" name="email" placeholder="Enter Email" value="" maxlength="50" required="">
-					<span class="text-danger" id="emailError"></span>
-                </div>
-				<div class="col-sm-6">
-					<label for="name" class="control-label">Image Required</label>
-                    <label for="image_required">
-                        <input type="radio" class="" id="image_required_no" name="image_required" value="0">
-                    </label>
-                    <label for="image_required">
-                        <input type="radio" class="" id="image_required_yes" name="image_required" value="1">
-                    </label>
-                </div>
-              </div>
+
               <div class="col-sm-offset-2 col-sm-12 text-right">
                 <button type="submit" class="btn btn-dark" id="btn-save" >
                     <i class="fa fa-save"></i>&nbsp; Save
@@ -129,14 +119,24 @@ function fetchData()
 	Table_obj = $('#DataTbl').DataTable({
 		processing: true,
 		serverSide: true,
-		ajax: "{{ url('admin/fetchsportsdata') }}",
+		ajax: "{{ url('admin/fetchpermissionsdata') }}",
 		columns: [
 		{ data: 'srno', name: 'srno' },
 		{ data: 'name', name: 'name' },
-		{ data: 'sport_name', name: 'sport_name' },
-		{ data: 'email', name: 'email' },
-		{ data: 'phone', name: 'phone' },
-		{ data: 'status', name: 'status' },
+		{ data: 'roles', name: 'roles',
+            render: function( data, type, full, meta,rowData ) {
+            let value = "";
+		    for (let i = 0; i < data.length; i++) {
+                    value +=  "<a href='javascript:void(0)' class='badge badge-success'>"+data[i].name +"</a>" +" ";
+                }
+                return value;
+             //   return  "<a href='javascript:void(0)' class='badge badge-success'>"+data + "</a>" ;
+            },
+
+        },
+	//	{ data: 'email', name: 'email' },
+		// { data: 'phone', name: 'phone' },
+		// { data: 'status', name: 'status' },
 		{data: 'action', name: 'action', orderable: false},
 		],
 		order: [[0, 'asc']]
@@ -155,62 +155,80 @@ function fetchData()
     });
     $('#addNew').click(function () {
         $('#id').val("");
+        $('#roles').val("");
         $('#addEditForm').trigger("reset");
 		$("#password").prop("required",true);
-        $('#ajaxheadingModel').html("Add Sport");
+        $('#ajaxheadingModel').html("Add Permission");
         $('#ajax-model').modal('show');
     });
 
-    $('body').on('click', '.edit', function () {
+    $('body').on('click', '.editPermission', function () {
         var id = $(this).data('id');
-        $('#sport_nameError').text('');
-		$('#emailError').text('');
+
+        $('#user_nameError').text('');
+		$('#permissionError').text('');
         $.ajax({
             type:"POST",
-            url: "{{ url('admin/edit-Sport') }}",
+            url: "{{ url('admin/edit-permission') }}",
             data: { id: id },
             dataType: 'json',
             success: function(res){
-			  $("#password").prop("required",false);
 			  $('#id').val("");
 			  $('#addEditForm').trigger("reset");
-              $('#ajaxheadingModel').html("Edit Sport");
+              $('#ajaxheadingModel').html("Edit Permission");
               $('#ajax-model').modal('show');
               $('#id').val(res.id);
               $('#name').val(res.name);
-			  $('#sport_name').val(res.sport_name);
-			  $('#email').val(res.email);
-			  $('#phone').val(res.phone);
-              $('#is_status').val(res.is_status);
+                $('#permissionss').select2('data', res.permissions);
+			//  $('#permissions').val(res.permissions);
            }
         });
     });
     $('body').on('click', '.delete', function () {
-       if (confirm("Delete Record?") == true) {
-        var id = $(this).data('id');
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+                confirmButton: 'btn btn-success',
+                cancelButton: 'btn btn-danger'
+            },
+            buttonsStyling: false
+        })
+        swalWithBootstrapButtons.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'No, cancel!',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
 
-        $.ajax({
-            type:"POST",
-            url: "{{ url('admin/delete-Sport') }}",
-            data: { id: id },
-            dataType: 'json',
-            success: function(res){
-              fetchData();
-           }
-        });
-       }
+
+                var id = $(this).data('id');
+
+                $.ajax({
+                    type: "POST",
+                    url: "{{ url('admin/delete-permission') }}",
+                    data: {id: id},
+                    dataType: 'json',
+                    success: function (res) {
+                        fetchData();
+                    }
+                });
+            }
+        })
     });
     $("#addEditForm").on('submit',(function(e) {
 		e.preventDefault();
 		var Form_Data = new FormData(this);
         $("#btn-save").html('Please Wait...');
         $("#btn-save"). attr("disabled", true);
-        $('#sport_nameError').text('');
-		$('#emailError').text('');
+        $('#user_nameError').text('');
+		$('#roleError').text('');
 
         $.ajax({
             type:"POST",
-            url: "{{ url('admin/add-update-Sport') }}",
+            url: "{{ url('admin/add-update-permission') }}",
             data: Form_Data,
 			mimeType: "multipart/form-data",
 		    contentType: false,
@@ -224,14 +242,22 @@ function fetchData()
 				$("#btn-save"). attr("disabled", false);
            },
 		   error:function (response) {
+               if(response.responseJSON.message=='User does not have any of the necessary access rights.'){
+                   Swal.fire({
+                       icon: 'error',
+                       title: 'Oops...',
+                       text: 'User does not have any of the necessary access rights.',
+                   })
+               }
 				$("#btn-save").html('<i class="fa fa-save"></i> Save');
 				$("#btn-save"). attr("disabled", false);
-				$('#sport_nameError').text(response.responseJSON.errors.sport_name);
-				$('#emailError').text(response.responseJSON.errors.email);
+				$('#user_nameError').text(response.responseJSON.errors.name);
+				$('#permissionError').text(response.responseJSON.errors.permissions);
 			}
         });
     }));
 });
+
 
 </script>
 

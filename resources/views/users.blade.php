@@ -13,9 +13,11 @@
 							<div class="row">
 								<div class="col-12 text-left">
 									<div class="pull-left">
-										<a class="btn btn-info" href="javascript:void(0)" id="addNew">
+										@if(auth()->user()->hasRole('super-admin') || auth()->user()->can('manage-users'))
+                                        <a class="btn btn-info" href="javascript:void(0)" id="addNew">
                                             Add User
                                         </a>
+                                            @endif
 									</div>
 								</div>
 							</div>
@@ -28,6 +30,7 @@
 										<th scope="col">Name</th>
 										<th scope="col">User Name</th>
 										<th scope="col">Email</th>
+										<th scope="col">Role</th>
 {{--										<th scope="col">Phone</th>--}}
 {{--										<th scope="col">Status</th>--}}
 										<th scope="col">Action</th>
@@ -75,26 +78,27 @@
                 </div>
 				<div class="col-sm-6">
 					<label for="name" class="control-label">Password</label>
-					<input type="text" class="form-control" id="password" name="password" placeholder="Enter Password" value="" minlength="8" maxlength="50">
+					<input type="password" class="form-control" id="password" name="password" placeholder="Enter Password" value="" minlength="8" maxlength="50">
                 </div>
               </div>
 
-{{--			  <div class="form-group row">--}}
-{{--                <div class="col-sm-6">--}}
-{{--					<label for="name" class="control-label">Phone</label>--}}
-{{--					<input type="text" class="form-control phone_number" id="phone" name="phone" placeholder="Enter Phone" value="" maxlength="50">--}}
-{{--                </div>--}}
+			 {{-- <div class="form-group row">
+                <div class="col-sm-6">
+					<label for="name" class="control-label">Phone</label>
+					<input type="number" class="form-control phone_number" id="phone" name="phone" placeholder="Enter Phone" value="" maxlength="50">
+                </div>
+--}}
 
-
-{{--				<div class="col-sm-6">--}}
-{{--					<label for="name" class="control-label">Status</label>--}}
-{{--					<select class="form-control" placeholder="Status" name="is_status" id="is_status" >--}}
-{{--					  <option value="">Select Status</option>--}}
-{{--					  <option value="1">Active</option>--}}
-{{--					  <option value="0">In-Active</option>--}}
-{{--					</select>--}}
-{{--                </div>--}}
-{{--              </div>--}}
+				<div class="col-sm-12">
+					<label for="name" class="control-label">Role</label>
+                    <select class="js-example-basic-single" id="user_role" name="role_id"  required>
+                        @foreach($roles as $role)
+                            <option value="{{$role->id}}">{{$role->name}}</option>
+                        @endforeach
+                    </select><br/>
+                    <span class="text-danger" id="roleError"></span>
+                </div>
+              </div>
 
               <div class="col-sm-offset-2 col-sm-12 text-right">
                 <button type="submit" class="btn btn-dark" id="btn-save" >
@@ -146,6 +150,22 @@ function fetchData()
 		{ data: 'name', name: 'name' },
 		{ data: 'user_name', name: 'user_name' },
 		{ data: 'email', name: 'email' },
+		{ data: 'role', name: 'role',
+            render: function( data, type, full, meta,rowData ) {
+
+               if(data.length) {
+                   let value = "";
+                   for (let i = 0; i < data.length; i++) {
+                       value += "<a href='javascript:void(0)' class='badge badge-success'>" + data[i].name + "</a>" + " ";
+                   }
+                   return value;
+               }
+                else{
+                   return  "<a href='javascript:void(0)' class='badge badge-danger'>"+"No Role Assigned Yet"+ "</a>" ;
+                }
+                //
+            },
+        },
 		// { data: 'phone', name: 'phone' },
 		// { data: 'status', name: 'status' },
 		{data: 'action', name: 'action', orderable: false},
@@ -191,25 +211,46 @@ function fetchData()
               $('#name').val(res.name);
 			  $('#user_name').val(res.user_name);
 			  $('#email').val(res.email);
-			  $('#phone').val(res.phone);
-              $('#is_status').val(res.is_status);
+			 // $('#phone').val(res.phone);
+              $('#user_role').val(res.role);
+             //   $('#user_role').select2('data', res.role);
            }
         });
     });
     $('body').on('click', '.delete', function () {
-       if (confirm("Delete Record?") == true) {
-        var id = $(this).data('id');
 
-        $.ajax({
-            type:"POST",
-            url: "{{ url('admin/delete-user') }}",
-            data: { id: id },
-            dataType: 'json',
-            success: function(res){
-              fetchData();
-           }
-        });
-       }
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+                confirmButton: 'btn btn-success',
+                cancelButton: 'btn btn-danger'
+            },
+            buttonsStyling: false
+        })
+
+        swalWithBootstrapButtons.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'No, cancel!',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                var id = $(this).data('id');
+
+                $.ajax({
+                    type:"POST",
+                    url: "{{ url('admin/delete-user') }}",
+                    data: { id: id },
+                    dataType: 'json',
+                    success: function(res){
+                        fetchData();
+                    }
+                });
+            }
+        })
+
     });
     $("#addEditForm").on('submit',(function(e) {
 		e.preventDefault();
@@ -235,6 +276,13 @@ function fetchData()
 				$("#btn-save"). attr("disabled", false);
            },
 		   error:function (response) {
+               if(response.responseJSON.message=='User does not have any of the necessary access rights.'){
+                   Swal.fire({
+                       icon: 'error',
+                       title: 'Oops...',
+                       text: 'User does not have any of the necessary access rights.',
+                   })
+               }
 				$("#btn-save").html('<i class="fa fa-save"></i> Save');
 				$("#btn-save"). attr("disabled", false);
 				$('#user_nameError').text(response.responseJSON.errors.user_name);

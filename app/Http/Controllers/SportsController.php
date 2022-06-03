@@ -7,6 +7,12 @@ use App\Models\Sports;
 
 class SportsController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('role_or_permission:super-admin|view-sports', ['only' => ['index','fetchsportsdata']]);
+        $this->middleware('role_or_permission:super-admin|manage-sports',['only' => ['edit','store','editProfile','updateRole','destroy']]);
+    }
     public function index(Request $request)
     {
         return view('sports');
@@ -117,16 +123,17 @@ class SportsController extends Controller
                     $response[$i]['phone'] = $user->phone;
                     $response[$i]['status'] = $status;
 
-                    if(auth()->user()->user_type == "superadmin")
+                    if(auth()->user()->hasRole('super-admin') || auth()->user()->can('manage-sports'))
+                  //  if(auth()->user()->user_type == "superadmin")
                     {
                         $response[$i]['action'] = '<a href="javascript:void(0)" class="btn btn-primary edit" data-id="'. $user->id .'"><i class="fa fa-edit"></i></a>
 											<a href="javascript:void(0)" class="btn btn-danger delete" data-id="'. $user->id .'"><i class="fa fa-trash"></i></a>';
                     }
                     else
                     {
-                        if($user->user_type != "superadmin")
+                       /* if($user->user_type != "superadmin")
                             $response[$i]['action'] = '<a href="javascript:void(0)" class="btn edit text-info" data-id="'. $user->id .'"><i class="fa fa-edit"></i></a>';
-                        else
+                        else*/
                             $response[$i]['action'] = "-";
                     }
                     $i++;

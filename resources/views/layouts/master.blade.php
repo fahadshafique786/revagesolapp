@@ -14,12 +14,16 @@
   <!-- Ionicons -->
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
   <!-- overlayScrollbars -->
+
   <link rel="stylesheet" href="{{ asset('dist/css/adminlte.min.css') }}">
   <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
   <!-- overlayScrollbars -->
+
   <link rel="stylesheet" href="{{ asset('plugins/overlayScrollbars/css/OverlayScrollbars.min.css') }}">
+
+
 
   <!-- DataTables -->
   <link rel="stylesheet" href="{{ asset('plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
@@ -27,6 +31,7 @@
 
 </head>
 <body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed text-sm">
+
 <div class="wrapper">
   <!-- Navbar -->
   <nav class="main-header navbar navbar-expand navbar-dark custom-nav">
@@ -75,6 +80,8 @@
 	$link_label_array['dashboard'] = "Dashboard";
 	$link_label_array['users'] = "User Administrator";
 	$link_label_array['sports'] = "Sports";
+	$link_label_array['roles'] = "Roles";
+	$link_label_array['permissions'] = "Permissions";
 @endphp
 
   <!-- Content Wrapper. Contains page content -->
