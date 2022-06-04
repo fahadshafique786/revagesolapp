@@ -16,10 +16,21 @@
 <!-- ./wrapper -->
 
 <!-- jQuery -->
-<script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
-<!-- Bootstrap 4 -->
+
+  <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <!-- Bootstrap 4 -->
+
 <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 <!-- AdminLTE App -->
+
+
+  {{--<link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/css/select2.min.css" rel="stylesheet" />
+  <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/js/select2.min.js"></script>--}}
+
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
+
 <script src="{{ asset('dist/js/adminlte.min.js') }}"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="{{ asset('dist/js/demo.js') }}"></script>
@@ -34,6 +45,17 @@
 <script src="{{ asset('plugins/jquery-ui/jquery-ui.min.js') }}"></script>
 
 <script>
+    $(document).ready(function() {
+        $('.js-example-basic-multiple').select2({
+            placeholder: "Please Select an Option ",
+        });
+        $(document).ready(function() {
+            $('.js-example-basic-single').select2({
+                placeholder: "Please Select an Option ",
+            });
+        });
+
+    });
   $(function () {
     $('.dataTables').DataTable({
       "paging": false,
@@ -45,6 +67,7 @@
       "responsive": true,
     });
   });
+
 
 function checkFileFormat(e){
 
@@ -165,7 +188,7 @@ $(document).ready(function($){
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
-	
+
 	$('body').on('click', '.profile', function () {
         $('#profile_user_nameError').text('');
 		$('#profile_emailError').text('');
@@ -185,7 +208,7 @@ $(document).ready(function($){
            }
         });
     });
-	
+
 	$("#profile_addEditForm").on('submit',(function(e) {
 		e.preventDefault();
 		var Form_Data = new FormData(this);
@@ -193,7 +216,7 @@ $(document).ready(function($){
         $("#profile_btn-save"). attr("disabled", true);
         $('#profile_user_nameError').text('');
 		$('#profile_emailError').text('');
-				
+
         $.ajax({
             type:"POST",
             url: "{{ url('admin/update-profile') }}",
@@ -210,15 +233,15 @@ $(document).ready(function($){
            },
 		   error:function (response) {
 				$("#profile_btn-save").html('<i class="fa fa-save"></i> Save');
-				$("#profile_btn-save"). attr("disabled", false);	
+				$("#profile_btn-save"). attr("disabled", false);
 				$('#profile_user_nameError').text(response.responseJSON.errors.user_name);
 				$('#profile_emailError').text(response.responseJSON.errors.email);
 			}
         });
     }));
-	
+
 });
-	
+
 </script>
 
 	@stack('scripts')

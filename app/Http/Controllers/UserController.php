@@ -8,18 +8,26 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Hash;
+use Spatie\Permission\Models\Role;
 
 
 class UserController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('role_or_permission:super-admin|view-users', ['only' => ['index','fetchusersdata']]);
+        $this->middleware('role_or_permission:super-admin|manage-users', ['only' => ['edit','store','editProfile','updateProfile','destroy']]);
+    }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
-    {
-        return view('users');
+    {$roles = Role::all();
+        return view('users',compact('roles'));
     }
 
     /**
@@ -50,10 +58,12 @@ class UserController extends Controller
 				'name' => 'required',
 				'user_name' => 'required|unique:users,user_name',
 				'email' => 'required|email|unique:users,email',
-				'phone' => 'required',
+			//	'phone' => 'required',
+                'role_id'=>'required|integer'
 //				'is_status' => 'required',
 			], $customMessages);
 		}
+
 
 		$input = array();
 		$input['name'] = $request->name;
@@ -70,8 +80,8 @@ class UserController extends Controller
 		if(!empty($request->password))
 			$input['password'] = Hash::make($request->password);
 
-		$input['is_status'] = $request->is_status;
-		$input['phone'] = $request->phone;
+	//	$input['is_status'] = $request->is_status;
+	//	$input['phone'] = $request->phone;
 
         $user   =   User::updateOrCreate(
                     [
@@ -79,8 +89,9 @@ class UserController extends Controller
                     ],
                     $input);
 
-        return response()->json(['success' => true]);
+        $user->syncRoles([$request->role_id]);
 
+        return response()->json(['success' => true]);
 
     }
 
@@ -105,7 +116,7 @@ class UserController extends Controller
      */
 	public function destroy(Request $request)
     {
-		$input['deleted_by'] = auth()->user()->id;
+		 $input['deleted_by'] = auth()->user()->id;
 		User::where('id',$request->id)->update($input);
         $user = User::where('id',$request->id)->delete();
 
@@ -115,9 +126,13 @@ class UserController extends Controller
 	public function fetchusersdata()
     {
         if(request()->ajax()) {
-
+            $with = [
+                'permissions',
+                'roles',
+                'roles.permissions'
+            ];
 			$response = array();
-			$Filterdata = User::select('*')->orderBy('id','desc')->get();
+			$Filterdata = User::with($with)->select('*')->orderBy('id','desc')->get();
 			if(!empty($Filterdata))
 			{
 				$i = 0;
@@ -130,19 +145,21 @@ class UserController extends Controller
 					$response[$i]['name'] = $user->name;
 					$response[$i]['user_name'] = $user->user_name;
 					$response[$i]['email'] = $user->email;
+					$response[$i]['role'] = $user->roles;
+					$response[$i]['permissions'] = $user->permissions;
 //					$response[$i]['phone'] = $user->phone;
 //					$response[$i]['status'] = $status;
 
-					if(auth()->user()->user_type == "superadmin")
+					if(auth()->user()->hasRole("super-admin") OR auth()->user()->can("manage-users") )
 					{
 						$response[$i]['action'] = '<a href="javascript:void(0)" class="btn btn-primary edit" data-id="'. $user->id .'"><i class="fa fa-edit"></i></a>
 											<a href="javascript:void(0)" class="btn btn-danger delete" data-id="'. $user->id .'"><i class="fa fa-trash"></i></a>';
 					}
 					else
 					{
-						if($user->user_type != "superadmin")
-							$response[$i]['action'] = '<a href="javascript:void(0)" class="btn edit text-info" data-id="'. $user->id .'"><i class="fa fa-edit"></i></a>';
-						else
+						/*if($user->user_type != "super-admin")
+							$response[$i]['action'] = '<a href="javascript:void(0)" class="btn edit text-info" data-id="'. $user->id .'"><i class="fa fa-edit"></i></a>';*/
+						//else
 							$response[$i]['action'] = "-";
 					}
 					$i++;
@@ -157,9 +174,15 @@ class UserController extends Controller
 
 	public function editProfile(Request $request)
     {
+        $with = [
+            'permissions',
+            'roles',
+            'roles.permissions'
+        ];
+
 		$id = auth()->user()->id;
 		$where = array('id' => $id);
-        $user  = User::where($where)->first();
+        $user  = User::with('with')->where($where)->first();
         return response()->json($user);
     }
 
@@ -175,7 +198,8 @@ class UserController extends Controller
 			'name' => 'required',
 			'user_name' => 'required|unique:users,user_name,'.$id,
 			'email' => 'required|email|unique:users,email,'.$id,
-			'phone' => 'required',
+			//'phone' => 'required',
+            'role_id'=>'required|array'
 		], $customMessages);
 
 		$input = array();
@@ -191,6 +215,7 @@ class UserController extends Controller
 
 		$where = array('id' => $id);
         $user   =   User::where($where)->update($input);
+        $user->syncRoles($request->role_id);
 
         return response()->json(['success' => true]);
 

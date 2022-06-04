@@ -13,9 +13,12 @@
 							<div class="row">
 								<div class="col-12 text-left">
 									<div class="pull-left">
-										<a class="btn btn-info" href="javascript:void(0)" id="addNew">
-                                            Add Sports
+
+                                        @if(auth()->user()->hasRole('super-admin') || auth()->user()->can('manage-sports'))
+                                        <a class="btn btn-info" href="javascript:void(0)" id="addNew">
+                                            Add Sport
                                         </a>
+                                        @endif
 									</div>
 								</div>
 							</div>

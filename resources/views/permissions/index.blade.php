@@ -13,9 +13,9 @@
 							<div class="row">
 								<div class="col-12 text-left">
 									<div class="pull-left">
-										@if(auth()->user()->hasRole('super-admin') || auth()->user()->can('manage-users'))
-                                        <a class="btn btn-info" href="javascript:void(0)" id="addNew">
-                                            Add User
+                                        @if(auth()->user()->hasRole('super-admin') || auth()->user()->can('manage-permissions'))
+										<a class="btn btn-info" href="javascript:void(0)" id="addNew">
+                                            Add Permission
                                         </a>
                                             @endif
 									</div>
@@ -28,9 +28,8 @@
 									<tr>
 										<th scope="col">#</th>
 										<th scope="col">Name</th>
-										<th scope="col">User Name</th>
-										<th scope="col">Email</th>
-										<th scope="col">Role</th>
+										<th scope="col">Roles</th>
+										{{--<th scope="col">Email</th>--}}
 {{--										<th scope="col">Phone</th>--}}
 {{--										<th scope="col">Status</th>--}}
 										<th scope="col">Action</th>
@@ -63,40 +62,16 @@
                 <div class="col-sm-6">
 					<label for="name" class="control-label">Name</label>
 					<input type="text" class="form-control" id="name" name="name" placeholder="Enter Name" value="" maxlength="50" required="">
+                    <span class="text-danger" id="user_nameError"></span>
                 </div>
 				<div class="col-sm-6">
-					<label for="name" class="control-label">User Name</label>
-					<input type="text" class="form-control" id="user_name" name="user_name" placeholder="Enter User Name" value="" maxlength="50" required="">
-					<span class="text-danger" id="user_nameError"></span>
-                </div>
-              </div>
-			  <div class="form-group row">
-                <div class="col-sm-6">
-					<label for="name" class="control-label">Email</label>
-					<input type="email" class="form-control" id="email" name="email" placeholder="Enter Email" value="" maxlength="50" required="">
-					<span class="text-danger" id="emailError"></span>
-                </div>
-				<div class="col-sm-6">
-					<label for="name" class="control-label">Password</label>
-					<input type="password" class="form-control" id="password" name="password" placeholder="Enter Password" value="" minlength="8" maxlength="50">
-                </div>
-              </div>
-
-			 {{-- <div class="form-group row">
-                <div class="col-sm-6">
-					<label for="name" class="control-label">Phone</label>
-					<input type="number" class="form-control phone_number" id="phone" name="phone" placeholder="Enter Phone" value="" maxlength="50">
-                </div>
---}}
-
-				<div class="col-sm-12">
-					<label for="name" class="control-label">Role</label>
-                    <select class="js-example-basic-single" id="user_role" name="role_id"  required>
+					<label for="name" class="control-label">Attach Roles</label><br/>
+                    <select class="js-example-basic-single" id="roles" name="role_id"  required>
                         @foreach($roles as $role)
-                            <option value="{{$role->id}}">{{$role->name}}</option>
+                        <option value="{{$role->id}}">{{$role->name}}</option>
                         @endforeach
                     </select><br/>
-                    <span class="text-danger" id="roleError"></span>
+					<span class="text-danger" id="roleError"></span>
                 </div>
               </div>
 
@@ -144,28 +119,22 @@ function fetchData()
 	Table_obj = $('#DataTbl').DataTable({
 		processing: true,
 		serverSide: true,
-		ajax: "{{ url('admin/fetchusersdata') }}",
+		ajax: "{{ url('admin/fetchpermissionsdata') }}",
 		columns: [
 		{ data: 'srno', name: 'srno' },
 		{ data: 'name', name: 'name' },
-		{ data: 'user_name', name: 'user_name' },
-		{ data: 'email', name: 'email' },
-		{ data: 'role', name: 'role',
+		{ data: 'roles', name: 'roles',
             render: function( data, type, full, meta,rowData ) {
-
-               if(data.length) {
-                   let value = "";
-                   for (let i = 0; i < data.length; i++) {
-                       value += "<a href='javascript:void(0)' class='badge badge-success'>" + data[i].name + "</a>" + " ";
-                   }
-                   return value;
-               }
-                else{
-                   return  "<a href='javascript:void(0)' class='badge badge-danger'>"+"No Role Assigned Yet"+ "</a>" ;
+            let value = "";
+		    for (let i = 0; i < data.length; i++) {
+                    value +=  "<a href='javascript:void(0)' class='badge badge-success'>"+data[i].name +"</a>" +" ";
                 }
-                //
+                return value;
+             //   return  "<a href='javascript:void(0)' class='badge badge-success'>"+data + "</a>" ;
             },
+
         },
+	//	{ data: 'email', name: 'email' },
 		// { data: 'phone', name: 'phone' },
 		// { data: 'status', name: 'status' },
 		{data: 'action', name: 'action', orderable: false},
@@ -186,39 +155,36 @@ function fetchData()
     });
     $('#addNew').click(function () {
         $('#id').val("");
+        $('#roles').val("");
         $('#addEditForm').trigger("reset");
 		$("#password").prop("required",true);
-        $('#ajaxheadingModel').html("Add User");
+        $('#ajaxheadingModel').html("Add Permission");
         $('#ajax-model').modal('show');
     });
 
-    $('body').on('click', '.edit', function () {
+    $('body').on('click', '.editPermission', function () {
         var id = $(this).data('id');
+
         $('#user_nameError').text('');
-		$('#emailError').text('');
+		$('#permissionError').text('');
         $.ajax({
             type:"POST",
-            url: "{{ url('admin/edit-user') }}",
+            url: "{{ url('admin/edit-permission') }}",
             data: { id: id },
             dataType: 'json',
             success: function(res){
-			  $("#password").prop("required",false);
 			  $('#id').val("");
 			  $('#addEditForm').trigger("reset");
-              $('#ajaxheadingModel').html("Edit User");
+              $('#ajaxheadingModel').html("Edit Permission");
               $('#ajax-model').modal('show');
               $('#id').val(res.id);
               $('#name').val(res.name);
-			  $('#user_name').val(res.user_name);
-			  $('#email').val(res.email);
-			 // $('#phone').val(res.phone);
-              $('#user_role').val(res.role);
-             //   $('#user_role').select2('data', res.role);
+                $('#permissionss').select2('data', res.permissions);
+			//  $('#permissions').val(res.permissions);
            }
         });
     });
     $('body').on('click', '.delete', function () {
-
         const swalWithBootstrapButtons = Swal.mixin({
             customClass: {
                 confirmButton: 'btn btn-success',
@@ -226,7 +192,6 @@ function fetchData()
             },
             buttonsStyling: false
         })
-
         swalWithBootstrapButtons.fire({
             title: 'Are you sure?',
             text: "You won't be able to revert this!",
@@ -237,20 +202,21 @@ function fetchData()
             reverseButtons: true
         }).then((result) => {
             if (result.isConfirmed) {
+
+
                 var id = $(this).data('id');
 
                 $.ajax({
-                    type:"POST",
-                    url: "{{ url('admin/delete-user') }}",
-                    data: { id: id },
+                    type: "POST",
+                    url: "{{ url('admin/delete-permission') }}",
+                    data: {id: id},
                     dataType: 'json',
-                    success: function(res){
+                    success: function (res) {
                         fetchData();
                     }
                 });
             }
         })
-
     });
     $("#addEditForm").on('submit',(function(e) {
 		e.preventDefault();
@@ -258,11 +224,11 @@ function fetchData()
         $("#btn-save").html('Please Wait...');
         $("#btn-save"). attr("disabled", true);
         $('#user_nameError').text('');
-		$('#emailError').text('');
+		$('#roleError').text('');
 
         $.ajax({
             type:"POST",
-            url: "{{ url('admin/add-update-user') }}",
+            url: "{{ url('admin/add-update-permission') }}",
             data: Form_Data,
 			mimeType: "multipart/form-data",
 		    contentType: false,
@@ -285,12 +251,13 @@ function fetchData()
                }
 				$("#btn-save").html('<i class="fa fa-save"></i> Save');
 				$("#btn-save"). attr("disabled", false);
-				$('#user_nameError').text(response.responseJSON.errors.user_name);
-				$('#emailError').text(response.responseJSON.errors.email);
+				$('#user_nameError').text(response.responseJSON.errors.name);
+				$('#permissionError').text(response.responseJSON.errors.permissions);
 			}
         });
     }));
 });
+
 
 </script>
 
