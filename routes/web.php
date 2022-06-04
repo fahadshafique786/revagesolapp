@@ -18,6 +18,7 @@ use App\Http\Controllers\PermissionsController;
 */
 
 Route::get('/', function () {
+    dd(123);
     return view('auth.login');
 });
 
