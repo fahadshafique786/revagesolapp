@@ -14,7 +14,7 @@
 								<div class="col-12 text-left">
 									<div class="pull-left">
 										<a class="btn btn-info" href="javascript:void(0)" id="addNew">
-                                            Add Sport
+                                            Add Sports
                                         </a>
 									</div>
 								</div>
@@ -25,11 +25,11 @@
 								<thead>
 									<tr>
 										<th scope="col">#</th>
+										<th scope="col">Icon</th>
 										<th scope="col">Name</th>
-										<th scope="col">Sport Name</th>
-										<th scope="col">Email</th>
-										<th scope="col">Phone</th>
-										<th scope="col">Status</th>
+										<th scope="col">Type</th>
+										<th scope="col">Image Required</th>
+										<th scope="col">Multi League</th>
 										<th scope="col">Action</th>
 									</tr>
 								</thead>
@@ -47,7 +47,7 @@
 
 	 <!-- boostrap model -->
     <div class="modal fade" id="ajax-model" aria-hidden="true" data-backdrop="static">
-      <div class="modal-dialog modal-lg">
+      <div class="modal-dialog modal-sm custom-fixed-popup right">
         <div class="modal-content">
           <div class="modal-header">
             <h4 class="modal-title" id="ajaxheadingModel"></h4>
@@ -56,35 +56,79 @@
           <div class="modal-body">
             <form action="javascript:void(0)" id="addEditForm" name="addEditForm" class="form-horizontal" method="POST" enctype="multipart/form-data">
               <input type="hidden" name="id" id="id">
+
+
+
               <div class="form-group row">
-                <div class="col-sm-6">
+
+                <div class="col-sm-12">
 					<label for="name" class="control-label">Name</label>
 					<input type="text" class="form-control" id="name" name="name" placeholder="Enter Name" value="" maxlength="50" required="">
                 </div>
-				<div class="col-sm-6">
-					<label for="name" class="control-label">Sports Type</label>
-					<span class="text-danger" id="sport_nameError"></span>
-                </div>
+
               </div>
-			  <div class="form-group row">
-                <div class="col-sm-6">
-					<label for="name" class="control-label">Multi League</label>
-					<input type="email" class="form-control" id="email" name="email" placeholder="Enter Email" value="" maxlength="50" required="">
-					<span class="text-danger" id="emailError"></span>
+
+                <div class="form-group row">
+
+                    <div class="col-sm-12">
+                        <label for="name" class="control-label d-block">  Sports Type </label>
+                        <label for="multi_league">
+                            <input type="radio" class="" id="sports_type_yes" name="sports_type" value="1" />
+                            <span class="">Yes</span>
+                        </label>
+                        <label for="multi_league">
+                            <input type="radio" class="" id="sports_type_no" name="sports_type"  value="0"/>
+                            <span class="">No</span>
+                        </label>
+
+                        <span class="text-danger" id="multi_leagueError"></span>
+                    </div>
+
                 </div>
-				<div class="col-sm-6">
-					<label for="name" class="control-label">Image Required</label>
-                    <label for="image_required">
-                        <input type="radio" class="" id="image_required_no" name="image_required" value="0">
-                    </label>
-                    <label for="image_required">
-                        <input type="radio" class="" id="image_required_yes" name="image_required" value="1">
-                    </label>
-                </div>
+
+              <div class="form-group row">
+
+                  <div class="col-sm-12">
+                      <label for="name" class="control-label d-block">Multi League</label>
+                      <label for="multi_league">
+                          <input type="radio" class="" id="multi_league_yes" name="multi_league" value="1" />
+                          <span class="">Yes</span>
+                      </label>
+                      <label for="multi_league">
+                          <input type="radio" class="" id="multi_league_no" name="multi_league"  value="0"/>
+                          <span class="">No</span>
+                      </label>
+
+                      <span class="text-danger" id="multi_leagueError"></span>
+                  </div>
+
               </div>
-              <div class="col-sm-offset-2 col-sm-12 text-right">
-                <button type="submit" class="btn btn-dark" id="btn-save" >
-                    <i class="fa fa-save"></i>&nbsp; Save
+
+
+
+              <div class="form-group row">
+
+                  <div class="col-sm-12">
+                      <label for="name" class="control-label d-block">Image Required</label>
+                      <label for="image_required">
+                          <input type="radio" class="" id="image_required_yes" name="image_required" value="1">
+                          <span class="">Yes</span>
+                      </label>
+                      <label for="image_required">
+                          <input type="radio" class="" id="image_required_no" name="image_required" value="0">
+                          <span class="">No</span>
+                      </label>
+                      <span class="text-danger" id="image_requiredError"></span>
+
+                  </div>
+
+
+              </div>
+
+
+              <div class="col-sm-12 text-center">
+                <button type="submit" class="btn btn-info full-width-button" id="btn-save" >
+                     Save
                 </button>
               </div>
             </form>
@@ -154,7 +198,7 @@ function fetchData()
         $('#id').val("");
         $('#addEditForm').trigger("reset");
 		$("#password").prop("required",true);
-        $('#ajaxheadingModel').html("Add Sport");
+        $('#ajaxheadingModel').html("Add Sports");
         $('#ajax-model').modal('show');
     });
 
@@ -171,7 +215,7 @@ function fetchData()
 			  $("#password").prop("required",false);
 			  $('#id').val("");
 			  $('#addEditForm').trigger("reset");
-              $('#ajaxheadingModel').html("Edit Sport");
+              $('#ajaxheadingModel').html("Edit Sports");
               $('#ajax-model').modal('show');
               $('#id').val(res.id);
               $('#name').val(res.name);

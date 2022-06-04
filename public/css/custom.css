@@ -88,3 +88,24 @@ LOGIN PAGE
     background-color: #17a2b8;
     border-color: #17a2b8;
 }
+
+
+/************* FIXED CUSTOM POPUP **************/
+.custom-fixed-popup {
+    position: fixed;
+    margin: 0;
+    top:0;
+    height: 100%;
+}
+
+.custom-fixed-popup > .modal-content{
+    height:100%;
+}
+
+.custom-fixed-popup.right {
+    right: 0;
+}
+
+.full-width-button{
+    width:100% !Important;
+}
