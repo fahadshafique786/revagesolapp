@@ -20,48 +20,28 @@ class SportsController extends Controller
 
     public function store(Request $request)
     {
-        $customMessages = [
-            'unique' => ':attribute already registered.'
-        ];
-
         if(!empty($request->id))
         {
             $this->validate($request, [
-                'name' => 'required',
-                'user_name' => 'required|unique:users,user_name,'.$request->id,
-                'email' => 'required|email|unique:users,email,'.$request->id,
-                'phone' => 'required',
-                'is_status' => 'required',
-            ], $customMessages);
+                'name' => 'required|unique:sports,name,'.$request->id,
+                'sports_type' => 'required',
+                'multi_league' => 'required'
+            ]);
         }
         else
         {
             $this->validate($request, [
-                'name' => 'required',
-                'user_name' => 'required|unique:users,user_name',
-                'email' => 'required|email|unique:users,email',
-                'phone' => 'required',
-                'is_status' => 'required',
-            ], $customMessages);
+                'name' => 'required|unique:sports,name,'.$request->id,
+                'sports_type' => 'required',
+                'multi_league' => 'required'
+            ]);
         }
 
         $input = array();
         $input['name'] = $request->name;
-        $input['user_name'] = $request->user_name;
-        $input['email'] = $request->email;
-        $input['updated_by'] = auth()->user()->id;
-
-        if(empty($request->id))
-        {
-            $input['user_type'] = "admin";
-            $input['created_by']	= auth()->user()->id;
-        }
-
-        if(!empty($request->password))
-            $input['password'] = Hash::make($request->password);
-
-        $input['is_status'] = $request->is_status;
-        $input['phone'] = $request->phone;
+        $input['multi_league'] = $request->multi_league;
+        $input['sports_type'] = $request->sports_type;
+        $input['image_required'] = $request->image_required;
 
         $user   =   Sports::updateOrCreate(
             [
@@ -70,8 +50,6 @@ class SportsController extends Controller
             $input);
 
         return response()->json(['success' => true]);
-
-
     }
 
     /**
@@ -111,23 +89,20 @@ class SportsController extends Controller
             if(!empty($Filterdata))
             {
                 $i = 0;
-                foreach($Filterdata as $index => $user)
+                foreach($Filterdata as $index => $sports)
                 {
-                    $status = (!empty($user->is_status)) ? "Active" : "Inactive";
 
                     $response[$i]['srno'] = $i + 1;
-                    $response[$i]['id'] = $user->id;
-                    $response[$i]['name'] = $user->name;
-                    $response[$i]['user_name'] = $user->user_name;
-                    $response[$i]['email'] = $user->email;
-                    $response[$i]['phone'] = $user->phone;
-                    $response[$i]['status'] = $status;
+                    $response[$i]['icon'] = $sports->icon;
+                    $response[$i]['name'] = $sports->name;
+                    $response[$i]['sports_type'] = $sports->sports_type;
+                    $response[$i]['multi_league'] = $sports->multi_league;
+                    $response[$i]['image_required'] = $sports->image_required;
 
                     if(auth()->user()->hasRole('super-admin') || auth()->user()->can('manage-sports'))
-                  //  if(auth()->user()->user_type == "superadmin")
                     {
-                        $response[$i]['action'] = '<a href="javascript:void(0)" class="btn btn-primary edit" data-id="'. $user->id .'"><i class="fa fa-edit"></i></a>
-											<a href="javascript:void(0)" class="btn btn-danger delete" data-id="'. $user->id .'"><i class="fa fa-trash"></i></a>';
+                        $response[$i]['action'] = '<a href="javascript:void(0)" class="btn edit" data-id="'. $sports->id .'"><i class="fa fa-edit  text-info"></i></a>
+											<a href="javascript:void(0)" class="btn delete" data-id="'. $sports->id .'"><i class="fa fa-trash text-danger"></i></a>';
                     }
                     else
                     {

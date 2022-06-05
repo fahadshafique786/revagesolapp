@@ -41,7 +41,7 @@ Route::group(
         Route::get('/fetchsportsdata', [SportsController::class, 'fetchsportsdata']);
 
 
-        Route::post('/add-update-Sport', [UserController::class, 'store']);
+        Route::post('/add-update-Sport', [SportsController::class, 'store']);
         Route::post('/edit-sport', [UserController::class, 'edit']);
         Route::post('/delete-sport', [UserController::class, 'destroy']);
         Route::post('/edit-sport', [UserController::class, 'editProfile']);

@@ -152,8 +152,8 @@ class UserController extends Controller
 
 					if(auth()->user()->hasRole("super-admin") OR auth()->user()->can("manage-users") )
 					{
-						$response[$i]['action'] = '<a href="javascript:void(0)" class="btn btn-primary edit" data-id="'. $user->id .'"><i class="fa fa-edit"></i></a>
-											<a href="javascript:void(0)" class="btn btn-danger delete" data-id="'. $user->id .'"><i class="fa fa-trash"></i></a>';
+						$response[$i]['action'] = '<a href="javascript:void(0)" class="btn edit" data-id="'. $user->id .'"><i class="fa fa-edit  text-info"></i></a>
+											<a href="javascript:void(0)" class="btn delete" data-id="'. $user->id .'"><i class="fa fa-trash  text-danger"></i></a>';
 					}
 					else
 					{

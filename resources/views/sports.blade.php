@@ -94,11 +94,11 @@
                   <div class="col-sm-12">
                       <label for="name" class="control-label d-block">Multi League</label>
                       <label for="multi_league">
-                          <input type="radio" class="" id="multi_league_yes" name="multi_league" value="1" />
+                          <input type="radio" class="" id="multi_league_yes" name="multi_league" value="yes" />
                           <span class="">Yes</span>
                       </label>
                       <label for="multi_league">
-                          <input type="radio" class="" id="multi_league_no" name="multi_league"  value="0"/>
+                          <input type="radio" class="" id="multi_league_no" name="multi_league"  value="no"/>
                           <span class="">No</span>
                       </label>
 
@@ -114,11 +114,11 @@
                   <div class="col-sm-12">
                       <label for="name" class="control-label d-block">Image Required</label>
                       <label for="image_required">
-                          <input type="radio" class="" id="image_required_yes" name="image_required" value="1">
+                          <input type="radio" class="" id="image_required_yes" name="image_required" value="yes">
                           <span class="">Yes</span>
                       </label>
                       <label for="image_required">
-                          <input type="radio" class="" id="image_required_no" name="image_required" value="0">
+                          <input type="radio" class="" id="image_required_no" name="image_required" value="no">
                           <span class="">No</span>
                       </label>
                       <span class="text-danger" id="image_requiredError"></span>
@@ -176,12 +176,31 @@ function fetchData()
 		ajax: "{{ url('admin/fetchsportsdata') }}",
 		columns: [
 		{ data: 'srno', name: 'srno' },
+		{ data: 'icon', name: 'icon' },
 		{ data: 'name', name: 'name' },
-		{ data: 'sport_name', name: 'sport_name' },
-		{ data: 'email', name: 'email' },
-		{ data: 'phone', name: 'phone' },
-		{ data: 'status', name: 'status' },
-		{data: 'action', name: 'action', orderable: false},
+		{ data: 'sports_type', name: 'sports_type' },
+        { data: 'image_required', name: 'image_required', render: function( data, type, full, meta,rowData ) {
+
+        if(data=='yes'){
+                        return "<a href='javascript:void(0)' class='badge badge-success'>"+data+"</a>" +" ";
+                    }
+                    else{
+                        return "<a href='javascript:void(0)' class='badge badge-danger'>"+data+"</a>" +" ";
+                    }
+                },
+        },
+		{ data: 'multi_league', name: 'multi_league', render: function( data, type, full, meta,rowData ) {
+               if(data=='yes'){
+                   return "<a href='javascript:void(0)' class='badge badge-success'>"+data+"</a>" +" ";
+               }
+               else{
+                   return "<a href='javascript:void(0)' class='badge badge-danger'>"+data+"</a>" +" ";
+               }
+            },
+
+
+        },
+        {data: 'action', name: 'action', orderable: false},
 		],
 		order: [[0, 'asc']]
 	});
