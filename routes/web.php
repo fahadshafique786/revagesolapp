@@ -42,9 +42,9 @@ Route::group(
 
 
         Route::post('/add-update-Sport', [SportsController::class, 'store']);
-        Route::post('/edit-sport', [UserController::class, 'edit']);
-        Route::post('/delete-sport', [UserController::class, 'destroy']);
-        Route::post('/edit-sport', [UserController::class, 'editProfile']);
+        Route::post('/edit-Sport', [SportsController::class, 'edit']);
+        Route::post('/delete-sport', [SportsController::class, 'destroy']);
+//        Route::post('/edit-sport', [SportsController::class, 'editProfile']);
 //        Route::post('/update-profile', [UserController::class, 'updateProfile']);
 
 

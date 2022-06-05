@@ -93,12 +93,11 @@ class SportsController extends Controller
                 {
 
                     $response[$i]['srno'] = $i + 1;
-                    $response[$i]['icon'] = $sports->icon;
+                    $response[$i]['iconss'] = '<a href="javascript:void(0)" class="" ><i class="fa fa-image text-lg"></i></a>';
                     $response[$i]['name'] = $sports->name;
                     $response[$i]['sports_type'] = $sports->sports_type;
                     $response[$i]['multi_league'] = $sports->multi_league;
                     $response[$i]['image_required'] = $sports->image_required;
-
                     if(auth()->user()->hasRole('super-admin') || auth()->user()->can('manage-sports'))
                     {
                         $response[$i]['action'] = '<a href="javascript:void(0)" class="btn edit" data-id="'. $sports->id .'"><i class="fa fa-edit  text-info"></i></a>
@@ -117,6 +116,7 @@ class SportsController extends Controller
 
             return datatables()->of($response)
                 ->addIndexColumn()
+                ->rawColumns(['iconss','action'])
                 ->make(true);
         }
     }
