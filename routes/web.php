@@ -3,9 +3,12 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\SportsController;
 use App\Http\Controllers\RolesController;
 use App\Http\Controllers\PermissionsController;
+
+use App\Http\Controllers\SportsController;
+use App\Http\Controllers\LeaguesController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -29,6 +32,9 @@ Route::group(
         'prefix' => 'admin/',
     ],
     function() {
+
+        /******* User Module ***********/
+
         Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard');
         Route::get('/users', [UserController::class, 'index']);
         Route::get('/fetchusersdata', [UserController::class, 'fetchusersdata']);
@@ -37,17 +43,16 @@ Route::group(
         Route::post('/delete-user', [UserController::class, 'destroy']);
         Route::post('/edit-profile', [UserController::class, 'editProfile']);
         Route::post('/update-profile', [UserController::class, 'updateProfile']);
+
+        /******* Sports Module ***********/
+
         Route::get('/sports', [SportsController::class, 'index']);
         Route::get('/fetchsportsdata', [SportsController::class, 'fetchsportsdata']);
-
-
         Route::post('/add-update-Sport', [SportsController::class, 'store']);
         Route::post('/edit-Sport', [SportsController::class, 'edit']);
         Route::post('/delete-sport', [SportsController::class, 'destroy']);
-//        Route::post('/edit-sport', [SportsController::class, 'editProfile']);
-//        Route::post('/update-profile', [UserController::class, 'updateProfile']);
 
-
+        /******* RBAC Management ***********/
 
         Route::get('/roles', [RolesController::class, 'index']);;
         Route::get('/fetchrolesdata', [RolesController::class, 'fetchRolesdata']);
@@ -60,6 +65,17 @@ Route::group(
         Route::post('/edit-permission', [PermissionsController::class, 'edit']);
         Route::post('/add-update-permission', [PermissionsController::class, 'store']);
         Route::post('/delete-permission', [PermissionsController::class, 'destroy']);
+
+
+        /******* Leagues Module ***********/
+        Route::get('/leagues', [LeaguesController::class, 'index']);
+        Route::get('/fetch-leagues-data', [LeaguesController::class, 'fetchleaguesdata']);
+        Route::post('/add-update-leagues', [LeaguesController::class, 'store']);
+        Route::post('/edit-league', [LeaguesController::class, 'edit']);
+        Route::post('/delete-league', [LeaguesController::class, 'destroy']);
+
+
+
     });
 
 

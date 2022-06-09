@@ -102,7 +102,7 @@
                 @endif
                 @if(auth()->user()->can('view-leagues')  OR auth()->user()->hasRole('super-admin'))
             <li class="nav-item">
-                <a href="forms/general.html" class="nav-link">
+                <a href="{{ url('admin/leagues') }}" class="nav-link {{ (Request::segment(2) == 'leagues') ? 'active' : '' }}">
                     <i class="far fa fa-bolt nav-icon"></i>
                     <p>Leagues</p>
                 </a>

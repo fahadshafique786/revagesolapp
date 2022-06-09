@@ -13,6 +13,7 @@ class SportsController extends Controller
         $this->middleware('role_or_permission:super-admin|view-sports', ['only' => ['index','fetchsportsdata']]);
         $this->middleware('role_or_permission:super-admin|manage-sports',['only' => ['edit','store','editProfile','updateRole','destroy']]);
     }
+
     public function index(Request $request)
     {
         return view('sports');
@@ -25,7 +26,6 @@ class SportsController extends Controller
             $this->validate($request, [
                 'name' => 'required|unique:sports,name,'.$request->id,
                 'sports_type' => 'required',
-//                'multi_league' => 'required'
             ]);
         }
         else
@@ -33,7 +33,6 @@ class SportsController extends Controller
             $this->validate($request, [
                 'name' => 'required|unique:sports,name,'.$request->id,
                 'sports_type' => 'required',
-//                'multi_league' => 'required'
             ]);
         }
 
@@ -68,12 +67,6 @@ class SportsController extends Controller
         return response()->json(['success' => true]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Request $request)
     {
         $where = array('id' => $request->id);
@@ -81,12 +74,8 @@ class SportsController extends Controller
         return response()->json($sports);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
+
     public function destroy(Request $request)
     {
         $sports = Sports::where('id',$request->id)->delete();
@@ -120,9 +109,6 @@ class SportsController extends Controller
                     }
                     else
                     {
-                       /* if($user->user_type != "superadmin")
-                            $response[$i]['action'] = '<a href="javascript:void(0)" class="btn edit text-info" data-id="'. $user->id .'"><i class="fa fa-edit"></i></a>';
-                        else*/
                             $response[$i]['action'] = "-";
                     }
                     $i++;
@@ -135,4 +121,6 @@ class SportsController extends Controller
                 ->make(true);
         }
     }
+
+
 }

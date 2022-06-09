@@ -80,6 +80,7 @@
 	$link_label_array['dashboard'] = "Dashboard";
 	$link_label_array['users'] = "User Administrator";
 	$link_label_array['sports'] = "Sports";
+	$link_label_array['leagues'] = "Leagues";
 	$link_label_array['roles'] = "Roles";
 	$link_label_array['permissions'] = "Permissions";
 @endphp
