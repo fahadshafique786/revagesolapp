@@ -37,7 +37,7 @@ LOGIN PAGE
 }
 
 .visiblilty-hidden {
-    visibility: hidden;
+    visibility: hidden !important;
 }
 .py-10 {
     padding-top: 10rem !important;
@@ -94,6 +94,7 @@ LOGIN PAGE
     position: fixed;
     margin: 0;
     top:0;
+    width:500px !important;
     height: 100%;
 }
 
@@ -127,4 +128,8 @@ LOGIN PAGE
 }
 .swal2-cancel{
     margin: 1rem!important;
+}
+
+.dataTable-image{
+    width:50px;
 }

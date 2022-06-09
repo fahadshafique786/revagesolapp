@@ -91,7 +91,6 @@ function checkFileFormat(e){
 }
 
 function allowonlyImg(e){
-
 	var id = e.id;
 	if(id == '')
 		return false;

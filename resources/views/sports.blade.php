@@ -67,6 +67,9 @@
                                 <div class="col-sm-12">
                                     <label for="name" class="control-label">Name</label>
                                     <input type="text" class="form-control" id="name" name="name" placeholder="Enter Name" value="" maxlength="50" required="">
+
+                                    <span class="text-danger" id="nameError"></span>
+
                                 </div>
 
                             </div>
@@ -75,16 +78,18 @@
 
                                 <div class="col-sm-12">
                                     <label for="name" class="control-label d-block">  Sports Type </label>
-                                    <label for="multi_league">
-                                        <input type="radio" class="" id="sports_type_yes" name="sports_type" value="1" />
-                                        <span class="">Yes</span>
-                                    </label>
-                                    <label for="multi_league">
-                                        <input type="radio" class="" id="sports_type_no" name="sports_type"  value="0"/>
-                                        <span class="">No</span>
+                                    <label for="sports_type_single" class="cursor-pointer">
+                                        <input type="radio" class="" id="sports_type_single" name="sports_type" value="single" checked />
+                                        Single
                                     </label>
 
-                                    <span class="text-danger" id="multi_leagueError"></span>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;
+                                    <label for="sports_type_double" class="cursor-pointer">
+                                        <input type="radio" class="" id="sports_type_double" name="sports_type"  value="double" />
+                                        Double
+                                    </label>
+
+                                    <span class="text-danger" id="sports_typeError"></span>
                                 </div>
 
                             </div>
@@ -93,12 +98,15 @@
 
                                 <div class="col-sm-12">
                                     <label for="name" class="control-label d-block">Multi League</label>
-                                    <label for="multi_league">
+                                    <label for="multi_league_yes" class="cursor-pointer">
                                         <input type="radio" class="" id="multi_league_yes" name="multi_league" value="yes" />
                                         <span class="">Yes</span>
                                     </label>
-                                    <label for="multi_league">
-                                        <input type="radio" class="" id="multi_league_no" name="multi_league"  value="no"/>
+
+                                    &nbsp;&nbsp;&nbsp;&nbsp;
+
+                                    <label for="multi_league_no" class="cursor-pointer">
+                                        <input type="radio" class="" id="multi_league_no" name="multi_league"  value="no" checked/>
                                         <span class="">No</span>
                                     </label>
 
@@ -113,15 +121,31 @@
 
                                 <div class="col-sm-12">
                                     <label for="name" class="control-label d-block">Image Required</label>
-                                    <label for="image_required">
-                                        <input type="radio" class="" id="image_required_yes" name="image_required" value="yes">
+
+                                    <label for="image_required_yes" class="cursor-pointer">
+                                        <input type="radio" class="" id="image_required_yes" name="image_required" value="yes" />
                                         <span class="">Yes</span>
                                     </label>
-                                    <label for="image_required">
-                                        <input type="radio" class="" id="image_required_no" name="image_required" value="no">
+                                    &nbsp;&nbsp;&nbsp;&nbsp;
+                                    <label for="image_required_no" class="cursor-pointer">
+                                        <input type="radio" class="" id="image_required_no" name="image_required" value="no" checked />
                                         <span class="">No</span>
                                     </label>
                                     <span class="text-danger" id="image_requiredError"></span>
+
+                                </div>
+
+
+                            </div>
+
+
+                            <div class="form-group row">
+
+                                <div class="col-sm-12">
+                                    <label for="name" class="control-label d-block">Sport Logo</label>
+
+                                        <input type="file" class="" id="sport_logo" name="sport_logo" onchange="allowonlyImg(this)">
+                                        <span class="text-danger" id="sport_logoError"></span>
 
                                 </div>
 
@@ -181,7 +205,7 @@
                 ajax: "{{ url('admin/fetchsportsdata') }}",
                 columns: [
                     { data: 'srno', name: 'srno' },
-                    { data: 'iconss', name: 'iconss'},
+                    { data: 'icon', name: 'icon'},
                     { data: 'name', name: 'name' },
                     { data: 'sports_type', name: 'sports_type' },
                     { data: 'image_required', name: 'image_required', render: function( data, type, full, meta,rowData ) {
@@ -231,7 +255,7 @@
 
             $('body').on('click', '.edit', function () {
                 var id = $(this).data('id');
-                $('#sport_nameError').text('');
+                $('#nameError').text('');
                 $('#emailError').text('');
                 $.ajax({
                     type:"POST",
@@ -239,6 +263,7 @@
                     data: { id: id },
                     dataType: 'json',
                     success: function(res){
+                        console.log(res);
                         $("#password").prop("required",false);
                         $('#id').val("");
                         $('#addEditForm').trigger("reset");
@@ -246,20 +271,19 @@
                         $('#ajax-model').modal('show');
                         $('#id').val(res.id);
                         $('#name').val(res.name);
-                        $('#sport_name').val(res.sport_name);
-                        $('#email').val(res.email);
-                        $('#phone').val(res.phone);
-                        $('#is_status').val(res.is_status);
+                        $("#multi_league_"+res.multi_league).prop("checked",true);
+                        $("#sports_type_"+res.sports_type).prop("checked",true);
+                        $("#image_required_"+res.image_required).prop("checked",true);
                     }
                 });
             });
             $('body').on('click', '.delete', function () {
-                if (confirm("Delete Record?") == true) {
+                if (confirm("Are you sure you want to delete?") == true) {
                     var id = $(this).data('id');
 
                     $.ajax({
                         type:"POST",
-                        url: "{{ url('admin/delete-Sport') }}",
+                        url: "{{ url('admin/delete-sport') }}",
                         data: { id: id },
                         dataType: 'json',
                         success: function(res){
@@ -273,8 +297,10 @@
                 var Form_Data = new FormData(this);
                 $("#btn-save").html('Please Wait...');
                 $("#btn-save"). attr("disabled", true);
-                $('#sport_nameError').text('');
-                $('#emailError').text('');
+                $('#nameError').text('');
+                $('#sports_typeError').text('');
+                $('#multi_leagueError').text('');
+                $('#image_requiredError').text('');
 
                 $.ajax({
                     type:"POST",
@@ -288,14 +314,16 @@
                     success: function(res){
                         fetchData();
                         $('#ajax-model').modal('hide');
-                        $("#btn-save").html('<i class="fa fa-save"></i> Save');
+                        $("#btn-save").html('Save');
                         $("#btn-save"). attr("disabled", false);
                     },
                     error:function (response) {
-                        $("#btn-save").html('<i class="fa fa-save"></i> Save');
+                        $("#btn-save").html(' Save');
                         $("#btn-save"). attr("disabled", false);
-                        $('#sport_nameError').text(response.responseJSON.errors.sport_name);
-                        $('#emailError').text(response.responseJSON.errors.email);
+                        $('#nameError').text(response.responseJSON.errors.name);
+                        $('#sports_typeError').text(response.responseJSON.errors.sports_type);
+                        $('#multi_leagueError').text(response.responseJSON.errors.multi_league);
+                        $('#image_requiredError').text(response.responseJSON.errors.image_required);
                     }
                 });
             }));

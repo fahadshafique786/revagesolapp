@@ -25,7 +25,7 @@ class SportsController extends Controller
             $this->validate($request, [
                 'name' => 'required|unique:sports,name,'.$request->id,
                 'sports_type' => 'required',
-                'multi_league' => 'required'
+//                'multi_league' => 'required'
             ]);
         }
         else
@@ -33,7 +33,7 @@ class SportsController extends Controller
             $this->validate($request, [
                 'name' => 'required|unique:sports,name,'.$request->id,
                 'sports_type' => 'required',
-                'multi_league' => 'required'
+//                'multi_league' => 'required'
             ]);
         }
 
@@ -42,6 +42,22 @@ class SportsController extends Controller
         $input['multi_league'] = $request->multi_league;
         $input['sports_type'] = $request->sports_type;
         $input['image_required'] = $request->image_required;
+
+
+        if($request->hasFile('sport_logo'))
+        {
+            $file_original_name  = '';
+            $file_unique_name = '';
+
+            $fileobj				= $request->file('sport_logo');
+            $file_original_name 	= $fileobj->getClientOriginalName('sport_logo');
+            $file_extension_name 	= $fileobj->getClientOriginalExtension('sport_logo');
+            $file_unique_name 		= strtolower($request->name).'-'.time().rand(1000,9999).'.'.$file_extension_name;
+            $destinationPath		= public_path('/uploads/');
+            $fileobj->move($destinationPath,$file_unique_name);
+
+            $input['icon'] = $file_unique_name;
+        }
 
         $user   =   Sports::updateOrCreate(
             [
@@ -61,8 +77,8 @@ class SportsController extends Controller
     public function edit(Request $request)
     {
         $where = array('id' => $request->id);
-        $user  = Sports::where($where)->first();
-        return response()->json($user);
+        $sports  = Sports::where($where)->first();
+        return response()->json($sports);
     }
 
     /**
@@ -73,10 +89,7 @@ class SportsController extends Controller
      */
     public function destroy(Request $request)
     {
-        $input['deleted_by'] = auth()->user()->id;
-        Sports::where('id',$request->id)->update($input);
-        $user = Sports::where('id',$request->id)->delete();
-
+        $sports = Sports::where('id',$request->id)->delete();
         return response()->json(['success' => true]);
     }
 
@@ -92,8 +105,10 @@ class SportsController extends Controller
                 foreach($Filterdata as $index => $sports)
                 {
 
+                    $sport_logo =  (!empty($sports->icon)) ? '<img class="dataTable-image" src="'.url("/uploads/").'/'.$sports->icon.'" />' : '<a href="javascript:void(0)" class="" ><i class="fa fa-image text-xl"></i></a>';
+
                     $response[$i]['srno'] = $i + 1;
-                    $response[$i]['iconss'] = '<a href="javascript:void(0)" class="" ><i class="fa fa-image text-lg"></i></a>';
+                    $response[$i]['icon'] = $sport_logo;
                     $response[$i]['name'] = $sports->name;
                     $response[$i]['sports_type'] = $sports->sports_type;
                     $response[$i]['multi_league'] = $sports->multi_league;
@@ -101,7 +116,7 @@ class SportsController extends Controller
                     if(auth()->user()->hasRole('super-admin') || auth()->user()->can('manage-sports'))
                     {
                         $response[$i]['action'] = '<a href="javascript:void(0)" class="btn edit" data-id="'. $sports->id .'"><i class="fa fa-edit  text-info"></i></a>
-											<a href="javascript:void(0)" class="btn delete" data-id="'. $sports->id .'"><i class="fa fa-trash text-danger"></i></a>';
+											<a href="javascript:void(0)" class="btn delete " data-id="'. $sports->id .'"><i class="fa fa-trash-alt text-danger"></i></a>';
                     }
                     else
                     {
@@ -116,50 +131,8 @@ class SportsController extends Controller
 
             return datatables()->of($response)
                 ->addIndexColumn()
-                ->rawColumns(['iconss','action'])
+                ->rawColumns(['icon','action'])
                 ->make(true);
         }
-    }
-
-    public function editProfile(Request $request)
-    {
-        $id = auth()->user()->id;
-        $where = array('id' => $id);
-        $user  = Sports::where($where)->first();
-        return response()->json($user);
-    }
-
-    public function updateProfile(Request $request)
-    {
-        $customMessages = [
-            'unique' => ':attribute already registered.'
-        ];
-
-        $id = auth()->user()->id;
-
-        $this->validate($request, [
-            'name' => 'required',
-            'user_name' => 'required|unique:users,user_name,'.$id,
-            'email' => 'required|email|unique:users,email,'.$id,
-            'phone' => 'required',
-        ], $customMessages);
-
-        $input = array();
-        $input['name'] = $request->name;
-        $input['user_name'] = $request->user_name;
-        $input['email'] = $request->email;
-        $input['updated_by'] = $id;
-
-        if(!empty($request->password))
-            $input['password'] = Hash::make($request->password);
-
-        $input['phone'] = $request->phone;
-
-        $where = array('id' => $id);
-        $user   =   Sports::where($where)->update($input);
-
-        return response()->json(['success' => true]);
-
-
     }
 }

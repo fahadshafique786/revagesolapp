@@ -14,8 +14,9 @@ class Sports extends Model
      * @var array<int, string>
      */
     protected $fillable = [
+        'icon',
         'name',
-        'type',
+        'sports_type',
         'image_required',
         'multi_league',
     ];
