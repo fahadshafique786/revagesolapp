@@ -80,6 +80,7 @@
 	$link_label_array['dashboard'] = "Dashboard";
 	$link_label_array['users'] = "User Administrator";
 	$link_label_array['sports'] = "Sports";
+	$link_label_array['teams'] = "Teams";
 	$link_label_array['leagues'] = "Leagues";
 	$link_label_array['roles'] = "Roles";
 	$link_label_array['permissions'] = "Permissions";
@@ -93,8 +94,16 @@
         <div class="row mb-2">
           <div class="col-sm-6">
             <h1 class="m-0 text-dark">
-                <i class="d-inline fa-list fas icon-bg nav-icon pl-1"></i>
-                {{ $link_label_array[Request::segment(2)] }}
+                <i class="d-inline vertical-super fa-list fas icon-bg nav-icon pl-1"></i>
+                <p class="page-title d-inline-block ">{{ $link_label_array[Request::segment(2)] }}
+                    @if(Request::segment(2) == 'teams')
+                        <small class="d-block text-sm"> Add or update {{$sportData->name}} Teams</small>
+                    @elseif(Request::segment(2) != 'dashboard')
+                        <small class="d-block text-sm"> Add or update {{Request::segment(2)}} </small>
+                    @else
+                        <small class="d-block text-sm"> &nbsp;&nbsp; </small>
+                    @endif
+                </p>
             </h1>
           </div><!-- /.col -->
           <div class="col-sm-6">

@@ -16,7 +16,7 @@
 
                                         @if(auth()->user()->hasRole('super-admin') || auth()->user()->can('manage-sports'))
                                             <a class="btn btn-info" href="javascript:void(0)" id="addNew">
-                                                Add League
+                                                Add Team
                                             </a>
                                         @endif
                                     </div>
@@ -66,9 +66,9 @@
                                     <label for="name" class="control-label">Sport</label>
                                     <select class="form-control" id="sports_id" name="sports_id" required>
                                         <option value="">   Select Sport </option>
-                                        @foreach ($sports_list as $sport)
-                                            <option value="{{ $sport->id }}"  {{ (isset($sport->id) && old('id')) ? "selected":"" }}>{{ $sport->name }}</option>
-                                        @endforeach
+{{--                                        @foreach ($sports_list as $sport)--}}
+{{--                                            <option value="{{ $sport->id }}"  {{ (isset($sport->id) && old('id')) ? "selected":"" }}>{{ $sport->name }}</option>--}}
+{{--                                        @endforeach--}}
                                     </select>
 
                                     <span class="text-danger" id="sports_idError"></span>

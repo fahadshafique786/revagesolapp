@@ -133,3 +133,7 @@ LOGIN PAGE
 .dataTable-image{
     width:50px;
 }
+
+.vertical-super{
+    vertical-align: super !important;
+}

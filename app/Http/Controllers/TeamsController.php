@@ -19,10 +19,11 @@ class TeamsController extends Controller
 
     public function index(Request $request, $sports_id)
     {
-        $sportData = Sports::where('id',$sports_id)->get();
-        dd($sportData);
+        $sportData = Sports::where('id',$sports_id)->first();
+//        dd($sportData);
 
-        return view('leagues')->with('sports_list',$sports_list);
+        return view('teams')
+            ->with('sportData',$sportData);
     }
 
     public function store(Request $request)
