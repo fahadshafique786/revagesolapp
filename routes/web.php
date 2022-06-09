@@ -8,6 +8,7 @@ use App\Http\Controllers\PermissionsController;
 
 use App\Http\Controllers\SportsController;
 use App\Http\Controllers\LeaguesController;
+use App\Http\Controllers\TeamsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -73,6 +74,14 @@ Route::group(
         Route::post('/add-update-leagues', [LeaguesController::class, 'store']);
         Route::post('/edit-league', [LeaguesController::class, 'edit']);
         Route::post('/delete-league', [LeaguesController::class, 'destroy']);
+
+
+        /******* Teams Module ***********/
+        Route::get('/teams/{sports_id}', [TeamsController::class, 'index']);
+        Route::get('/fetch-teams-data', [TeamsController::class, 'fetchteamsdata']);
+//        Route::post('/add-update-leagues', [LeaguesController::class, 'store']);
+//        Route::post('/edit-league', [LeaguesController::class, 'edit']);
+//        Route::post('/delete-league', [LeaguesController::class, 'destroy']);
 
 
 

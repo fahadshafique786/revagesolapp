@@ -5,8 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Leagues;
 use App\Models\Sports;
+use App\Models\Teams;
 
-class LeaguesController extends Controller
+class TeamsController extends Controller
 {
     public function __construct()
     {
@@ -15,9 +16,12 @@ class LeaguesController extends Controller
 //        $this->middleware('role_or_permission:super-admin|manage-sports',['only' => ['edit','store','editProfile','updateRole','destroy']]);
     }
 
-    public function index(Request $request)
+
+    public function index(Request $request, $sports_id)
     {
-        $sports_list = Sports::all();
+        $sportData = Sports::where('id',$sports_id)->get();
+        dd($sportData);
+
         return view('leagues')->with('sports_list',$sports_list);
     }
 
@@ -80,7 +84,7 @@ class LeaguesController extends Controller
         return response()->json(['success' => true]);
     }
 
-    public function fetchleaguesdata()
+    public function fetchteamsdata()
     {
         if(request()->ajax()) {
 

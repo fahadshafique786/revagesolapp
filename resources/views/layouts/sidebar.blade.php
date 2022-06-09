@@ -119,7 +119,7 @@
                 </a>
                 <ul class="nav nav-treeview">
                     <li class="nav-item">
-                        <a href="forms/general.html" class="nav-link">
+                        <a href="{{ url('admin/teams/2') }}" class="nav-link">
                             <i class="far fa fa-minus nav-icon text-sm"></i>
                             <p>Cricket</p>
                         </a>
