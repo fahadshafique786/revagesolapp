@@ -89,12 +89,14 @@ class ScheduleController extends Controller
         if(request()->ajax()) {
 
             $response = array();
-            $Filterdata = Schedules::select('schedules.*')
+            $Filterdata = Schedules::select('schedules.*','homeTeam.name as home_team_name','homeTeam.points as home_points','awayTeam.name as away_team_name','awayTeam.points as away_points')
                 ->where('schedules.sports_id',$sports_id)
-                ->orderBy('schedules.id','desc')->get();
-//                ->join('leagues', function ($join) {
-//                    $join->on('leagues.id', '=', 'teams.id');
-//                })
+                ->join('teams as homeTeam', function ($join) {
+                    $join->on('schedules.home_team_id', '=', 'homeTeam.id');
+                })
+                ->join('teams as awayTeam', function ($join) {
+                    $join->on('schedules.away_team_id', '=', 'awayTeam.id');
+                })->orderBy('schedules.id','desc')->get();
 
             if(!empty($Filterdata))
             {
@@ -103,9 +105,9 @@ class ScheduleController extends Controller
                 {
 
                     $response[$i]['srno'] = $i + 1;
-                    $response[$i]['home_team_id'] = $schedule->home_team_id;
-                    $response[$i]['away_team_id'] = $schedule->away_team_id;
-                    $response[$i]['score'] = "5-2";
+                    $response[$i]['home_team_id'] = $schedule->home_team_name;
+                    $response[$i]['away_team_id'] = $schedule->away_team_name;
+                    $response[$i]['score'] = $schedule->home_points . " - " . $schedule->away_points;
                     $response[$i]['start_time'] = $schedule->start_time;
                     $response[$i]['is_live'] = strtoupper($schedule->is_live);
                     if(auth()->user()->hasRole('super-admin') || auth()->user()->can('manage-schedules'))
