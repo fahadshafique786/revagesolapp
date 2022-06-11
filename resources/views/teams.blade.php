@@ -30,6 +30,7 @@
                                     <th scope="col">#</th>
                                     <th scope="col">Icon</th>
                                     <th scope="col">Name</th>
+                                    <th scope="col">League</th>
                                     <th scope="col">Points</th>
                                     <th scope="col">Action</th>
                                 </tr>
@@ -84,6 +85,18 @@
                                     <input type="text" class="form-control" id="name" name="name" placeholder="Enter Name" value="" maxlength="50" required="">
 
                                     <span class="text-danger" id="nameError"></span>
+
+                                </div>
+
+                            </div>
+
+                            <div class="form-group row">
+
+                                <div class="col-sm-12">
+                                    <label for="name" class="control-label">Points</label>
+                                    <input type="number" class="form-control" id="points" name="points" placeholder="0" value="" required />
+
+                                    <span class="text-danger" id="pointsError"></span>
 
                                 </div>
 
@@ -158,6 +171,7 @@
                     { data: 'icon', name: 'icon'},
                     { data: 'name', name: 'name' },
                     { data: 'league_name', name: 'league_name' },
+                    { data: 'points', name: 'points' },
                     {data: 'action', name: 'action', orderable: false},
                 ],
                 order: [[0, 'asc']]
@@ -178,14 +192,16 @@
                 $('#id').val("");
                 $('#addEditForm').trigger("reset");
                 $("#password").prop("required",true);
-                $('#ajaxheadingModel').html("Add League");
+                $('#ajaxheadingModel').html("Add Team");
                 $('#ajax-model').modal('show');
             });
 
             $('body').on('click', '.edit', function () {
                 var id = $(this).data('id');
                 $('#nameError').text('');
-                $('#emailError').text('');
+                $('#pointsError').text('');
+                $('#team_iconError').text('');
+                $('#leagues_idError').text('');
                 $.ajax({
                     type:"POST",
                     url: "{{ url('admin/edit-team') }}",
@@ -196,11 +212,12 @@
                         $("#password").prop("required",false);
                         $('#id').val("");
                         $('#addEditForm').trigger("reset");
-                        $('#ajaxheadingModel').html("Edit League");
+                        $('#ajaxheadingModel').html("Edit Team");
                         $('#ajax-model').modal('show');
                         $('#id').val(res.id);
                         $('#name').val(res.name);
                         $('#leagues_id').val(res.leagues_id);
+                        $('#points').val(res.points);
 
                     }
                 });

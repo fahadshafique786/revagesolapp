@@ -55,6 +55,7 @@ class TeamsController extends Controller
         $input = array();
         $input['name'] = $request->name;
         $input['leagues_id'] = $request->leagues_id;
+        $input['points'] = $request->points;
         $input['sports_id'] = $sports_id;
 
 
@@ -118,6 +119,7 @@ class TeamsController extends Controller
                     $response[$i]['icon'] = $sport_logo;
                     $response[$i]['name'] = $leagues->name;
                     $response[$i]['league_name'] = $leagues->league_name;
+                    $response[$i]['points'] = $leagues->points;
                     if(auth()->user()->hasRole('super-admin') || auth()->user()->can('manage-leagues'))
                     {
                         $response[$i]['action'] = '<a href="javascript:void(0)" class="btn edit" data-id="'. $leagues->id .'"><i class="fa fa-edit  text-info"></i></a>

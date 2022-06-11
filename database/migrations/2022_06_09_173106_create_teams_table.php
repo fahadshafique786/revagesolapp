@@ -19,7 +19,7 @@ class CreateTeamsTable extends Migration
             $table->string('name')->nullable();
             $table->bigInteger('sports_id');
             $table->bigInteger('leagues_id');
-            $table->decimal('points')->default(0);
+            $table->integer('points')->default(0);
             $table->timestamps();
         });
     }

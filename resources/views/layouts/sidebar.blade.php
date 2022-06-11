@@ -118,33 +118,44 @@
                     </p>
                 </a>
                 <ul class="nav nav-treeview">
-                    <li class="nav-item">
-                        <a href="{{ url('admin/teams/2') }}" class="nav-link">
-                            <i class="far fa fa-minus nav-icon text-sm"></i>
-                            <p>Cricket</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="forms/advanced.html" class="nav-link">
-                            <i class="far fa fa-minus nav-icon text-sm"></i>
-                            <p>Badminton</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="forms/editors.html" class="nav-link">
-                            <i class="far fa fa-minus nav-icon text-sm"></i>
-                            <p>Tennis</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="forms/validation.html" class="nav-link">
-                            <i class="far fa fa-minus nav-icon text-sm"></i>
-                            <p>Soccer</p>
-                        </a>
-                    </li>
+                    @php $sportsList = \App\Models\Sports::all(); @endphp
+                    @foreach($sportsList as $sport)
+                        <li class="nav-item">
+                            <a href="{{ url('admin/teams/'.$sport->id) }}" class="nav-link">
+                                <i class="far fa fa-minus nav-icon text-sm"></i>
+                                <p class="text-capitalize">{{$sport->name}}</p>
+                            </a>
+                        </li>
+                    @endforeach
                 </ul>
             </li>
                 @endif
+
+{{--                @if(auth()->user()->can('view-teams')  OR auth()->user()->hasRole('super-admin'))--}}
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="nav-icon fas fa-users"></i>
+                    <p>
+                        Schedule
+                        <i class="fas fa-angle-left right"></i>
+                    </p>
+                </a>
+                <ul class="nav nav-treeview">
+                    @php $sportsList = \App\Models\Sports::all(); @endphp
+                    @foreach($sportsList as $sport)
+                        <li class="nav-item">
+                            <a href="{{ url('admin/teams/'.$sport->id) }}" class="nav-link">
+                                <i class="far fa fa-minus nav-icon text-sm"></i>
+                                <p class="text-capitalize">{{$sport->name}}</p>
+                            </a>
+                        </li>
+                    @endforeach
+                </ul>
+            </li>
+{{--                @endif--}}
+
+
+
             @endif
 
 
