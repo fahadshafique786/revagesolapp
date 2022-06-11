@@ -78,11 +78,10 @@ Route::group(
 
         /******* Teams Module ***********/
         Route::get('/teams/{sports_id}', [TeamsController::class, 'index']);
-        Route::get('/fetch-teams-data', [TeamsController::class, 'fetchteamsdata']);
-//        Route::post('/add-update-leagues', [LeaguesController::class, 'store']);
-//        Route::post('/edit-league', [LeaguesController::class, 'edit']);
-//        Route::post('/delete-league', [LeaguesController::class, 'destroy']);
-
+        Route::get('/fetch-teams-data/{sports_id}', [TeamsController::class, 'fetchteamsdata']);
+        Route::post('/add-update-teams/{sports_id}', [TeamsController::class, 'store']);
+        Route::post('/delete-team', [TeamsController::class, 'destroy']);
+        Route::post('/edit-team', [TeamsController::class, 'edit']);
 
 
     });

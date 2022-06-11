@@ -30,7 +30,7 @@
                                     <th scope="col">#</th>
                                     <th scope="col">Icon</th>
                                     <th scope="col">Name</th>
-                                    <th scope="col">Sport</th>
+                                    <th scope="col">Points</th>
                                     <th scope="col">Action</th>
                                 </tr>
                                 </thead>
@@ -63,15 +63,15 @@
                             <div class="form-group row">
 
                                 <div class="col-sm-12">
-                                    <label for="name" class="control-label">Sport</label>
-                                    <select class="form-control" id="sports_id" name="sports_id" required>
-                                        <option value="">   Select Sport </option>
-{{--                                        @foreach ($sports_list as $sport)--}}
-{{--                                            <option value="{{ $sport->id }}"  {{ (isset($sport->id) && old('id')) ? "selected":"" }}>{{ $sport->name }}</option>--}}
-{{--                                        @endforeach--}}
+                                    <label for="name" class="control-label">Leagues</label>
+                                    <select class="form-control" id="leagues_id" name="leagues_id" required>
+                                        <option value="">   Select Leagues </option>
+                                        @foreach ($leagues_list as $league)
+                                            <option value="{{ $league->id }}"  {{ (isset($league->id) && old('id')) ? "selected":"" }}>{{ $league->name }}</option>
+                                        @endforeach
                                     </select>
 
-                                    <span class="text-danger" id="sports_idError"></span>
+                                    <span class="text-danger" id="leagues_idError"></span>
 
                                 </div>
 
@@ -92,10 +92,10 @@
                             <div class="form-group row">
 
                                 <div class="col-sm-12">
-                                    <label for="league_icon" class="control-label d-block">League Icon</label>
+                                    <label for="league_icon" class="control-label d-block">Team Icon</label>
 
-                                    <input type="file" class="" id="league_icon" name="league_icon" onchange="allowonlyImg(this)">
-                                    <span class="text-danger" id="league_iconError"></span>
+                                    <input type="file" class="" id="team_icon" name="team_icon" onchange="allowonlyImg(this)">
+                                    <span class="text-danger" id="team_iconError"></span>
 
                                 </div>
 
@@ -152,12 +152,12 @@
                     },
                 ],
                 serverSide: true,
-                ajax: "{{ url('admin/fetch-leagues-data') }}",
+                ajax: "{{ url('admin/fetch-teams-data/'.$sports_id) }}",
                 columns: [
                     { data: 'srno', name: 'srno' },
                     { data: 'icon', name: 'icon'},
                     { data: 'name', name: 'name' },
-                    { data: 'sport_name', name: 'sport_name' },
+                    { data: 'league_name', name: 'league_name' },
                     {data: 'action', name: 'action', orderable: false},
                 ],
                 order: [[0, 'asc']]
@@ -188,7 +188,7 @@
                 $('#emailError').text('');
                 $.ajax({
                     type:"POST",
-                    url: "{{ url('admin/edit-league') }}",
+                    url: "{{ url('admin/edit-team') }}",
                     data: { id: id },
                     dataType: 'json',
                     success: function(res){
@@ -200,7 +200,7 @@
                         $('#ajax-model').modal('show');
                         $('#id').val(res.id);
                         $('#name').val(res.name);
-                        $('#sports_id').val(res.sports_id);
+                        $('#leagues_id').val(res.leagues_id);
 
                     }
                 });
@@ -211,7 +211,7 @@
 
                     $.ajax({
                         type:"POST",
-                        url: "{{ url('admin/delete-league') }}",
+                        url: "{{ url('admin/delete-team') }}",
                         data: { id: id },
                         dataType: 'json',
                         success: function(res){
@@ -226,13 +226,12 @@
                 $("#btn-save").html('Please Wait...');
                 $("#btn-save"). attr("disabled", true);
                 $('#nameError').text('');
-                $('#sports_typeError').text('');
-                $('#multi_leagueError').text('');
-                $('#image_requiredError').text('');
+                $('#leagues_idError').text('');
+                $('#pointsError').text('');
 
                 $.ajax({
                     type:"POST",
-                    url: "{{ url('admin/add-update-leagues') }}",
+                    url: "{{ url('admin/add-update-teams/'.$sports_id) }}",
                     data: Form_Data,
                     mimeType: "multipart/form-data",
                     contentType: false,
@@ -249,9 +248,8 @@
                         $("#btn-save").html(' Save');
                         $("#btn-save"). attr("disabled", false);
                         $('#nameError').text(response.responseJSON.errors.name);
-                        $('#sports_typeError').text(response.responseJSON.errors.sports_type);
-                        $('#multi_leagueError').text(response.responseJSON.errors.multi_league);
-                        $('#image_requiredError').text(response.responseJSON.errors.image_required);
+                        $('#leagues_idError').text(response.responseJSON.errors.leagues_id);
+                        $('#pointsError').text(response.responseJSON.errors.points);
                     }
                 });
             }));

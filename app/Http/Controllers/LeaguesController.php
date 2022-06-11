@@ -52,7 +52,7 @@ class LeaguesController extends Controller
             $file_original_name 	= $fileobj->getClientOriginalName('league_icon');
             $file_extension_name 	= $fileobj->getClientOriginalExtension('league_icon');
             $file_unique_name 		= strtolower($request->name).'-'.time().rand(1000,9999).'.'.$file_extension_name;
-            $destinationPath		= public_path('/uploads/');
+            $destinationPath		= public_path('/uploads/leagues/');
             $fileobj->move($destinationPath,$file_unique_name);
 
             $input['icon'] = $file_unique_name;
@@ -70,13 +70,13 @@ class LeaguesController extends Controller
     public function edit(Request $request)
     {
         $where = array('id' => $request->id);
-        $sports  = Leagues::where($where)->first();
-        return response()->json($sports);
+        $leagues  = Leagues::where($where)->first();
+        return response()->json($leagues);
     }
 
     public function destroy(Request $request)
     {
-        $sports = Leagues::where('id',$request->id)->delete();
+        $leagues = Leagues::where('id',$request->id)->delete();
         return response()->json(['success' => true]);
     }
 
@@ -90,14 +90,13 @@ class LeaguesController extends Controller
                     $join->on('leagues.sports_id', '=', 'sports.id');
                 })->orderBy('leagues.id','desc')->get();
 
-//            dd($Filterdata);
             if(!empty($Filterdata))
             {
                 $i = 0;
                 foreach($Filterdata as $index => $leagues)
                 {
 
-                    $sport_logo =  (!empty($leagues->icon)) ? '<img class="dataTable-image" src="'.url("/uploads/").'/'.$leagues->icon.'" />' : '<a href="javascript:void(0)" class="" ><i class="fa fa-image text-xl"></i></a>';
+                    $sport_logo =  (!empty($leagues->icon)) ? '<img class="dataTable-image" src="'.url("/uploads/leagues/").'/'.$leagues->icon.'" />' : '<a href="javascript:void(0)" class="" ><i class="fa fa-image text-xl"></i></a>';
 
                     $response[$i]['srno'] = $i + 1;
                     $response[$i]['icon'] = $sport_logo;
