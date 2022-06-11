@@ -110,20 +110,20 @@ class TeamsController extends Controller
             if(!empty($Filterdata))
             {
                 $i = 0;
-                foreach($Filterdata as $index => $leagues)
+                foreach($Filterdata as $index => $team)
                 {
 
-                    $sport_logo =  (!empty($leagues->icon)) ? '<img class="dataTable-image" src="'.url("/uploads/teams/").'/'.$leagues->icon.'" />' : '<a href="javascript:void(0)" class="" ><i class="fa fa-image text-xl"></i></a>';
+                    $sport_logo =  (!empty($team->icon)) ? '<img class="dataTable-image" src="'.url("/uploads/teams/").'/'.$team->icon.'" />' : '<a href="javascript:void(0)" class="" ><i class="fa fa-image text-xl"></i></a>';
 
                     $response[$i]['srno'] = $i + 1;
                     $response[$i]['icon'] = $sport_logo;
-                    $response[$i]['name'] = $leagues->name;
-                    $response[$i]['league_name'] = $leagues->league_name;
-                    $response[$i]['points'] = $leagues->points;
-                    if(auth()->user()->hasRole('super-admin') || auth()->user()->can('manage-leagues'))
+                    $response[$i]['name'] = $team->name;
+                    $response[$i]['league_name'] = $team->league_name;
+                    $response[$i]['points'] = $team->points;
+                    if(auth()->user()->hasRole('super-admin') || auth()->user()->can('manage-teams'))
                     {
-                        $response[$i]['action'] = '<a href="javascript:void(0)" class="btn edit" data-id="'. $leagues->id .'"><i class="fa fa-edit  text-info"></i></a>
-											<a href="javascript:void(0)" class="btn delete " data-id="'. $leagues->id .'"><i class="fa fa-trash-alt text-danger"></i></a>';
+                        $response[$i]['action'] = '<a href="javascript:void(0)" class="btn edit" data-id="'. $team->id .'"><i class="fa fa-edit  text-info"></i></a>
+											<a href="javascript:void(0)" class="btn delete " data-id="'. $team->id .'"><i class="fa fa-trash-alt text-danger"></i></a>';
                     }
                     else
                     {

@@ -9,6 +9,7 @@ use App\Http\Controllers\PermissionsController;
 use App\Http\Controllers\SportsController;
 use App\Http\Controllers\LeaguesController;
 use App\Http\Controllers\TeamsController;
+use App\Http\Controllers\ScheduleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -84,19 +85,12 @@ Route::group(
         Route::post('/edit-team', [TeamsController::class, 'edit']);
 
 
+        /******* Schedules Module ***********/
+        Route::get('/schedules/{sports_id}', [ScheduleController::class, 'index']);
+        Route::get('/fetch-schedules-data/{sports_id}', [ScheduleController::class, 'fetchschedulesdata']);
+        Route::post('/add-update-schedules/{sports_id}', [ScheduleController::class, 'store']);
+        Route::post('/delete-schedule', [ScheduleController::class, 'destroy']);
+        Route::post('/edit-schedule', [ScheduleController::class, 'edit']);
+
+
     });
-
-
-//Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-//Auth::routes();
-
-//Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-//Route::get('admin', function () {
-//    return view('admin');
-//});
-
-
-
-

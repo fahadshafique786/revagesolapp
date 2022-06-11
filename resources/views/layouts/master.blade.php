@@ -28,6 +28,7 @@
   <!-- DataTables -->
   <link rel="stylesheet" href="{{ asset('plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
   <link rel="stylesheet" href="{{ asset('plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.css">
 
 </head>
 <body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed text-sm">
@@ -81,6 +82,7 @@
 	$link_label_array['users'] = "User Administrator";
 	$link_label_array['sports'] = "Sports";
 	$link_label_array['teams'] = "Teams";
+	$link_label_array['schedules'] = "Schedules";
 	$link_label_array['leagues'] = "Leagues";
 	$link_label_array['roles'] = "Roles";
 	$link_label_array['permissions'] = "Permissions";
@@ -96,7 +98,7 @@
             <h1 class="m-0 text-dark">
                 <i class="d-inline vertical-super fa-list fas icon-bg nav-icon pl-1"></i>
                 <p class="page-title d-inline-block ">{{ $link_label_array[Request::segment(2)] }}
-                    @if(Request::segment(2) == 'teams')
+                    @if(Request::segment(2) == 'teams' || Request::segment(2) == 'schedules')
                         <small class="d-block text-sm"> Add or update {{$sportData->name}} Teams</small>
                     @elseif(Request::segment(2) != 'dashboard')
                         <small class="d-block text-sm"> Add or update {{Request::segment(2)}} </small>

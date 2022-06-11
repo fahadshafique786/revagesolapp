@@ -131,7 +131,7 @@
             </li>
                 @endif
 
-{{--                @if(auth()->user()->can('view-teams')  OR auth()->user()->hasRole('super-admin'))--}}
+                @if(auth()->user()->can('view-schedules')  OR auth()->user()->hasRole('super-admin'))
             <li class="nav-item">
                 <a href="#" class="nav-link">
                     <i class="nav-icon fas fa-users"></i>
@@ -144,7 +144,7 @@
                     @php $sportsList = \App\Models\Sports::all(); @endphp
                     @foreach($sportsList as $sport)
                         <li class="nav-item">
-                            <a href="{{ url('admin/teams/'.$sport->id) }}" class="nav-link">
+                            <a href="{{ url('admin/schedules/'.$sport->id) }}" class="nav-link">
                                 <i class="far fa fa-minus nav-icon text-sm"></i>
                                 <p class="text-capitalize">{{$sport->name}}</p>
                             </a>
@@ -152,7 +152,7 @@
                     @endforeach
                 </ul>
             </li>
-{{--                @endif--}}
+                @endif
 
 
 

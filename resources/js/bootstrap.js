@@ -31,3 +31,8 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     forceTLS: true
 // });
+
+// global.moment = require('moment');
+// require('tempusdominus-bootstrap-4');
+// import 'fullcalendar';
+// import 'moment-timezone';
