@@ -80,7 +80,7 @@
                                 <div class="col-sm-12">
                                     <label for="name" class="control-label">Home Team</label>
                                     <select class="form-control" id="home_team_id" name="home_team_id" required>
-                                        <option value="">   Select Leagues </option>
+                                        <option value="">   Select Home Team </option>
                                         @foreach ($teamsList as $team)
                                             <option value="{{ $team->id }}"  {{ (isset($team->id) && old('id')) ? "selected":"" }}>{{ $team->name }}</option>
                                         @endforeach
@@ -97,7 +97,7 @@
                                 <div class="col-sm-12">
                                     <label for="name" class="control-label">Away Team</label>
                                     <select class="form-control" id="away_team_id" name="away_team_id" required>
-                                        <option value="">   Select Leagues </option>
+                                        <option value="">   Select Away Team </option>
                                         @foreach ($teamsList as $team)
                                             <option value="{{ $team->id }}"  {{ (isset($team->id) && old('id')) ? "selected":"" }}>{{ $team->name }}</option>
                                         @endforeach
@@ -106,17 +106,15 @@
                                     <span class="text-danger" id="away_teamError"></span>
 
                                 </div>
-
                             </div>
-
 
 
                             <div class="form-group">
                                 <label for="start_time">Match Start(DateTime)</label>
                                 <div class="input-group date" id="" data-target-input="nearest">
-                                    <input type="text" class="form-control datetimepicker"  id="start_time" name="start_time"  required />
+                                    <input type="text" autocomplete="off" class="form-control datetimepicker"  id="start_time" name="start_time"  required />
                                     <div class="input-group-append" data-target="" data-toggle="datetimepicker">
-                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                        <div class="input-group-text calendarIcon"><i class="fa fa-calendar"></i></div>
                                     </div>
                                 </div>
                             </div>

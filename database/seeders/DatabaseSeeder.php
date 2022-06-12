@@ -27,7 +27,7 @@ class DatabaseSeeder extends Seeder
         Permission::create(
             [
             'name'=>'view_dashboard',
-                ],
+            ],
             [
             'name'=>'manage_dasboard',
             ],
@@ -60,8 +60,15 @@ class DatabaseSeeder extends Seeder
             ],
             [
                 'name'=>'manage_leagues',
+            ],
+            [
+                'name'=>'view_teams',
+            ],
+            [
+                'name'=>'manage_teams',
             ]
         );
+
         $role = Role::create(['name' => 'super-admin']);
 
         $permissions = Permission::pluck('id','id')->all();

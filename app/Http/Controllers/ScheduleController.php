@@ -14,8 +14,8 @@ class ScheduleController extends Controller
     {
         $this->sports_id = null;
 //        $this->middleware('auth');
-//        $this->middleware('role_or_permission:super-admin|view-schedules', ['only' => ['index','fetchschedulesdata']]);
-//        $this->middleware('role_or_permission:super-admin|manage-schedules',['only' => ['edit','store','destroy']]);
+        $this->middleware('role_or_permission:super-admin|view_schedules', ['only' => ['index','fetchschedulesdata']]);
+        $this->middleware('role_or_permission:super-admin|manage_schedules',['only' => ['edit','store','destroy']]);
     }
 
     public function index(Request $request, $sports_id)
@@ -110,7 +110,7 @@ class ScheduleController extends Controller
                     $response[$i]['score'] = $schedule->home_points . " - " . $schedule->away_points;
                     $response[$i]['start_time'] = $schedule->start_time;
                     $response[$i]['is_live'] = strtoupper($schedule->is_live);
-                    if(auth()->user()->hasRole('super-admin') || auth()->user()->can('manage-schedules'))
+                    if(auth()->user()->hasRole('super-admin') || auth()->user()->can('manage_schedules'))
                     {
                         $response[$i]['action'] = '<a href="javascript:void(0)" class="btn edit" data-id="'. $schedule->id .'"><i class="fa fa-edit  text-info"></i></a>
 											<a href="javascript:void(0)" class="btn delete " data-id="'. $schedule->id .'"><i class="fa fa-trash-alt text-danger"></i></a>';

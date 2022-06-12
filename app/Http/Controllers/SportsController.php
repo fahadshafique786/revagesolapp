@@ -10,8 +10,8 @@ class SportsController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('role_or_permission:super-admin|view-sports', ['only' => ['index','fetchsportsdata']]);
-        $this->middleware('role_or_permission:super-admin|manage-sports',['only' => ['edit','store','editProfile','updateRole','destroy']]);
+        $this->middleware('role_or_permission:super-admin|view_sports', ['only' => ['index','fetchsportsdata']]);
+        $this->middleware('role_or_permission:super-admin|manage_sports',['only' => ['edit','store','editProfile','updateRole','destroy']]);
     }
 
     public function index(Request $request)
@@ -102,7 +102,7 @@ class SportsController extends Controller
                     $response[$i]['sports_type'] = $sports->sports_type;
                     $response[$i]['multi_league'] = $sports->multi_league;
                     $response[$i]['image_required'] = $sports->image_required;
-                    if(auth()->user()->hasRole('super-admin') || auth()->user()->can('manage-sports'))
+                    if(auth()->user()->hasRole('super-admin') || auth()->user()->can('manage_sports'))
                     {
                         $response[$i]['action'] = '<a href="javascript:void(0)" class="btn edit" data-id="'. $sports->id .'"><i class="fa fa-edit  text-info"></i></a>
 											<a href="javascript:void(0)" class="btn delete " data-id="'. $sports->id .'"><i class="fa fa-trash-alt text-danger"></i></a>';
