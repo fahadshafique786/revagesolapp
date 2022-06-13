@@ -14,8 +14,8 @@ class RolesController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('role_or_permission:super-admin|view-roles', ['only' => ['index','fetchRolesdata']]);
-        $this->middleware('role_or_permission:super-admin|manage-roles',['only' => ['edit','store','editProfile','updateRole','destroy']]);
+        $this->middleware('role_or_permission:super-admin|view_roles', ['only' => ['index','fetchRolesdata']]);
+        $this->middleware('role_or_permission:super-admin|manage_roles',['only' => ['edit','store','editProfile','updateRole','destroy']]);
     }
     public function index(Request $request)
     {

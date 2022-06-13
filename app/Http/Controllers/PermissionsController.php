@@ -13,8 +13,8 @@ class PermissionsController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('role_or_permission:super-admin|view-permissions', ['only' => ['index','fetchpermissionsdata']]);
-        $this->middleware('role_or_permission:super-admin|manage-permissions',['only' => ['edit','store','editProfile','updateProfile','destroy']]);
+//        $this->middleware('role_or_permission:super-admin|view-permissions', ['only' => ['index','fetchpermissionsdata']]);
+//        $this->middleware('role_or_permission:super-admin|manage-permissions',['only' => ['edit','store','editProfile','updateProfile','destroy']]);
     }
     public function index(Request $request)
     {

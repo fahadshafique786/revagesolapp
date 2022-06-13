@@ -102,7 +102,7 @@ class LeaguesController extends Controller
                     $response[$i]['icon'] = $sport_logo;
                     $response[$i]['name'] = $leagues->name;
                     $response[$i]['sport_name'] = $leagues->sport_name;
-                    if(auth()->user()->hasRole('super-admin') || auth()->user()->can('manage-leagues'))
+                    if(auth()->user()->hasRole('super-admin') || auth()->user()->can('manage_leagues'))
                     {
                         $response[$i]['action'] = '<a href="javascript:void(0)" class="btn edit" data-id="'. $leagues->id .'"><i class="fa fa-edit  text-info"></i></a>
 											<a href="javascript:void(0)" class="btn delete " data-id="'. $leagues->id .'"><i class="fa fa-trash-alt text-danger"></i></a>';
