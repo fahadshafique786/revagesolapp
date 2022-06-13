@@ -15,7 +15,7 @@ class CreateServersTable extends Migration
     {
         Schema::create('servers', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('sport_id');
+            $table->bigInteger('sports_id');
             $table->string('name')->nullable();
             $table->string('link')->nullable();
             $table->enum('isHeader',['0','1'])->default('0');
