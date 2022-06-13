@@ -56,7 +56,7 @@
 			<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 
 				<a class="dropdown-item profile" href="javascript:void(0)">
-					Profile
+					Profilessss
 				</a>
 
 				<a class="dropdown-item" href="{{ route('logout') }}"
