@@ -16,7 +16,7 @@
 
                                         @if(auth()->user()->hasRole('super-admin') || auth()->user()->can('manage-sports'))
                                             <a class="btn btn-info" href="javascript:void(0)" id="addNew">
-                                                Add Sport
+                                                Add Server
                                             </a>
                                         @endif
                                     </div>
@@ -28,11 +28,11 @@
                                 <thead>
                                 <tr>
                                     <th scope="col" width="10px">#</th>
-                                    <th scope="col">Icon</th>
                                     <th scope="col">Name</th>
-                                    <th scope="col">Type</th>
-                                    <th scope="col">Image Required</th>
-                                    <th scope="col">Multi League</th>
+                                    <th scope="col">Sport</th>
+                                    <th scope="col">Link</th>
+                                    <th scope="col">Headers</th>
+                                    <th scope="col">Premium</th>
                                     <th scope="col">Action</th>
                                 </tr>
                                 </thead>
@@ -65,6 +65,23 @@
                             <div class="form-group row">
 
                                 <div class="col-sm-12">
+                                    <label for="name" class="control-label">Sport</label>
+                                    <select class="form-control" id="sports_id" name="sports_id" required>
+                                        <option value="">   Select Sport </option>
+                                        @foreach ($sports_list as $sport)
+                                            <option value="{{ $sport->id }}"  {{ (isset($sport->id) && old('id')) ? "selected":"" }}>{{ $sport->name }}</option>
+                                        @endforeach
+                                    </select>
+
+                                    <span class="text-danger" id="sports_idError"></span>
+
+                                </div>
+
+                            </div>
+
+                            <div class="form-group row">
+
+                                <div class="col-sm-12">
                                     <label for="name" class="control-label">Name</label>
                                     <input type="text" class="form-control" id="name" name="name" placeholder="Enter Name" value="" maxlength="50" required="">
 
@@ -77,40 +94,33 @@
                             <div class="form-group row">
 
                                 <div class="col-sm-12">
-                                    <label for="name" class="control-label d-block">  Sports Type </label>
-                                    <label for="sports_type_single" class="cursor-pointer">
-                                        <input type="radio" class="" id="sports_type_single" name="sports_type" value="single" checked />
-                                        Single
-                                    </label>
+                                    <label for="name" class="control-label">Link</label>
+                                    <input type="text" class="form-control" id="link" name="link" placeholder="Enter Link" value="">
 
-                                    &nbsp;&nbsp;&nbsp;&nbsp;
-                                    <label for="sports_type_double" class="cursor-pointer">
-                                        <input type="radio" class="" id="sports_type_double" name="sports_type"  value="double" />
-                                        Double
-                                    </label>
+                                    <span class="text-danger" id="linkError"></span>
 
-                                    <span class="text-danger" id="sports_typeError"></span>
                                 </div>
 
                             </div>
 
+
                             <div class="form-group row">
 
                                 <div class="col-sm-12">
-                                    <label for="name" class="control-label d-block">Multi League</label>
-                                    <label for="multi_league_yes" class="cursor-pointer">
-                                        <input type="radio" class="" id="multi_league_yes" name="multi_league" value="yes" />
+                                    <label for="name" class="control-label d-block">Header</label>
+                                    <label for="isHeaderYes" class="cursor-pointer">
+                                        <input type="radio" class="" id="isHeaderYes" name="isHeader" value="1" />
                                         <span class="">Yes</span>
                                     </label>
 
                                     &nbsp;&nbsp;&nbsp;&nbsp;
 
-                                    <label for="multi_league_no" class="cursor-pointer">
-                                        <input type="radio" class="" id="multi_league_no" name="multi_league"  value="no" checked/>
+                                    <label for="isHeaderNo" class="cursor-pointer">
+                                        <input type="radio" class="" id="isHeaderNo" name="isHeader"  value="0" checked/>
                                         <span class="">No</span>
                                     </label>
 
-                                    <span class="text-danger" id="multi_leagueError"></span>
+                                    <span class="text-danger" id="isHeaderError"></span>
                                 </div>
 
                             </div>
@@ -120,37 +130,24 @@
                             <div class="form-group row">
 
                                 <div class="col-sm-12">
-                                    <label for="name" class="control-label d-block">Image Required</label>
-
-                                    <label for="image_required_yes" class="cursor-pointer">
-                                        <input type="radio" class="" id="image_required_yes" name="image_required" value="yes" />
+                                    <label for="name" class="control-label d-block">Premium</label>
+                                    <label for="isPremiumYes" class="cursor-pointer">
+                                        <input type="radio" class="" id="isPremiumYes" name="isPremium" value="1" />
                                         <span class="">Yes</span>
                                     </label>
+
                                     &nbsp;&nbsp;&nbsp;&nbsp;
-                                    <label for="image_required_no" class="cursor-pointer">
-                                        <input type="radio" class="" id="image_required_no" name="image_required" value="no" checked />
+
+                                    <label for="isPremiumNo" class="cursor-pointer">
+                                        <input type="radio" class="" id="isPremiumNo" name="isPremium"  value="0" checked/>
                                         <span class="">No</span>
                                     </label>
-                                    <span class="text-danger" id="image_requiredError"></span>
 
+                                    <span class="text-danger" id="isPremiumYesError"></span>
                                 </div>
-
 
                             </div>
 
-
-                            <div class="form-group row">
-
-                                <div class="col-sm-12">
-                                    <label for="name" class="control-label d-block">Sport Logo</label>
-
-                                        <input type="file" class="" id="sport_logo" name="sport_logo" onchange="allowonlyImg(this)">
-                                        <span class="text-danger" id="sport_logoError"></span>
-
-                                </div>
-
-
-                            </div>
 
 
                             <div class="col-sm-12 text-center">
@@ -202,33 +199,14 @@
                     },
                 ],
                 serverSide: true,
-                ajax: "{{ url('admin/fetchsportsdata') }}",
+                ajax: "{{ url('admin/fetch-servers-data') }}",
                 columns: [
                     { data: 'srno', name: 'srno' },
-                    { data: 'icon', name: 'icon'},
                     { data: 'name', name: 'name' },
-                    { data: 'sports_type', name: 'sports_type' },
-                    { data: 'image_required', name: 'image_required', render: function( data, type, full, meta,rowData ) {
-
-                            if(data=='yes'){
-                                return "<a href='javascript:void(0)' class='badge badge-success'>"+data+"</a>" +" ";
-                            }
-                            else{
-                                return "<a href='javascript:void(0)' class='badge badge-danger'>"+data+"</a>" +" ";
-                            }
-                        },
-                    },
-                    { data: 'multi_league', name: 'multi_league', render: function( data, type, full, meta,rowData ) {
-                            if(data=='yes'){
-                                return "<a href='javascript:void(0)' class='badge badge-success'>"+data+"</a>" +" ";
-                            }
-                            else{
-                                return "<a href='javascript:void(0)' class='badge badge-danger'>"+data+"</a>" +" ";
-                            }
-                        },
-
-
-                    },
+                    { data: 'sport_name', name: 'sport_name' },
+                    { data: 'link', name: 'sport_name' },
+                    { data: 'isHeader', name: 'isHeader' },
+                    { data: 'isPremium', name: 'isPremium' },
                     {data: 'action', name: 'action', orderable: false},
                 ],
                 order: [[0, 'asc']]
@@ -249,31 +227,46 @@
                 $('#id').val("");
                 $('#addEditForm').trigger("reset");
                 $("#password").prop("required",true);
-                $('#ajaxheadingModel').html("Add Sports");
+                $('#ajaxheadingModel').html("Add Server");
                 $('#ajax-model').modal('show');
             });
 
             $('body').on('click', '.edit', function () {
                 var id = $(this).data('id');
                 $('#nameError').text('');
-                $('#emailError').text('');
+                $('#link').text('');
+
                 $.ajax({
                     type:"POST",
-                    url: "{{ url('admin/edit-Sport') }}",
+                    url: "{{ url('admin/edit-server') }}",
                     data: { id: id },
                     dataType: 'json',
                     success: function(res){
                         console.log(res);
-                        $("#password").prop("required",false);
                         $('#id').val("");
                         $('#addEditForm').trigger("reset");
-                        $('#ajaxheadingModel').html("Edit Sports");
+                        $('#ajaxheadingModel').html("Edit Server");
                         $('#ajax-model').modal('show');
+
                         $('#id').val(res.id);
                         $('#name').val(res.name);
-                        $("#multi_league_"+res.multi_league).prop("checked",true);
-                        $("#sports_type_"+res.sports_type).prop("checked",true);
-                        $("#image_required_"+res.image_required).prop("checked",true);
+                        $('#sports_id').val(res.sports_id);
+                        $('#link').val(res.link);
+
+                        if(res.isHeader == 1){
+                            $("#isHeaderYes").prop("checked",true);
+                        }
+                        else{
+                            $("#isHeaderNo").prop("checked",true);
+                        }
+
+                        if(res.isPremium == 1){
+                            $("#isPremiumYes").prop("checked",true);
+                        }
+                        else{
+                            $("#isPremiumNo").prop("checked",true);
+                        }
+
                     }
                 });
             });
@@ -283,7 +276,7 @@
 
                     $.ajax({
                         type:"POST",
-                        url: "{{ url('admin/delete-sport') }}",
+                        url: "{{ url('admin/delete-server') }}",
                         data: { id: id },
                         dataType: 'json',
                         success: function(res){
@@ -297,14 +290,16 @@
                 var Form_Data = new FormData(this);
                 $("#btn-save").html('Please Wait...');
                 $("#btn-save"). attr("disabled", true);
+
                 $('#nameError').text('');
-                $('#sports_typeError').text('');
-                $('#multi_leagueError').text('');
-                $('#image_requiredError').text('');
+                $('#sports_idError').text('');
+                $('#linkError').text('');
+                $('#isHeaderError').text('');
+                $('#isPremiumError').text('');
 
                 $.ajax({
                     type:"POST",
-                    url: "{{ url('admin/add-update-Sport') }}",
+                    url: "{{ url('admin/add-update-servers') }}",
                     data: Form_Data,
                     mimeType: "multipart/form-data",
                     contentType: false,
@@ -320,10 +315,12 @@
                     error:function (response) {
                         $("#btn-save").html(' Save');
                         $("#btn-save"). attr("disabled", false);
+
                         $('#nameError').text(response.responseJSON.errors.name);
-                        $('#sports_typeError').text(response.responseJSON.errors.sports_type);
-                        $('#multi_leagueError').text(response.responseJSON.errors.multi_league);
-                        $('#image_requiredError').text(response.responseJSON.errors.image_required);
+                        $('#sports_idError').text(response.responseJSON.errors.sports_id);
+                        $('#linkError').text(response.responseJSON.errors.link);
+                        $('#isHeaderError').text(response.responseJSON.errors.isHeader);
+                        $('#isPremiumError').text(response.responseJSON.errors.isPremium);
                     }
                 });
             }));

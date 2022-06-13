@@ -131,13 +131,13 @@
 
                 @if(auth()->user()->can('view_schedules')  OR auth()->user()->hasRole('super-admin'))
                     <li class="nav-item">
-                <a href="#" class="nav-link">
-                    <i class="nav-icon fas fa-users"></i>
-                    <p>
-                        Schedule
-                        <i class="fas fa-angle-left right"></i>
-                    </p>
-                </a>
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-users"></i>
+                            <p>
+                                Schedule
+                                <i class="fas fa-angle-left right"></i>
+                            </p>
+                        </a>
                 <ul class="nav nav-treeview">
                     @php $sportsList = \App\Models\Sports::all(); @endphp
                     @foreach($sportsList as $sport)
@@ -151,7 +151,14 @@
                 </ul>
             </li>
                 @endif
-
+            @if(auth()->user()->can('view_servers')  OR auth()->user()->hasRole('super-admin'))
+            <li class="nav-item">
+                <a href="{{ url('admin/servers') }}" class="nav-link {{ (Request::segment(2) == 'servers') ? 'active' : '' }}">
+                    <i class="far fa fa-life-ring nav-icon"></i>
+                    <p>Live Servers</p>
+                </a>
+            </li>
+                @endif
 
 
             @endif

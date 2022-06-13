@@ -10,6 +10,7 @@ use App\Http\Controllers\SportsController;
 use App\Http\Controllers\LeaguesController;
 use App\Http\Controllers\TeamsController;
 use App\Http\Controllers\ScheduleController;
+use App\Http\Controllers\ServersController;
 
 /*
 |--------------------------------------------------------------------------
@@ -91,6 +92,14 @@ Route::group(
         Route::post('/add-update-schedules/{sports_id}', [ScheduleController::class, 'store']);
         Route::post('/delete-schedule', [ScheduleController::class, 'destroy']);
         Route::post('/edit-schedule', [ScheduleController::class, 'edit']);
+
+
+        /******* Servers Module ***********/
+        Route::get('/servers', [ServersController::class, 'index']);
+        Route::get('/fetch-servers-data', [ServersController::class, 'fetchserversdata']);
+        Route::post('/add-update-servers', [ServersController::class, 'store']);
+        Route::post('/delete-server', [ServersController::class, 'destroy']);
+        Route::post('/edit-server', [ServersController::class, 'edit']);
 
 
     });
