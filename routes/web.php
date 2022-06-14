@@ -101,5 +101,10 @@ Route::group(
         Route::post('/delete-server', [ServersController::class, 'destroy']);
         Route::post('/edit-server', [ServersController::class, 'edit']);
 
+        /******* Schedule Servers  ***********/
+        Route::get('/servers/{schedule_id}', [ServersController::class, 'fetchScheduleServersView']);;
+        Route::get('/fetch-servers-data/{schedule_id}', [ServersController::class, 'fetchserversdata']);
+        Route::post('/add-update-servers/{schedule_id}', [ServersController::class, 'store']);
+        Route::post('/attach-servers/{schedule_id}', [ServersController::class, 'attachServers']);
 
     });

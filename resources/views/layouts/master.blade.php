@@ -101,8 +101,10 @@
                 <p class="page-title d-inline-block ">{{ $link_label_array[Request::segment(2)] }}
                     @if(Request::segment(2) == 'teams' || Request::segment(2) == 'schedules')
                         <small class="d-block text-sm"> Add or update {{$sportData->name}} Teams</small>
+                    @elseif(Request::segment(2) == 'server' || Request::segment(3) > 0)
+                        <small class="d-block text-sm"> {{ $scheduleData->home_team_name .' vs  ' . $scheduleData->away_team_name }} </small>
                     @elseif(Request::segment(2) != 'dashboard')
-                        <small class="d-block text-sm"> Add or update {{Request::segment(2)}} </small>
+                        <small class="d-block text-sm"> Add or update  {{Request::segment(2)}} </small>
                     @else
                         <small class="d-block text-sm"> &nbsp;&nbsp; </small>
                     @endif

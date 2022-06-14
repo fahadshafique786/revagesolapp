@@ -101,19 +101,19 @@ class ScheduleController extends Controller
             if(!empty($Filterdata))
             {
                 $i = 0;
-                foreach($Filterdata as $index => $schedule)
+                foreach($Filterdata as $index => $obj)
                 {
 
-                    $response[$i]['srno'] = $i + 1;
-                    $response[$i]['home_team_id'] = $schedule->home_team_name;
-                    $response[$i]['away_team_id'] = $schedule->away_team_name;
-                    $response[$i]['score'] = $schedule->home_points . " - " . $schedule->away_points;
-                    $response[$i]['start_time'] = $schedule->start_time;
-                    $response[$i]['is_live'] = strtoupper($schedule->is_live);
+                    $response[$i]['srno'] = '<a target="_blank" href="'.url("admin/servers/".$obj->id).'" class=""> <i class="fa fa-bolt"></i> </a>';
+                    $response[$i]['home_team_id'] = $obj->home_team_name;
+                    $response[$i]['away_team_id'] = $obj->away_team_name;
+                    $response[$i]['score'] = $obj->home_points . " - " . $obj->away_points;
+                    $response[$i]['start_time'] = $obj->start_time;
+                    $response[$i]['is_live'] = strtoupper($obj->is_live);
                     if(auth()->user()->hasRole('super-admin') || auth()->user()->can('manage_schedules'))
                     {
-                        $response[$i]['action'] = '<a href="javascript:void(0)" class="btn edit" data-id="'. $schedule->id .'"><i class="fa fa-edit  text-info"></i></a>
-											<a href="javascript:void(0)" class="btn delete " data-id="'. $schedule->id .'"><i class="fa fa-trash-alt text-danger"></i></a>';
+                        $response[$i]['action'] = '<a href="javascript:void(0)" class="btn edit" data-id="'. $obj->id .'"><i class="fa fa-edit  text-info"></i></a>
+											<a href="javascript:void(0)" class="btn delete " data-id="'. $obj->id .'"><i class="fa fa-trash-alt text-danger"></i></a>';
                     }
                     else
                     {
@@ -125,7 +125,7 @@ class ScheduleController extends Controller
 
             return datatables()->of($response)
                 ->addIndexColumn()
-                ->rawColumns(['action'])
+                ->rawColumns(['srno','action'])
                 ->make(true);
         }
     }

@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Servers;
 use App\Models\Sports;
+use App\Models\ScheduledServers;
+use App\Models\Schedules;
+use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Http\Request;
 
 class ServersController extends Controller
@@ -21,8 +24,14 @@ class ServersController extends Controller
         return view('servers')->with('sports_list',$sports_list);
     }
 
-    public function store(Request $request)
+    public function store(Request $request,$schedule_id = null)
     {
+        if($schedule_id){
+            $scheduleSports = Schedules::where('id',$schedule_id)->select('sports_id')->first();
+            $sports_id  = $scheduleSports->sports_id;
+            $request->merge(['sports_id' => $sports_id]);
+        }
+
         if(!empty($request->id))
         {
             $this->validate($request, [
@@ -51,6 +60,13 @@ class ServersController extends Controller
             ],
             $input);
 
+        if($schedule_id){
+            $data['schedule_id'] = $schedule_id;
+            $data['server_id'] = $servers->id;
+
+            $scheduledServers   =   ScheduledServers::create($data);
+        }
+
         return response()->json(['success' => true]);
     }
 
@@ -67,15 +83,32 @@ class ServersController extends Controller
         return response()->json(['success' => true]);
     }
 
-    public function fetchserversdata()
+    public function fetchserversdata($schedule_id = null)
     {
         if(request()->ajax()) {
 
             $response = array();
-            $Filterdata = Servers::select('servers.*','sports.name as sport_name')
-                ->join('sports', function ($join) {
-                    $join->on('servers.sports_id', '=', 'sports.id');
-                })->orderBy('servers.id','desc')->get();
+
+            if($schedule_id){
+                $Filterdata = Servers::select('servers.*','sports.name as sport_name')
+                    ->join('scheduled_servers', function ($join) {
+                        $join->on('scheduled_servers.server_id', '=', 'servers.id');
+                    })
+                    ->join('sports', function ($join) {
+                        $join->on('servers.sports_id', '=', 'sports.id');
+                    })
+                    ->where('scheduled_servers.schedule_id',$schedule_id)
+                    ->orderBy('servers.id','desc')->get();
+            }
+            else{
+
+                $Filterdata = Servers::select('servers.*','sports.name as sport_name')
+                    ->join('sports', function ($join) {
+                        $join->on('servers.sports_id', '=', 'sports.id');
+                    })->orderBy('servers.id','desc')->get();
+            }
+
+
 
             if(!empty($Filterdata))
             {
@@ -92,7 +125,7 @@ class ServersController extends Controller
                     if(auth()->user()->hasRole('super-admin') || auth()->user()->can('manage_servers'))
                     {
                         $response[$i]['action'] = '<a href="javascript:void(0)" class="btn edit" data-id="'. $obj->id .'"><i class="fa fa-edit  text-info"></i></a>
-											<a href="javascript:void(0)" class="btn delete " data-id="'. $obj->id .'"><i class="fa fa-trash-alt text-danger"></i></a>';
+											<a href="javascript:void(0)" class="btn delete hide " data-id="'. $obj->id .'"><i class="fa fa-trash-alt text-danger"></i></a>';
                     }
                     else
                     {
@@ -108,6 +141,50 @@ class ServersController extends Controller
                 ->make(true);
         }
     }
+
+    public function fetchScheduleServersView($schedule_id)
+    {
+        $scheduleData = Schedules::select('schedules.id as schedule_id','homeTeam.name as home_team_name','awayTeam.name as away_team_name')
+            ->where('schedules.id',$schedule_id)
+            ->join('teams as homeTeam', function ($join) {
+                $join->on('schedules.home_team_id', '=', 'homeTeam.id');
+            })
+            ->join('teams as awayTeam', function ($join) {
+                $join->on('schedules.away_team_id', '=', 'awayTeam.id');
+            })->orderBy('schedules.id','desc')->first();
+
+
+        $scheduleSports = Schedules::where('id',$schedule_id)->select('sports_id')->first();
+        $sports_id  = $scheduleSports->sports_id;
+
+        $servers_list = Servers::where('sports_id',$sports_id)->get();
+
+        if(!empty($scheduleData)){
+
+            return view('schedule_servers')
+                ->with('scheduleData',$scheduleData)
+                ->with('servers_list',$servers_list)
+                ->with('schedule_id',$schedule_id);
+        }
+        else{
+            abort(404);
+        }
+
+    }
+
+    public function attachServers(Request $request,$schedule_id){
+
+        if($schedule_id){
+            $data['schedule_id'] = $schedule_id;
+            $data['server_id'] = $request->server_id;
+            $scheduledServers   =   ScheduledServers::create($data);
+        }
+
+        return response()->json(['success' => true]);
+
+
+    }
+
 
 
 
