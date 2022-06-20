@@ -2,6 +2,20 @@
 
 @section('content')
 
+@php if(isset($_COOKIE['login_email']) && isset($_COOKIE['login_pass']))
+{
+  $login_email = $_COOKIE['login_email'];
+  $login_pass  = $_COOKIE['login_pass'];
+  $is_remember = "checked='checked'";
+}
+else{
+  $login_email ='';
+  $login_pass = '';
+  $is_remember = "";
+}
+@endphp
+
+
     <div class="login-box m-auto">
         <!-- /.login-logo -->
         <div class="card card-outline card-">
