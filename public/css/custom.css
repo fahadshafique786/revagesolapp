@@ -7,6 +7,11 @@ LOGIN PAGE
     background-repeat: no-repeat;
 }
 
+.image-width-20{
+    width:20px !important;
+    margin-left: 1.0em !Important;
+}
+
 .lavalite-overlay{
     position: absolute;
     width: 100%;

@@ -174,15 +174,17 @@ class UserController extends Controller
 
 	public function editProfile(Request $request)
     {
-        $with = [
-            'permissions',
-            'roles',
-            'roles.permissions'
-        ];
-
+//        $with = [
+//            'permissions',
+//            'roles',
+//            'roles.permissions'
+//        ];
+//
 		$id = auth()->user()->id;
 		$where = array('id' => $id);
-        $user  = User::with('with')->where($where)->first();
+        $user  = User::where($where)->first();
+//        $user  = User::with('with')->where($where)->first();
+
         return response()->json($user);
     }
 
@@ -197,25 +199,25 @@ class UserController extends Controller
 		$this->validate($request, [
 			'name' => 'required',
 			'user_name' => 'required|unique:users,user_name,'.$id,
-			'email' => 'required|email|unique:users,email,'.$id,
+//			'email' => 'required|email|unique:users,email,'.$id,
 			//'phone' => 'required',
-            'role_id'=>'required|array'
+//            'role_id'=>'required|array'
 		], $customMessages);
 
 		$input = array();
 		$input['name'] = $request->name;
 		$input['user_name'] = $request->user_name;
-		$input['email'] = $request->email;
-		$input['updated_by'] = $id;
+//		$input['email'] = $request->email;
+//		$input['updated_by'] = $id;
 
 		if(!empty($request->password))
 			$input['password'] = Hash::make($request->password);
 
-		$input['phone'] = $request->phone;
+//		$input['phone'] = $request->phone;
 
 		$where = array('id' => $id);
         $user   =   User::where($where)->update($input);
-        $user->syncRoles($request->role_id);
+//        $user->syncRoles($request->role_id);
 
         return response()->json(['success' => true]);
 

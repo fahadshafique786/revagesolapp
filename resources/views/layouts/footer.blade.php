@@ -222,7 +222,7 @@ $(document).ready(function($){
               $('#profile_name').val(res.name);
 			  $('#profile_user_name').val(res.user_name);
 			  $('#profile_email').val(res.email);
-			  $('#profile_phone').val(res.phone);
+			  // $('#profile_phone').val(res.phone);
            }
         });
     });
@@ -288,7 +288,7 @@ $(document).ready(function($){
 			  <div class="form-group row">
                 <div class="col-sm-6">
 					<label for="name" class="control-label">Email</label>
-					<input type="email" class="form-control" id="profile_email" name="email" placeholder="Enter Email" value="" maxlength="50" required="">
+					<input type="email" disabled class="form-control" id="profile_email" name="email" placeholder="Enter Email" value="" maxlength="50" required="">
 					<span class="text-danger" id="profile_emailError"></span>
                 </div>
 				<div class="col-sm-6">
@@ -296,12 +296,7 @@ $(document).ready(function($){
 					<input type="text" class="form-control" id="profile_password" name="password" placeholder="Enter Password" value="" minlength="8" maxlength="50" required="">
                 </div>
               </div>
-			  <div class="form-group row">
-                <div class="col-sm-6">
-					<label for="name" class="control-label">Phone</label>
-					<input type="text" class="form-control phone_number" id="profile_phone" name="phone" placeholder="Enter Phone" value="" maxlength="50" required="">
-                </div>
-              </div>
+
               <div class="col-sm-offset-2 col-sm-12 text-right">
                 <button type="submit" class="btn btn-dark" id="profile_btn-save" >
                     <i class="fa fa-save"></i>&nbsp; Save

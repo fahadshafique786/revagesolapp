@@ -50,6 +50,7 @@
 		<li class="nav-item dropdown">
 			<a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
 				{{ Auth::user()->name }} <span class="caret"></span>
+                <img src="{{ asset('dist/img/avatar-custom.png') }}" class="img-circle elevation-2 image-width-20 " alt="User Image"/>
 			</a>
 
 
