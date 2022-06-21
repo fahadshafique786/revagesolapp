@@ -61,7 +61,12 @@
             $(this).bootstrapSwitch('state', $(this).prop('checked'));
         })
 
-        $('#start_time').datetimepicker({format: 'm/d/Y h:m'});
+
+		$('#start_time').datetimepicker({
+				format: 'd/m/Y g:i A',
+				formatTime: 'g:i A',
+		});
+		
         // $(".calendarIcon").click(function(){
         // });
 
