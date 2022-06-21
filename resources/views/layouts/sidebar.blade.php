@@ -11,7 +11,7 @@
     <!-- Sidebar -->
     <div class="sidebar">
       <!-- Sidebar user panel (optional) -->
-      <div class="user-panel d-none mt-3 pb-3 mb-3 d-flex">
+      <div class="user-panel d-none mt-3 pb-3 mb-3 d-flexd">
         <div class="image">
           <img src="{{ asset('dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2" alt="User Image">
         </div>
@@ -44,7 +44,7 @@
             <li class="nav-item">
 
                 <a href="#" class="nav-link">
-                    <i class="nav-icon fas fa-user"></i>
+                    <i class="nav-icon fas fa-users "></i>
                     <p>
                         User Administrator
                         <i class="fas fa-angle-left right"></i>
@@ -93,7 +93,8 @@
                 @if(auth()->user()->can('view_sports')  || auth()->user()->hasRole('super-admin'))
                     <li class="nav-item">
                         <a href="{{ url('admin/sports') }}" class="nav-link {{ (Request::segment(2) == 'sports') ? 'active' : '' }}">
-                            <i class="far fa fa-life-ring nav-icon"></i>
+                            <!-- <i class="far fa fa-life-ring nav-icon"></i> -->
+							<img src="{{ asset('dist/img/sidebar-icons/sports.png') }}" class="elevation-2 "/>
                             <p>Sports</p>
                         </a>
                     </li>
@@ -101,7 +102,7 @@
                 @if(auth()->user()->can('view_leagues')  || auth()->user()->hasRole('super-admin'))
                     <li class="nav-item">
                         <a href="{{ url('admin/leagues') }}" class="nav-link {{ (Request::segment(2) == 'leagues') ? 'active' : '' }}">
-                            <i class="far fa fa-bolt nav-icon"></i>
+							<img src="{{ asset('dist/img/sidebar-icons/league.png') }}" class="elevation-2 "/>
                             <p>Leagues</p>
                         </a>
                     </li>
@@ -109,7 +110,7 @@
                 @if(auth()->user()->can('view_teams') ||  auth()->user()->hasRole('super-admin'))
                    <li class="nav-item">
                 <a href="#" class="nav-link">
-                    <i class="nav-icon fas fa-users"></i>
+				<img src="{{ asset('dist/img/sidebar-icons/team.png') }}" class="elevation-2 "/>
                     <p>
                         Teams
                         <i class="fas fa-angle-left right"></i>
@@ -132,7 +133,7 @@
                 @if(auth()->user()->can('view_schedules')  OR auth()->user()->hasRole('super-admin'))
                     <li class="nav-item">
                         <a href="#" class="nav-link">
-                            <i class="nav-icon fas fa-users"></i>
+							<img src="{{ asset('dist/img/sidebar-icons/schedule.png') }}" class="elevation-2 "/>
                             <p>
                                 Schedule
                                 <i class="fas fa-angle-left right"></i>
@@ -154,7 +155,7 @@
             @if(auth()->user()->can('view_servers')  OR auth()->user()->hasRole('super-admin'))
             <li class="nav-item">
                 <a href="{{ url('admin/servers') }}" class="nav-link {{ (Request::segment(2) == 'servers') ? 'active' : '' }}">
-                    <i class="far fa fa-life-ring nav-icon"></i>
+                    <i class="far fa fa-server nav-icon"></i>
                     <p>Live Servers</p>
                 </a>
             </li>
