@@ -7,6 +7,7 @@ use App\Models\Sports;
 use App\Models\Leagues;
 use App\Models\Teams;
 use App\Models\Schedules;
+use App\Models\ScheduledServers;
 use Carbon\Carbon;
 
 class ScheduleController extends Controller
@@ -97,7 +98,8 @@ class ScheduleController extends Controller
 
     public function destroy(Request $request)
     {
-        $schduledata = Schedules::where('id',$request->id)->delete();
+        ScheduledServers::where('schedule_id',$request->id)->delete();
+        Schedules::where('id',$request->id)->delete();
         return response()->json(['success' => true]);
     }
 

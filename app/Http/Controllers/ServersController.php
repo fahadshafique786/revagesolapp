@@ -79,6 +79,7 @@ class ServersController extends Controller
 
     public function destroy(Request $request)
     {
+        ScheduledServers::where('server_id',$request->id)->delete();
         $servers = Servers::where('id',$request->id)->delete();
         return response()->json(['success' => true]);
     }

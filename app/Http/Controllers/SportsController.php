@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Sports;
+use App\Models\Schedules;
+use App\Models\Leagues;
+use App\Models\Teams;
 
 class SportsController extends Controller
 {
@@ -78,7 +81,14 @@ class SportsController extends Controller
 
     public function destroy(Request $request)
     {
-        $sports = Sports::where('id',$request->id)->delete();
+        Servers::where('sports_id',$request->id)->delete();
+        Schedules::where('sports_id',$request->id)->delete();
+        Teams::where('sports_id',$request->id)->delete();
+        Leagues::where('sports_id',$request->id)->delete();
+
+
+        Sports::where('id',$request->id)->delete();
+
         return response()->json(['success' => true]);
     }
 
