@@ -221,19 +221,19 @@
                     { data: 'image_required', name: 'image_required', render: function( data, type, full, meta,rowData ) {
 
                             if(data=='yes'){
-                                return "<a href='javascript:void(0)' class='badge badge-success text-sm text-capitalize'>"+data+"</a>" +" ";
+                                return "<a href='javascript:void(0)' class='badge badge-success text-xs text-capitalize'>"+data+"</a>" +" ";
                             }
                             else{
-                                return "<a href='javascript:void(0)' class='badge badge-danger text-sm text-capitalize'>"+data+"</a>" +" ";
+                                return "<a href='javascript:void(0)' class='badge badge-danger text-xs text-capitalize'>"+data+"</a>" +" ";
                             }
                         },
                     },
                     { data: 'multi_league', name: 'multi_league', render: function( data, type, full, meta,rowData ) {
                             if(data=='yes'){
-                                return "<a href='javascript:void(0)' class='badge badge-success text-sm text-capitalize'>"+data+"</a>" +" ";
+                                return "<a href='javascript:void(0)' class='badge badge-success text-xs text-capitalize'>"+data+"</a>" +" ";
                             }
                             else{
-                                return "<a href='javascript:void(0)' class='badge badge-danger text-sm text-capitalize'>"+data+"</a>" +" ";
+                                return "<a href='javascript:void(0)' class='badge badge-danger text-xs text-capitalize'>"+data+"</a>" +" ";
                             }
                         },
 
