@@ -28,6 +28,7 @@
                                 <thead>
                                 <tr>
                                     <th scope="col" width="10px">#</th>
+                                    <th scope="col">Label</th>
                                     <th scope="col">Home</th>
                                     <th scope="col">Away</th>
                                     <th scope="col">Score</th>
@@ -171,6 +172,7 @@
                 ajax: "{{ url('admin/fetch-schedules-data/'.$sports_id) }}",
                 columns: [
                     { data: 'srno', name: 'srno' },
+                    { data: 'label', name: 'label'},
                     { data: 'home_team_id', name: 'home_team_id'},
                     { data: 'away_team_id', name: 'away_team_id' },
                     { data: 'score', name: 'score' },

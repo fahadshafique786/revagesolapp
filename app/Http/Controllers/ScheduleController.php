@@ -40,7 +40,7 @@ class ScheduleController extends Controller
         if(!empty($request->id))
         {
             $this->validate($request, [
-                'label' => 'required|unique:schedules,lable,'.$request->id,
+                'label' => 'required|unique:schedules,label,'.$request->id,
                 'home_team_id' => 'required',
                 'away_team_id' => 'required',
                 'start_time' => 'required',
@@ -57,6 +57,7 @@ class ScheduleController extends Controller
         }
 
         $input = array();
+        $input['label'] = $request->label;
         $input['home_team_id'] = $request->home_team_id;
         $input['away_team_id'] = $request->away_team_id;
         $input['start_time'] = date('Y-m-d H:i:s', strtotime($request->start_time));
@@ -105,6 +106,7 @@ class ScheduleController extends Controller
                 {
 
                     $response[$i]['srno'] = '<a target="_blank" href="'.url("admin/servers/".$obj->id).'" class=""> <i class="fa fa-bolt"></i> </a>';
+                    $response[$i]['label'] = $obj->label;
                     $response[$i]['home_team_id'] = $obj->home_team_name;
                     $response[$i]['away_team_id'] = $obj->away_team_name;
                     $response[$i]['score'] = $obj->home_points . " - " . $obj->away_points;
