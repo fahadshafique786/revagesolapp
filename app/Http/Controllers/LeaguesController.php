@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Teams;
+use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Http\Request;
 use App\Models\Leagues;
+use App\Models\Schedules;
 use App\Models\Sports;
 
 class LeaguesController extends Controller
@@ -76,8 +79,13 @@ class LeaguesController extends Controller
 
     public function destroy(Request $request)
     {
-        $leagues = Leagues::where('id',$request->id)->delete();
+
+//        Schedule::where('leagues_id',$request->id)->delete();
+        Teams::where('leagues_id',$request->id)->delete();
+        Leagues::where('id',$request->id)->delete();
+
         return response()->json(['success' => true]);
+
     }
 
     public function fetchleaguesdata()
