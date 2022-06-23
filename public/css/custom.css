@@ -142,3 +142,16 @@ LOGIN PAGE
 .vertical-super{
     vertical-align: super !important;
 }
+
+.vertical-baseline{
+    vertical-align: baseline !important;
+}
+.vertical-middle{
+    vertical-align: middle !important;
+}
+.vertical-unset{
+    vertical-align: unset !important;
+}
+.vertical-baseline{
+    vertical-align: baseline !important;
+}

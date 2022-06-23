@@ -94,12 +94,12 @@
 	$link_label_array['servers'] = "Servers";
 	$link_label_array['roles'] = "Roles";
 	$link_label_array['permissions'] = "Permissions";
-	
+
 	$link_label_array1['sports']['icon'] = "sports.png";
 	$link_label_array1['teams']['icon']  = "team.png";
 	$link_label_array1['schedules']['icon'] = "schedule.png";
 	$link_label_array1['leagues']['icon'] = "league.png";
-	
+
 @endphp
 
   <!-- Content Wrapper. Contains page content -->
@@ -110,25 +110,25 @@
         <div class="row mb-2">
           <div class="col-sm-6">
             <h1 class="m-0 text-dark">
-                
+
 				@if(Request::segment(2) == 'dashboard')
 					<i class="d-inline vertical-superss  fas fa-tachometer-alt  icon-bg nav-icon pl-1"></i>
 				@elseif(Request::segment(2) == 'teams')
-					<img src="{{ asset('dist/img/sidebar-icons/team.png') }}" class="elevation-2 icon-bg vertical-super"/>
+					<img src="{{ asset('dist/img/sidebar-icons/team.png') }}" class="elevation-2 icon-bg vertical-baseline"/>
 				@elseif(Request::segment(2) == 'sports')
-					<img src="{{ asset('dist/img/sidebar-icons/sports.png') }}" class="elevation-2 icon-bg vertical-super"/>
+					<img src="{{ asset('dist/img/sidebar-icons/sports.png') }}" class="elevation-2 icon-bg vertical-baseline"/>
 				@elseif(Request::segment(2) == 'schedules')
-					<img src="{{ asset('dist/img/sidebar-icons/schedule.png') }}" class="elevation-2 icon-bg vertical-super "/>
+					<img src="{{ asset('dist/img/sidebar-icons/schedule.png') }}" class="elevation-2 icon-bg vertical-baseline "/>
 				@elseif(Request::segment(2) == 'leagues')
-					<img src="{{ asset('dist/img/sidebar-icons/league.png') }}" class="elevation-2  icon-bg vertical-super"/>
+					<img src="{{ asset('dist/img/sidebar-icons/league.png') }}" class="elevation-2  icon-bg vertical-baseline"/>
 				@elseif(Request::segment(2) == 'users' || Request::segment(2) == 'permissions'  || Request::segment(2) == 'roles' )
-                        <i class="fas fa-users icon-bg  vertical-super"></i>				
+                        <i class="fas fa-users icon-bg  vertical-super"></i>
 				@elseif(Request::segment(2) == 'servers')
-						<i class="fas fa-server vertical-super icon-bg"></i>	
-	
+						<i class="fas fa-server vertical-super icon-bg"></i>
+
 				@endif
-				
-		
+
+
                 <p class="page-title d-inline-block ml-2">{{ $link_label_array[Request::segment(2)] }}
                     @if(Request::segment(2) == 'teams' || Request::segment(2) == 'schedules')
                         <small class="d-block text-sm"> Add or update {{$sportData->name}} Teams</small>
