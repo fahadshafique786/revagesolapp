@@ -227,7 +227,7 @@
             processing: true,
             columnDefs: [
                 { targets: '_all',
-                    orderable: false
+                    orderable: true
                 },
             ],
             serverSide: true,

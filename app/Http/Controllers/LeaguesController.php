@@ -88,7 +88,7 @@ class LeaguesController extends Controller
             $Filterdata = Leagues::select('leagues.*','sports.name as sport_name')
                 ->join('sports', function ($join) {
                     $join->on('leagues.sports_id', '=', 'sports.id');
-                })->orderBy('leagues.id','desc')->get();
+                })->orderBy('leagues.id','asc')->get();
 
             if(!empty($Filterdata))
             {

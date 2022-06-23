@@ -87,7 +87,7 @@ class SportsController extends Controller
         if(request()->ajax()) {
 
             $response = array();
-            $Filterdata = Sports::select('*')->orderBy('id','desc')->get();
+            $Filterdata = Sports::select('*')->orderBy('id','asc')->get();
             if(!empty($Filterdata))
             {
                 $i = 0;

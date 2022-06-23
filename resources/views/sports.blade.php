@@ -79,13 +79,13 @@
                                 <div class="col-sm-12">
                                     <label for="name" class="control-label d-block">  Sports Type </label>
                                     <label for="sports_type_single" class="cursor-pointer">
-                                        <input type="radio" class="" id="sports_type_single" name="sports_type" value="single" checked />
+                                        <input type="radio" class="" id="sports_type_single" name="sports_type" value="single"  />
                                         Single
                                     </label>
 
                                     &nbsp;&nbsp;&nbsp;&nbsp;
                                     <label for="sports_type_double" class="cursor-pointer">
-                                        <input type="radio" class="" id="sports_type_double" name="sports_type"  value="double" />
+                                        <input type="radio" class="" id="sports_type_double" name="sports_type"  value="double" checked />
                                         Double
                                     </label>
 
@@ -99,14 +99,14 @@
                                 <div class="col-sm-12">
                                     <label for="name" class="control-label d-block">Multi League</label>
                                     <label for="multi_league_yes" class="cursor-pointer">
-                                        <input type="radio" class="" id="multi_league_yes" name="multi_league" value="yes" />
+                                        <input type="radio" class="" id="multi_league_yes" name="multi_league" value="yes" checked/>
                                         <span class="">Yes</span>
                                     </label>
 
                                     &nbsp;&nbsp;&nbsp;&nbsp;
 
                                     <label for="multi_league_no" class="cursor-pointer">
-                                        <input type="radio" class="" id="multi_league_no" name="multi_league"  value="no" checked/>
+                                        <input type="radio" class="" id="multi_league_no" name="multi_league"  value="no" />
                                         <span class="">No</span>
                                     </label>
 
@@ -123,12 +123,12 @@
                                     <label for="name" class="control-label d-block">Image Required</label>
 
                                     <label for="image_required_yes" class="cursor-pointer">
-                                        <input type="radio" class="" id="image_required_yes" name="image_required" value="yes" />
+                                        <input type="radio" class="" id="image_required_yes" name="image_required" value="yes" checked/>
                                         <span class="">Yes</span>
                                     </label>
                                     &nbsp;&nbsp;&nbsp;&nbsp;
                                     <label for="image_required_no" class="cursor-pointer">
-                                        <input type="radio" class="" id="image_required_no" name="image_required" value="no" checked />
+                                        <input type="radio" class="" id="image_required_no" name="image_required" value="no"  />
                                         <span class="">No</span>
                                     </label>
                                     <span class="text-danger" id="image_requiredError"></span>
@@ -198,7 +198,7 @@
                 processing: true,
                 columnDefs: [
                     { targets: '_all',
-                        orderable: false
+                        orderable: true
                     },
                 ],
                 serverSide: true,
@@ -211,19 +211,19 @@
                     { data: 'image_required', name: 'image_required', render: function( data, type, full, meta,rowData ) {
 
                             if(data=='yes'){
-                                return "<a href='javascript:void(0)' class='badge badge-success'>"+data+"</a>" +" ";
+                                return "<a href='javascript:void(0)' class='badge badge-success text-md text-capitalize'>"+data+"</a>" +" ";
                             }
                             else{
-                                return "<a href='javascript:void(0)' class='badge badge-danger'>"+data+"</a>" +" ";
+                                return "<a href='javascript:void(0)' class='badge badge-danger text-md text-capitalize'>"+data+"</a>" +" ";
                             }
                         },
                     },
                     { data: 'multi_league', name: 'multi_league', render: function( data, type, full, meta,rowData ) {
                             if(data=='yes'){
-                                return "<a href='javascript:void(0)' class='badge badge-success'>"+data+"</a>" +" ";
+                                return "<a href='javascript:void(0)' class='badge badge-success text-md text-capitalize'>"+data+"</a>" +" ";
                             }
                             else{
-                                return "<a href='javascript:void(0)' class='badge badge-danger'>"+data+"</a>" +" ";
+                                return "<a href='javascript:void(0)' class='badge badge-danger text-md text-capitalize'>"+data+"</a>" +" ";
                             }
                         },
 
@@ -245,6 +245,9 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
+
+
+
             $('#addNew').click(function () {
                 $('#id').val("");
                 $('#addEditForm').trigger("reset");
@@ -277,6 +280,8 @@
                     }
                 });
             });
+
+
             $('body').on('click', '.delete', function () {
                 if (confirm("Are you sure you want to delete?") == true) {
                     var id = $(this).data('id');
@@ -292,6 +297,10 @@
                     });
                 }
             });
+
+
+            /****** Add or Update Form Submit ::  Function **********/
+
             $("#addEditForm").on('submit',(function(e) {
                 e.preventDefault();
                 var Form_Data = new FormData(this);
@@ -300,7 +309,16 @@
                 $('#nameError').text('');
                 $('#sports_typeError').text('');
                 $('#multi_leagueError').text('');
-                $('#image_requiredError').text('');
+
+                if($("#image_required_yes").prop('checked')){
+                    if(!$("#sport_logo").val()){
+                        alert("Please select sports logo!")
+                        $("#btn-save").html('Save');
+                        $("#btn-save"). attr("disabled", false);
+                        $('#sport_logoError').text('Please select logo!');
+                        return false;
+                    }
+                }
 
                 $.ajax({
                     type:"POST",

@@ -96,7 +96,7 @@ class ScheduleController extends Controller
                 })
                 ->join('teams as awayTeam', function ($join) {
                     $join->on('schedules.away_team_id', '=', 'awayTeam.id');
-                })->orderBy('schedules.id','desc')->get();
+                })->orderBy('schedules.id','asc')->get();
 
             if(!empty($Filterdata))
             {

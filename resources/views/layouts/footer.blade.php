@@ -61,32 +61,27 @@
             $(this).bootstrapSwitch('state', $(this).prop('checked'));
         })
 
-		$("#headerMenuIconId.open").click(function(){
-				
-			$(this).removeClass('open');
+        $(document).delegate('#headerMenuIconId.open', 'click', function(){
+            $(this).removeClass('open');
 			$(this).removeClass('fa-arrow-left');
 			$(this).addClass('closed');
 			$(this).addClass('fa-bars');
-			
 		});
 
-		$("#headerMenuIconId.closed").click(function(){
-				
-			$(this).removeClass('closed');
-			$(this).removeClass('fa-bars');
-			$(this).addClass('open');
-			$(this).addClass('fa-arrow-left');
-			
-		});
+        $(document).delegate('#headerMenuIconId.closed', 'click', function(){
+            $(this).removeClass('fa-bars');
+            $(this).addClass('fa-arrow-left');
+            $(this).addClass('open');
+            $(this).removeClass('closed');
+
+        });
 
 
 		$('#start_time').datetimepicker({
 				format: 'd/m/Y g:i A',
 				formatTime: 'g:i A',
 		});
-		
-        // $(".calendarIcon").click(function(){
-        // });
+
 
         $('.js-example-basic-multiple').select2({
             placeholder: "Please Select an Option ",

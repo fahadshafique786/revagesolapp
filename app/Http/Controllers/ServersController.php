@@ -105,7 +105,7 @@ class ServersController extends Controller
                 $Filterdata = Servers::select('servers.*','sports.name as sport_name')
                     ->join('sports', function ($join) {
                         $join->on('servers.sports_id', '=', 'sports.id');
-                    })->orderBy('servers.id','desc')->get();
+                    })->orderBy('servers.id','asc')->get();
             }
 
 
@@ -151,7 +151,7 @@ class ServersController extends Controller
             })
             ->join('teams as awayTeam', function ($join) {
                 $join->on('schedules.away_team_id', '=', 'awayTeam.id');
-            })->orderBy('schedules.id','desc')->first();
+            })->orderBy('schedules.id','asc')->first();
 
 
         $scheduleSports = Schedules::where('id',$schedule_id)->select('sports_id')->first();

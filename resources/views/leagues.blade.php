@@ -27,7 +27,7 @@
                             <table class="table table-bordered table-hover" id="DataTbl">
                                 <thead>
                                 <tr>
-                                    <th scope="col">#</th>
+                                    <th scope="col" width="10px">#</th>
                                     <th scope="col">Icon</th>
                                     <th scope="col">Name</th>
                                     <th scope="col">Sport</th>
@@ -148,7 +148,7 @@
                 processing: true,
                 columnDefs: [
                     { targets: '_all',
-                        orderable: false
+                        orderable: true
                     },
                 ],
                 serverSide: true,
