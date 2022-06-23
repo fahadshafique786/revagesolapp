@@ -112,7 +112,7 @@
             <h1 class="m-0 text-dark">
 
 				@if(Request::segment(2) == 'dashboard')
-					<i class="d-inline vertical-superss  fas fa-tachometer-alt  icon-bg nav-icon pl-1"></i>
+					<i class="d-inline vertical-super  fas fa-tachometer-alt  icon-bg nav-icon pl-1"></i>
 				@elseif(Request::segment(2) == 'teams')
 					<img src="{{ asset('dist/img/sidebar-icons/team.png') }}" class="elevation-2 icon-bg vertical-baseline"/>
 				@elseif(Request::segment(2) == 'sports')
