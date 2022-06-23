@@ -7,6 +7,7 @@ use App\Models\Sports;
 use App\Models\Leagues;
 use App\Models\Teams;
 use App\Models\Schedules;
+use Carbon\Carbon;
 
 class ScheduleController extends Controller
 {
@@ -55,6 +56,21 @@ class ScheduleController extends Controller
                 'start_time' => 'required',
             ]);
         }
+
+
+//        $dateArray = explode(' ',$request->start_time);
+//        $aDateString = $dateArray[0];
+//        $aTimeString = $dateArray[1];
+//
+//        $dateTimeString = $aDateString." ".$aTimeString;
+//
+//       $ddd = date('Y-m-d', strtotime('28/06/2021'));
+//        dd($aDateString,$ddd,$dateArray,$dateTimeString,$request->start_time);
+//
+//        $dueDateTime = Carbon::createFromFormat('Y-m-d H:i:s', $dateTimeString, 'Europe/London');
+//
+//        dd($dueDateTime,$request->start_time);
+
 
         $input = array();
         $input['label'] = $request->label;
@@ -105,7 +121,7 @@ class ScheduleController extends Controller
                 foreach($Filterdata as $index => $obj)
                 {
 
-                    $response[$i]['srno'] = '<a target="_blank" href="'.url("admin/servers/".$obj->id).'" class=""> <i class="fa fa-bolt"></i> </a>';
+                    $response[$i]['srno'] = '<a target="_blank" href="'.url("admin/servers/".$obj->id).'" class=""> <i class="fa fa-server"></i> </a>';
                     $response[$i]['label'] = $obj->label;
                     $response[$i]['home_team_id'] = $obj->home_team_name;
                     $response[$i]['away_team_id'] = $obj->away_team_name;
