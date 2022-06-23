@@ -112,7 +112,7 @@
             <h1 class="m-0 text-dark">
 
 				@if(Request::segment(2) == 'dashboard')
-					<i class="d-inline vertical-super  fas fa-tachometer-alt  icon-bg nav-icon pl-1"></i>
+					<i class="d-inline fas fa-tachometer-alt  icon-bg nav-icon pl-1"></i>
 				@elseif(Request::segment(2) == 'teams')
 					<img src="{{ asset('dist/img/sidebar-icons/team.png') }}" class="elevation-2 icon-bg vertical-baseline"/>
 				@elseif(Request::segment(2) == 'sports')
@@ -129,7 +129,7 @@
 				@endif
 
 
-                <p class="page-title d-inline-block ml-2">{{ $link_label_array[Request::segment(2)] }}
+                <p class="page-title {{  Request::segment(2) == 'dashboard' ? 'd-inline' : 'd-inline-block' }}  ml-2">{{ $link_label_array[Request::segment(2)] }}
                     @if(Request::segment(2) == 'teams' || Request::segment(2) == 'schedules')
                         <small class="d-block text-sm"> Add or update {{$sportData->name}} Teams</small>
                     @elseif(Request::segment(2) == 'server' || Request::segment(3) > 0)
