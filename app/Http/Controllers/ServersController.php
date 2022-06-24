@@ -99,7 +99,7 @@ class ServersController extends Controller
                         $join->on('servers.sports_id', '=', 'sports.id');
                     })
                     ->where('scheduled_servers.schedule_id',$schedule_id)
-                    ->orderBy('servers.id','desc')->get();
+                    ->orderBy('servers.id','asc')->get();
             }
             else{
 
