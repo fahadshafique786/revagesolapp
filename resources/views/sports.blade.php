@@ -155,6 +155,7 @@
                                     <label for="name" class="control-label d-block">Sport Logo</label>
 
                                         <input type="file" class="" id="sport_logo" name="sport_logo" onchange="allowonlyImg(this)">
+                                        <input type="hidden" readonly class="" id="sport_logo_hidden" name="sport_logo_hidden" >
                                         <span class="text-danger" id="sport_logoError"></span>
 
                                 </div>
@@ -270,6 +271,7 @@
                 var id = $(this).data('id');
                 $('#nameError').text('');
                 $('#emailError').text('');
+                $('#sport_logoError').text('');
                 $.ajax({
                     type:"POST",
                     url: "{{ url('admin/edit-Sport') }}",
@@ -284,6 +286,7 @@
                         $('#ajax-model').modal('show');
                         $('#id').val(res.id);
                         $('#name').val(res.name);
+                        $('#sport_logo_hidden').val(res.icon);
                         $("#multi_league_"+res.multi_league).prop("checked",true);
                         $("#sports_type_"+res.sports_type).prop("checked",true);
                         $("#image_required_"+res.image_required).prop("checked",true);
@@ -309,6 +312,10 @@
             });
 
 
+            $("#image_required_no").on('click',function(){
+                $('#sport_logoError').text('');
+            })
+
             /****** Add or Update Form Submit ::  Function **********/
 
             $("#addEditForm").on('submit',(function(e) {
@@ -319,17 +326,20 @@
                 $('#nameError').text('');
                 $('#sports_typeError').text('');
                 $('#multi_leagueError').text('');
-                $('#image_requiredError').text('');
+                $('#sport_logoError').text('');
 
-                if($("#image_required_yes").prop('checked')){
-                    if(!$("#sport_logo").val()){
-                        alert("Please select sports logo!")
-                        $("#btn-save").html('Save');
-                        $("#btn-save"). attr("disabled", false);
-                        $('#sport_logoError').text('Please select logo!');
-                        return false;
+
+                    if($("#image_required_yes").prop('checked') && !$("#sport_logo_hidden").val()){
+
+                        if(!$("#sport_logo").val()){
+                            alert("Please select sports logo!")
+                            $("#btn-save").html('Save');
+                            $("#btn-save"). attr("disabled", false);
+                            $('#sport_logoError').text('Please select logo!');
+                            return false;
+                        }
                     }
-                }
+
 
                 $.ajax({
                     type:"POST",
