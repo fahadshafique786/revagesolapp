@@ -319,6 +319,7 @@
                 $('#nameError').text('');
                 $('#sports_typeError').text('');
                 $('#multi_leagueError').text('');
+                $('#image_requiredError').text('');
 
                 if($("#image_required_yes").prop('checked')){
                     if(!$("#sport_logo").val()){
