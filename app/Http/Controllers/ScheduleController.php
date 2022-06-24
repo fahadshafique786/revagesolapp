@@ -124,7 +124,7 @@ class ScheduleController extends Controller
                 })
                 ->join('teams as awayTeam', function ($join) {
                     $join->on('schedules.away_team_id', '=', 'awayTeam.id');
-                })->orderBy('schedules.id','asc')->get();
+                })->orderBy('schedules.start_time','desc')->get();
 
             if(!empty($Filterdata))
             {
@@ -132,7 +132,8 @@ class ScheduleController extends Controller
                 foreach($Filterdata as $index => $obj)
                 {
 
-                    $response[$i]['srno'] = '<a target="_blank" href="'.url("admin/servers/".$obj->id).'" class=""> <i class="fa fa-server"></i> </a>';
+                    $iteration = $i+1;
+                    $response[$i]['srno'] = '<a target="_blank" href="'.url("admin/servers/".$obj->id).'" class=""> <i class="fa fa-server"></i> <span class="text-dark text-bold">'.$iteration.'</span>  </a>';
                     $response[$i]['label'] = $obj->label;
                     $response[$i]['home_team_id'] = $obj->home_team_name;
                     $response[$i]['away_team_id'] = $obj->away_team_name;
