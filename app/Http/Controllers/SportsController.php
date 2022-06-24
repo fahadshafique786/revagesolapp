@@ -7,6 +7,7 @@ use App\Models\Sports;
 use App\Models\Schedules;
 use App\Models\Leagues;
 use App\Models\Teams;
+use App\Models\Servers;
 
 class SportsController extends Controller
 {
