@@ -105,7 +105,7 @@ class TeamsController extends Controller
                 ->where('teams.sports_id',$sports_id)
                 ->join('leagues', function ($join) {
                     $join->on('leagues.id', '=', 'teams.leagues_id');
-                })->orderBy('teams.id','desc')->get();
+                })->orderBy('teams.id','asc')->get();
 
             if(!empty($Filterdata))
             {
