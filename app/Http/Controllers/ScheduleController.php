@@ -59,6 +59,15 @@ class ScheduleController extends Controller
         }
 
 
+          $date_string = $request->start_time;
+//        $date_string = "2022/06/03 14:00";
+//        $date_string = "25/06/2022 14:00";
+//        if(strtotime($date_string)){
+//            //
+//            dd("it's in date format");
+//        }
+//        dd("ok");
+
 //        $dateArray = explode(' ',$request->start_time);
 //        $aDateString = $dateArray[0];
 //        $aTimeString = $dateArray[1];
@@ -77,7 +86,7 @@ class ScheduleController extends Controller
         $input['label'] = $request->label;
         $input['home_team_id'] = $request->home_team_id;
         $input['away_team_id'] = $request->away_team_id;
-        $input['start_time'] = date('Y-m-d H:i:s', strtotime($request->start_time));
+        $input['start_time'] = $date_string = $request->start_time;
         $input['sports_id'] = $sports_id;
 
         $schduledata   =   Schedules::updateOrCreate(

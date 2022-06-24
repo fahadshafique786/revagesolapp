@@ -176,7 +176,11 @@
                     { data: 'home_team_id', name: 'home_team_id'},
                     { data: 'away_team_id', name: 'away_team_id' },
                     { data: 'score', name: 'score' },
-                    { data: 'start_time', name: 'start_time' },
+                    { data: 'start_time', name: 'start_time', render: function( data, type, full, meta,rowData ) {
+                        return convertTime24to12(data)
+                        }
+
+                    },
                     { data: 'is_live', name: 'is_live' },
                     {data: 'action', name: 'action', orderable: false},
                 ],
@@ -225,11 +229,14 @@
                         $('#label').val(res.label);
                         $('#home_team_id').val(res.home_team_id);
                         $('#away_team_id').val(res.away_team_id);
-                        $('#start_time').val(res.start_time);
+
+                        $('#start_time').val(convertTime24to12(res.start_time));
 
                     }
                 });
             });
+
+
             $('body').on('click', '.delete', function () {
                 if (confirm("Are you sure you want to delete?") == true) {
                     var id = $(this).data('id');
@@ -245,9 +252,16 @@
                     });
                 }
             });
+
+
             $("#addEditForm").on('submit',(function(e) {
                 e.preventDefault();
                 var Form_Data = new FormData(this);
+
+                let start_time = convertTime12to24($("#start_time").val());
+                Form_Data.set('start_time', start_time);
+
+
                 $("#btn-save").html('Please Wait...');
                 $("#btn-save"). attr("disabled", true);
                 $('#labelError').text('');
@@ -278,6 +292,8 @@
                     }
                 });
             }));
+
+
         });
 
     </script>

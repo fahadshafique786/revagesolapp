@@ -49,12 +49,41 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
 
 <script>
-    function getFormattedDate(date) {
-        var day = date.getDate();
-        var month = date.getMonth() + 1;
-        var year = date.getFullYear().toString().slice(2);
-        return day + '-' + month + '-' + year;
+    const convertTime12to24 = (dateTime12h) => {
+        const [date, time , modifier] = dateTime12h.split(' ');
+
+        let [hours, minutes] = time.split(':');
+
+        const [day , month , year] = date.split('/')
+
+        if (hours === '12') {
+            hours = '00';
+        }
+
+        if (modifier === 'PM') {
+            hours = parseInt(hours, 10) + 12;
+        }
+
+        return `${year}-${month}-${day} ${hours}:${minutes}`;
     }
+
+    const convertTime24to12 = (dateTime24h) => {
+        const [date,time] = dateTime24h.split(' ');
+
+        const [year , month , day] = date.split('-');
+
+        let [hours, minutes] = time.split(':');
+
+        let modifiers = "AM"
+        if(hours > 12){
+                hours = parseInt(hours, 10) - 12;
+                modifiers = "PM"
+        }
+
+        return `${day}/${month}/${year} ${hours}:${minutes} ${modifiers}`;
+
+    }
+
 
     $(document).ready(function() {
         $("input[data-bootstrap-switch]").each(function(){
@@ -80,6 +109,7 @@
 		$('#start_time').datetimepicker({
 				format: 'd/m/Y g:i A',
 				formatTime: 'g:i A',
+                validateOnBlur: false,
 		});
 
 
@@ -217,6 +247,9 @@ $(function () {
 	});
 
 });
+
+
+
 
 $(document).ready(function($){
 	$.ajaxSetup({
