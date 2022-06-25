@@ -29,6 +29,7 @@
                                 <tr>
                                     <th scope="col" width="10px">#</th>
                                     <th scope="col">Label</th>
+                                    <th scope="col">League</th>
                                     <th scope="col">Home</th>
                                     <th scope="col">Away</th>
                                     <th scope="col">Score</th>
@@ -200,6 +201,7 @@
                 columns: [
                     { data: 'srno', name: 'srno' },
                     { data: 'label', name: 'label'},
+                    { data: 'league', name: 'league'},
                     { data: 'home_team_id', name: 'home_team_id'},
                     { data: 'away_team_id', name: 'away_team_id' },
                     { data: 'score', name: 'score' },
@@ -210,7 +212,18 @@
                         }
 
                     },
-                    { data: 'is_live', name: 'is_live'},
+                    { data: 'is_live', name: 'is_live', searchable:false , render: function( data, type, full, meta,rowData ) {
+
+                            if(data=='Yes'){
+                                return "<a href='javascript:void(0)' class='badge badge-success text-xs text-capitalize'>"+data+"</a>" +" ";
+                            }
+                            else{
+                                return "<a href='javascript:void(0)' class='badge badge-danger text-xs text-capitalize'>"+data+"</a>" +" ";
+                            }
+                        },
+
+
+                    },
 
                     {data: 'action', name: 'action', orderable: false , render: function( data, type, full, meta,rowData ) {
 

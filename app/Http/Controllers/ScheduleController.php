@@ -109,15 +109,24 @@ class ScheduleController extends Controller
                 $i = 0;
                 foreach($Filterdata as $index => $obj)
                 {
-
                     $iteration = $i+1;
-                    $response[$i]['srno'] = '<a target="_blank" href="'.url("admin/servers/".$obj->id).'" class=""> <i class="fa fa-server"></i> <span class="text-dark text-bold">'.$iteration.'</span>  </a>';
+
+                    $linkedServer  = ScheduledServers::where('schedule_id',$obj->id);
+                    if($linkedServer->exists()){
+                        $serverLink =  '<a target="_blank" href="'.url("admin/servers/".$obj->id).'" class=""> <i class="fa fa-server text-md text-success"></i> <span class="text-dark text-bold">'.$iteration.'</span>  </a>';
+                    }
+                    else{
+                        $serverLink = '<a target="_blank" href="'.url("admin/servers/".$obj->id).'" class=""> <i class="fa fa-server text-md text-danger"></i> <span class="text-dark text-bold">'.$iteration.'</span>  </a>';
+                    }
+
+                    $response[$i]['srno'] = $serverLink;
                     $response[$i]['label'] = $obj->label;
+                    $response[$i]['league'] = "PSL";
                     $response[$i]['home_team_id'] = $obj->home_team_name;
                     $response[$i]['away_team_id'] = $obj->away_team_name;
                     $response[$i]['score'] = $obj->home_points . " - " . $obj->away_points;
                     $response[$i]['start_time'] = $obj->start_time;
-                    $response[$i]['is_live'] = strtoupper($obj->is_live);
+                    $response[$i]['is_live'] = getBooleanStr($obj->is_live,true);
                     if(auth()->user()->hasRole('super-admin') || auth()->user()->can('manage_schedules'))
                     {
                         $liveSwitch = ($obj->is_live) ? 'checked' : '';
