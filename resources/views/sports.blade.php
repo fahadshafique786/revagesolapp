@@ -32,8 +32,7 @@
 
 
                             </div>
-
-
+                            
                         </div>
                         <div class="card-body">
                             <table class="table table-bordered table-hover" id="DataTbl">
@@ -190,28 +189,9 @@
 @push('scripts')
     <script type="text/javascript">
 
-
-        $('#filter').click(function(){
-            var sports_filter = $('#sports_filter').val();
-            if(sports_filter != '')
-            {
-                $('#DataTbl').DataTable().destroy();
-                // $('#DataTbl').DataTable().destroy();
-                fetchData(sports_filter);
-            }
-            else
-            {
-                alert('Select  Filter Option');
-                $('#DataTbl').DataTable().destroy();
-                fetchData();
-            }
-        });
-
-
-
         var Table_obj = "";
 
-        function fetchData(filter_sports = '')
+        function fetchData()
         {
             $.ajaxSetup({
                 headers: {
@@ -219,30 +199,24 @@
                 }
             });
 
+            if(Table_obj != '' && Table_obj != null)
+            {
+                $('#DataTbl').dataTable().fnDestroy();
+                $('#DataTbl tbody').empty();
+                Table_obj = '';
+            }
 
-            // if(Table_obj != '' && Table_obj != null)
-            // {
-            //     $('#DataTbl').dataTable().fnDestroy();
-            //     $('#DataTbl tbody').empty();
-            //     Table_obj = '';
-            // }
 
-            var dataTable = $('#DataTbl').DataTable({
-                "processing" : true,
-                "serverSide" : true,
-                "order" : [],
-                "searching" : true,
-                columnDefs: [{
-                    "defaultContent": "-",
-                    "targets": "_all"
-                }],
-                "ajax" : {
-                    url:"{{ url('admin/fetchsportsdata') }}",
-                    type:"POST",
-                    data:{
-                        filter_sports:filter_sports
-                    }
-                },
+
+            Table_obj = $('#DataTbl').DataTable({
+                processing: true,
+                columnDefs: [
+                    { targets: '_all',
+                        orderable: true
+                    },
+                ],
+                serverSide: true,
+                ajax: "{{ url('admin/fetchsportsdata') }}",
                 columns: [
                     { data: 'srno', name: 'srno' , searchable:false},
                     { data: 'icon', name: 'icon', searchable:false},
@@ -271,52 +245,8 @@
                     },
                     {data: 'action', name: 'action', orderable: false , searchable:false},
                 ],
-
+                order: [[0, 'asc']],
             });
-
-
-
-
-
-            {{--Table_obj = $('#DataTbl').DataTable({--}}
-            {{--    processing: true,--}}
-            {{--    columnDefs: [--}}
-            {{--        { targets: '_all',--}}
-            {{--            orderable: true--}}
-            {{--        },--}}
-            {{--    ],--}}
-            {{--    serverSide: true,--}}
-            {{--    ajax: "{{ url('admin/fetchsportsdata') }}",--}}
-            {{--    columns: [--}}
-            {{--        { data: 'srno', name: 'srno' , searchable:false},--}}
-            {{--        { data: 'icon', name: 'icon', searchable:false},--}}
-            {{--        { data: 'name', name: 'name' },--}}
-            {{--        { data: 'sports_type', name: 'sports_type' },--}}
-            {{--        { data: 'image_required', name: 'image_required' , searchable:false , render: function( data, type, full, meta,rowData ) {--}}
-
-            {{--                if(data=='yes'){--}}
-            {{--                    return "<a href='javascript:void(0)' class='badge badge-success text-xs text-capitalize'>"+data+"</a>" +" ";--}}
-            {{--                }--}}
-            {{--                else{--}}
-            {{--                    return "<a href='javascript:void(0)' class='badge badge-danger text-xs text-capitalize'>"+data+"</a>" +" ";--}}
-            {{--                }--}}
-            {{--            },--}}
-            {{--        },--}}
-            {{--        { data: 'multi_league', name: 'multi_league' , searchable:false , render: function( data, type, full, meta,rowData ) {--}}
-            {{--                if(data=='yes'){--}}
-            {{--                    return "<a href='javascript:void(0)' class='badge badge-success text-xs text-capitalize'>"+data+"</a>" +" ";--}}
-            {{--                }--}}
-            {{--                else{--}}
-            {{--                    return "<a href='javascript:void(0)' class='badge badge-danger text-xs text-capitalize'>"+data+"</a>" +" ";--}}
-            {{--                }--}}
-            {{--            },--}}
-
-
-            {{--        },--}}
-            {{--        {data: 'action', name: 'action', orderable: false , searchable:false},--}}
-            {{--    ],--}}
-            {{--    order: [[0, 'asc']],--}}
-            {{--});--}}
 
         }
 

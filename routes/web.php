@@ -50,7 +50,7 @@ Route::group(
         /******* Sports Module ***********/
 
         Route::get('/sports', [SportsController::class, 'index']);
-        Route::post('/fetchsportsdata', [SportsController::class, 'fetchsportsdata']);
+        Route::get('/fetchsportsdata', [SportsController::class, 'fetchsportsdata']);
         Route::post('/add-update-Sport', [SportsController::class, 'store']);
         Route::post('/edit-Sport', [SportsController::class, 'edit']);
         Route::post('/delete-sport', [SportsController::class, 'destroy']);
@@ -72,7 +72,7 @@ Route::group(
 
         /******* Leagues Module ***********/
         Route::get('/leagues', [LeaguesController::class, 'index']);
-        Route::get('/fetch-leagues-data', [LeaguesController::class, 'fetchleaguesdata']);
+        Route::post('/fetch-leagues-data', [LeaguesController::class, 'fetchleaguesdata']);
         Route::post('/add-update-leagues', [LeaguesController::class, 'store']);
         Route::post('/edit-league', [LeaguesController::class, 'edit']);
         Route::post('/delete-league', [LeaguesController::class, 'destroy']);
