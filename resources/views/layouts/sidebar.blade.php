@@ -108,7 +108,7 @@
                     </li>
                 @endif
                 @if(auth()->user()->can('view_teams') ||  auth()->user()->hasRole('super-admin'))
-                   <li class="nav-item {{Request::segment(2) == 'teams' ? 'menu-open' : ''}}">
+                   <li class="nav-item custom {{Request::segment(2) == 'teams' ? 'menu-open' : ''}}">
                 <a href="#" class="nav-link">
 				<img src="{{ asset('dist/img/sidebar-icons/team.png') }}" class="elevation-2 "/>
                     <p>
@@ -120,7 +120,7 @@
                     @php $sportsList = \App\Models\Sports::all(); @endphp
                     @foreach($sportsList as $sport)
                         <li class="nav-item">
-                            <a href="{{ url('admin/teams/'.$sport->id) }}" class="nav-link  {{Request::segment(3) == $sport->id ? 'active' : ''}}">
+                            <a href="{{ url('admin/teams/'.$sport->id) }}" class="nav-link custom {{Request::segment(3) == $sport->id ? 'active' : ''}}">
                                 <i class="far fa fa-minus nav-icon text-sm"></i>
                                 <p class="text-capitalize">{{$sport->name}}</p>
                             </a>
@@ -131,7 +131,7 @@
                 @endif
 
                 @if(auth()->user()->can('view_schedules')  OR auth()->user()->hasRole('super-admin'))
-                    <li class="nav-item {{Request::segment(2) == 'schedules' ? 'menu-open' : ''}}">
+                    <li class="nav-item custom {{Request::segment(2) == 'schedules' ? 'menu-open' : ''}}">
                         <a href="#" class="nav-link">
 							<img src="{{ asset('dist/img/sidebar-icons/schedule.png') }}" class="elevation-2 "/>
                             <p>
@@ -143,7 +143,7 @@
                     @php $sportsList = \App\Models\Sports::all(); @endphp
                     @foreach($sportsList as $sport)
                         <li class="nav-item">
-                            <a href="{{ url('admin/schedules/'.$sport->id) }}" class="nav-link  {{Request::segment(3) == $sport->id ? 'active' : ''}}">
+                            <a href="{{ url('admin/schedules/'.$sport->id) }}" class="nav-link  custom {{Request::segment(3) == $sport->id ? 'active' : ''}}">
                                 <i class="far fa fa-minus nav-icon text-sm"></i>
                                 <p class="text-capitalize">{{$sport->name}}</p>
                             </a>

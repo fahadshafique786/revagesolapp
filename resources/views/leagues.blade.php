@@ -11,15 +11,24 @@
                     <div class="card">
                         <div class="card-header">
                             <div class="row">
-                                <div class="col-12 text-left">
-                                    <div class="pull-left">
+                                <div class="col-6 text-left">
 
                                         @if(auth()->user()->hasRole('super-admin') || auth()->user()->can('manage-sports'))
                                             <a class="btn btn-info" href="javascript:void(0)" id="addNew">
                                                 Add League
                                             </a>
                                         @endif
-                                    </div>
+
+                                </div>
+
+                                <div class="col-6 text-right">
+
+                                    @if(auth()->user()->hasRole('super-admin') || auth()->user()->can('manage-sports'))
+                                        <a class="btn btn-warning" href="javascript:window.location.reload()" id="">
+                                            <i class="fa fa-spinner"></i> &nbsp; Refresh Screen
+                                        </a>
+                                    @endif
+
                                 </div>
                             </div>
                         </div>
@@ -154,11 +163,11 @@
                 serverSide: true,
                 ajax: "{{ url('admin/fetch-leagues-data') }}",
                 columns: [
-                    { data: 'srno', name: 'srno' },
-                    { data: 'icon', name: 'icon'},
+                    { data: 'srno', name: 'srno' , searchable:false},
+                    { data: 'icon', name: 'icon', searchable:false},
                     { data: 'name', name: 'name' },
                     { data: 'sport_name', name: 'sport_name' },
-                    {data: 'action', name: 'action', orderable: false},
+                    {data: 'action', name: 'action', orderable: false , searchable:false},
                 ],
                 order: [[0, 'asc']]
             });

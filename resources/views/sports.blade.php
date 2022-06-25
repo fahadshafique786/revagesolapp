@@ -215,11 +215,11 @@
                 serverSide: true,
                 ajax: "{{ url('admin/fetchsportsdata') }}",
                 columns: [
-                    { data: 'srno', name: 'srno' },
-                    { data: 'icon', name: 'icon'},
+                    { data: 'srno', name: 'srno' , searchable:false},
+                    { data: 'icon', name: 'icon', searchable:false},
                     { data: 'name', name: 'name' },
                     { data: 'sports_type', name: 'sports_type' },
-                    { data: 'image_required', name: 'image_required', render: function( data, type, full, meta,rowData ) {
+                    { data: 'image_required', name: 'image_required' , searchable:false , render: function( data, type, full, meta,rowData ) {
 
                             if(data=='yes'){
                                 return "<a href='javascript:void(0)' class='badge badge-success text-xs text-capitalize'>"+data+"</a>" +" ";
@@ -229,7 +229,7 @@
                             }
                         },
                     },
-                    { data: 'multi_league', name: 'multi_league', render: function( data, type, full, meta,rowData ) {
+                    { data: 'multi_league', name: 'multi_league' , searchable:false , render: function( data, type, full, meta,rowData ) {
                             if(data=='yes'){
                                 return "<a href='javascript:void(0)' class='badge badge-success text-xs text-capitalize'>"+data+"</a>" +" ";
                             }
@@ -240,7 +240,7 @@
 
 
                     },
-                    {data: 'action', name: 'action', orderable: false},
+                    {data: 'action', name: 'action', orderable: false , searchable:false},
                 ],
                 order: [[0, 'asc']]
             });

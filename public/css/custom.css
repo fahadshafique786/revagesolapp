@@ -116,7 +116,7 @@ LOGIN PAGE
 }
 
 .nav-treeview>.nav-item>.nav-link.active, [class*=sidebar-dark-] .nav-treeview>.nav-item>.nav-link.active:focus, [class*=sidebar-dark-] .nav-treeview>.nav-item>.nav-link.active {
-    background-color:  #17a2b8!important;
+    background-color:  #17a2b8 ;
     color: #343a40;
 }
 .select2-container--default .select2-selection--multiple .select2-selection__choice {
@@ -154,4 +154,13 @@ LOGIN PAGE
 }
 .vertical-baseline{
     vertical-align: baseline !important;
+}
+
+.custom.nav-item.menu-open > a{
+    background-color:  #17a2b8 !important;
+}
+
+.custom.nav-link.active{
+    background-color: #ffffff !important;
+    color:#17a2b8 !important;
 }
