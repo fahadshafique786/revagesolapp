@@ -84,6 +84,7 @@ Route::group(
         Route::post('/add-update-teams/{sports_id}', [TeamsController::class, 'store']);
         Route::post('/delete-team', [TeamsController::class, 'destroy']);
         Route::post('/edit-team', [TeamsController::class, 'edit']);
+        Route::post('/getTeamsByLeagueId', [TeamsController::class, 'getTeamsByLeagueId']);
 
 
         /******* Schedules Module ***********/

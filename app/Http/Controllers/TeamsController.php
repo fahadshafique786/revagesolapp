@@ -146,5 +146,19 @@ class TeamsController extends Controller
     }
 
 
+    public function getTeamsByLeagueId(Request $request)
+    {
+        $teamsList = Teams::where('leagues_id',$request->leagues_id)->get();
+        //dd($teamsList);
+        $options = '<option value="">Select Team </option>';
+        if(!empty($teamsList)){
+            foreach($teamsList as $obj){
+                $options .= '<option value="'.$obj->id.'">   '  .   $obj->name    .   '    </option>';
+            }
+        }
+
+        return $options;
+    }
+
 
 }

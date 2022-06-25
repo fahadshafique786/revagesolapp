@@ -24,11 +24,13 @@ class ScheduleController extends Controller
     {
         $sportData = Sports::where('id',$sports_id)->first();
         if(!empty($sportData)){
+            $leaguesList = Leagues::where('sports_id',$sports_id)->get();
             $teamsList = Teams::where('sports_id',$sports_id)->get();
 
             return view('schedules')
                 ->with('sports_id',$sports_id)
                 ->with('sportData',$sportData)
+                ->with('leaguesList',$leaguesList)
                 ->with('teamsList',$teamsList);
         }
         else{
@@ -61,6 +63,7 @@ class ScheduleController extends Controller
 
         $input = array();
         $input['label'] = $request->label;
+        $input['leagues_id'] = $request->leagues_id;
         $input['home_team_id'] = $request->home_team_id;
         $input['away_team_id'] = $request->away_team_id;
         $input['start_time'] = $date_string = $request->start_time;
@@ -89,15 +92,24 @@ class ScheduleController extends Controller
         return response()->json(['success' => true]);
     }
 
-    public function fetchschedulesdata($sports_id)
+    public function fetchschedulesdata(Request $request , $sports_id)
     {
         if(request()->ajax()) {
 
             $response = array();
-            $Filterdata = Schedules::select('schedules.*','homeTeam.name as home_team_name','homeTeam.points as home_points','awayTeam.name as away_team_name','awayTeam.points as away_points')
-                ->where('schedules.sports_id',$sports_id)
-                ->join('teams as homeTeam', function ($join) {
-                    $join->on('schedules.home_team_id', '=', 'homeTeam.id');
+            $Filterdata = Schedules::select('schedules.*','leagues.name as league_name','homeTeam.name as home_team_name','homeTeam.points as home_points','awayTeam.name as away_team_name','awayTeam.points as away_points')
+                ->where('schedules.sports_id',$sports_id);
+
+
+            if(isset($request->filter_league) && !empty($request->filter_league)){
+                $Filterdata = $Filterdata->where('schedules.leagues_id',$request->filter_league);
+            }
+
+            $Filterdata = $Filterdata->join('teams as homeTeam', function ($join) {
+                $join->on('schedules.home_team_id', '=', 'homeTeam.id');
+                })
+                ->join('leagues', function ($join) {
+                    $join->on('leagues.id', '=', 'schedules.leagues_id');
                 })
                 ->join('teams as awayTeam', function ($join) {
                     $join->on('schedules.away_team_id', '=', 'awayTeam.id');
@@ -121,7 +133,7 @@ class ScheduleController extends Controller
 
                     $response[$i]['srno'] = $serverLink;
                     $response[$i]['label'] = $obj->label;
-                    $response[$i]['league'] = "PSL";
+                    $response[$i]['league'] = $obj->league_name;
                     $response[$i]['home_team_id'] = $obj->home_team_name;
                     $response[$i]['away_team_id'] = $obj->away_team_name;
                     $response[$i]['score'] = $obj->home_points . " - " . $obj->away_points;

@@ -22,6 +22,30 @@
                                     </div>
                                 </div>
                             </div>
+
+
+                            <div class="row">
+
+                                <div class="col-sm-2 pt-4">
+                                    <select class="form-control" id="league_filter" name="league_filter" >
+                                        <option value="">   Select League </option>
+                                        @foreach ($leaguesList as $obj)
+                                            <option value="{{ $obj->id }}"  {{ (isset($obj->id) && old('id')) ? "selected":"" }}>{{ $obj->name }}</option>
+                                        @endforeach
+                                    </select>
+
+                                </div>
+
+                                <div class="col-sm-2 pt-4">
+
+                                    <button type="button" class="btn btn-primary" id="filter"> <i class="fa fa-filter"></i> Apply Filter </button>
+                                </div>
+
+
+                            </div>
+
+
+
                         </div>
                         <div class="card-body">
                             <table class="table table-bordered table-hover" id="DataTbl">
@@ -75,17 +99,33 @@
 
                             </div>
 
+                            <div class="form-group row">
 
+                                <div class="col-sm-12">
+                                    <label for="name" class="control-label">Leagues</label>
+                                    <select class="form-control" id="leagues_id" name="leagues_id" required onchange="getTeamsByLeagues(this.value);">
+                                        <option value="">   Select League</option>
+                                        @foreach ($leaguesList as $obj)
+                                            <option value="{{ $obj->id }}"  {{ (isset($obj->id) && old('id')) ? "selected":"" }}>{{ $obj->name }}</option>
+                                        @endforeach
+                                    </select>
+
+                                    <span class="text-danger" id="leaguesError"></span>
+
+                                </div>
+
+                            </div>
 
                             <div class="form-group row">
 
                                 <div class="col-sm-12">
                                     <label for="name" class="control-label">Home Team</label>
-                                    <select class="form-control" id="home_team_id" name="home_team_id" required>
+                                    <select class="form-control" id="home_team_id" name="home_team_id" required
+                                            onchange="verifyHomeAwayTeamDuplication('home',this.id,this.value)">
                                         <option value="">   Select Home Team </option>
-                                        @foreach ($teamsList as $team)
-                                            <option value="{{ $team->id }}"  {{ (isset($team->id) && old('id')) ? "selected":"" }}>{{ $team->name }}</option>
-                                        @endforeach
+{{--                                        @foreach ($teamsList as $team)--}}
+{{--                                            <option value="{{ $team->id }}"  {{ (isset($team->id) && old('id')) ? "selected":"" }}>{{ $team->name }}</option>--}}
+{{--                                        @endforeach--}}
                                     </select>
 
                                     <span class="text-danger" id="home_teamError"></span>
@@ -98,11 +138,12 @@
 
                                 <div class="col-sm-12">
                                     <label for="name" class="control-label">Away Team</label>
-                                    <select class="form-control" id="away_team_id" name="away_team_id" required>
+                                    <select class="form-control" id="away_team_id" name="away_team_id" required
+                                            onchange="verifyHomeAwayTeamDuplication('away',this.id,this.value)">
                                         <option value="">   Select Away Team </option>
-                                        @foreach ($teamsList as $team)
-                                            <option value="{{ $team->id }}"  {{ (isset($team->id) && old('id')) ? "selected":"" }}>{{ $team->name }}</option>
-                                        @endforeach
+{{--                                        @foreach ($teamsList as $team)--}}
+{{--                                            <option value="{{ $team->id }}"  {{ (isset($team->id) && old('id')) ? "selected":"" }}>{{ $team->name }}</option>--}}
+{{--                                        @endforeach--}}
                                     </select>
 
                                     <span class="text-danger" id="away_teamError"></span>
@@ -146,6 +187,60 @@
 @push('scripts')
     <script type="text/javascript">
 
+
+
+        $('#filter').click(function(){
+            var league_filter = $('#league_filter').val();
+            if(league_filter != '')
+            {
+                $('#DataTbl').DataTable().destroy();
+                fetchData(league_filter);
+            }
+            else
+            {
+                alert('Select Filter Option');
+                $('#DataTbl').DataTable().destroy();
+                fetchData();
+            }
+        });
+
+
+        function getTeamsByLeagues(leagues_id){
+
+            $.ajax({
+                type:"POST",
+                url: "{{ url('admin/getTeamsByLeagueId') }}",
+                data: { leagues_id: leagues_id},
+                success: function(response){
+                    $("#home_team_id").html(response);
+                    $("#away_team_id").html(response);
+                }
+            });
+
+        }
+
+        function verifyHomeAwayTeamDuplication(type,currentId,currentValue){
+
+            if(type == 'home') {
+                $("#home_teamError").text('');
+                if (currentValue == $("#away_team_id").val()) {
+                    $("#home_teamError").text('Please select different team!');
+                    $("#home_team_id").val('');
+                }
+            }
+
+            if(type == 'away'){
+                $("#away_teamError").text('');
+                if(currentValue == $("#home_team_id").val()){
+                    $("#away_teamError").text('Please select different team!');
+                    $("#away_team_id").val('');
+                }
+
+            }
+        }
+
+
+
         $(document).delegate('.isLiveStatusSwitch', 'switchChange.bootstrapSwitch', function(event,state){
 
             var schedule_id = $(this).attr('data-schedule-id');
@@ -166,10 +261,9 @@
 
         var Table_obj = "";
 
-        function fetchData()
+        function fetchData(filter_league = "")
         {
-            var filter_league = "";
-            $.ajaxSetup({
+             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
@@ -236,7 +330,7 @@
                         }
                     },
                 ],
-                order: [[5, 'asc']]
+                order: [[6, 'asc']]
             });
 
 
@@ -265,6 +359,7 @@
                 $('#pointsError').text('');
                 $('#team_iconError').text('');
                 $('#leagues_idError').text('');
+
                 $.ajax({
                     type:"POST",
                     url: "{{ url('admin/edit-schedule') }}",
@@ -276,14 +371,22 @@
                         $('#id').val("");
                         $('#addEditForm').trigger("reset");
                         $('#ajaxheadingModel').html("Edit Schedule");
-                        $('#ajax-model').modal('show');
+
+                        $('#leagues_id').val(res.leagues_id);
+
+                        getTeamsByLeagues(res.leagues_id)
+
 
                         $('#id').val(res.id);
                         $('#label').val(res.label);
-                        $('#home_team_id').val(res.home_team_id);
-                        $('#away_team_id').val(res.away_team_id);
+
 
                         $('#start_time').val(convertTime24to12(res.start_time));
+                        setTimeout(function(){
+                            $('#home_team_id').val(res.home_team_id);
+                            $('#away_team_id').val(res.away_team_id);
+                            $('#ajax-model').modal('show');
+                        },1500);
 
                     }
                 });
