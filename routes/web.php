@@ -88,10 +88,11 @@ Route::group(
 
         /******* Schedules Module ***********/
         Route::get('/schedules/{sports_id}', [ScheduleController::class, 'index']);
-        Route::get('/fetch-schedules-data/{sports_id}', [ScheduleController::class, 'fetchschedulesdata']);
+        Route::post('/fetch-schedules-data/{sports_id}', [ScheduleController::class, 'fetchschedulesdata']);
         Route::post('/add-update-schedules/{sports_id}', [ScheduleController::class, 'store']);
         Route::post('/delete-schedule', [ScheduleController::class, 'destroy']);
         Route::post('/edit-schedule', [ScheduleController::class, 'edit']);
+        Route::post('/update-schedule-live-status', [ScheduleController::class, 'updateScheduleLiveStatus']);
 
 
         /******* Servers Module ***********/

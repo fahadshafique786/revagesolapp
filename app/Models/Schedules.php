@@ -10,8 +10,9 @@ class Schedules extends Model
     use HasFactory;
 
     protected $fillable = [
-        'sports_id',
         'label',
+        'sports_id',
+        'leagues_id',
         'home_team_id',
         'away_team_id',
         'start_time',

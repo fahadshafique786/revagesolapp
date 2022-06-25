@@ -110,6 +110,7 @@
                             </div>
 
 
+
                             <div class="form-group">
                                 <label for="start_time">Match Start(DateTime)</label>
                                 <div class="input-group date" id="" data-target-input="nearest">
@@ -143,10 +144,30 @@
 
 @push('scripts')
     <script type="text/javascript">
+
+        $(document).delegate('.isLiveStatusSwitch', 'switchChange.bootstrapSwitch', function(event,state){
+
+            var schedule_id = $(this).attr('data-schedule-id');
+            var is_live  = (state) ? 1 : 0;
+
+            $.ajax({
+                type:"POST",
+                url: "{{ url('admin/update-schedule-live-status') }}",
+                data: { schedule_id: schedule_id , is_live :  is_live},
+                dataType: 'json',
+                success: function(res){
+                    fetchData();
+                }
+            });
+
+        });
+
+
         var Table_obj = "";
 
         function fetchData()
         {
+            var filter_league = "";
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -169,7 +190,13 @@
                     },
                 ],
                 serverSide: true,
-                ajax: "{{ url('admin/fetch-schedules-data/'.$sports_id) }}",
+                "ajax" : {
+                    url:"{{ url('admin/fetch-schedules-data/'.$sports_id) }}",
+                    type:"POST",
+                    data:{
+                        filter_league:filter_league
+                    }
+                },
                 columns: [
                     { data: 'srno', name: 'srno' },
                     { data: 'label', name: 'label'},
@@ -177,15 +204,28 @@
                     { data: 'away_team_id', name: 'away_team_id' },
                     { data: 'score', name: 'score' },
                     { data: 'start_time', name: 'start_time', render: function( data, type, full, meta,rowData ) {
+
                         return convertTime24to12(data)
+
                         }
 
                     },
-                    { data: 'is_live', name: 'is_live' },
-                    {data: 'action', name: 'action', orderable: false},
+                    { data: 'is_live', name: 'is_live'},
+
+                    {data: 'action', name: 'action', orderable: false , render: function( data, type, full, meta,rowData ) {
+
+                            $("input[data-bootstrap-switch]").each(function(){
+                                $(this).bootstrapSwitch('state', $(this).prop('checked'));
+                            });
+
+                            return data;
+
+                        }
+                    },
                 ],
-                order: [[0, 'asc']]
+                order: [[5, 'asc']]
             });
+
 
         }
 

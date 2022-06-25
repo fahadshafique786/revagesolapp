@@ -203,11 +203,10 @@
 
             Table_obj = $('#DataTbl').DataTable({
                 processing: true,
-                columnDefs: [
-                    { targets: '_all',
-                        orderable: true
-                    },
-                ],
+                columnDefs: [{
+                    "defaultContent": "-",
+                    "targets": "_all"
+                }],
                 serverSide: true,
                 "ajax" : {
                     url:"{{ url('admin/fetch-teams-data/'.$sports_id) }}",

@@ -59,29 +59,6 @@ class ScheduleController extends Controller
         }
 
 
-          $date_string = $request->start_time;
-//        $date_string = "2022/06/03 14:00";
-//        $date_string = "25/06/2022 14:00";
-//        if(strtotime($date_string)){
-//            //
-//            dd("it's in date format");
-//        }
-//        dd("ok");
-
-//        $dateArray = explode(' ',$request->start_time);
-//        $aDateString = $dateArray[0];
-//        $aTimeString = $dateArray[1];
-//
-//        $dateTimeString = $aDateString." ".$aTimeString;
-//
-//       $ddd = date('Y-m-d', strtotime('28/06/2021'));
-//        dd($aDateString,$ddd,$dateArray,$dateTimeString,$request->start_time);
-//
-//        $dueDateTime = Carbon::createFromFormat('Y-m-d H:i:s', $dateTimeString, 'Europe/London');
-//
-//        dd($dueDateTime,$request->start_time);
-
-
         $input = array();
         $input['label'] = $request->label;
         $input['home_team_id'] = $request->home_team_id;
@@ -124,7 +101,8 @@ class ScheduleController extends Controller
                 })
                 ->join('teams as awayTeam', function ($join) {
                     $join->on('schedules.away_team_id', '=', 'awayTeam.id');
-                })->orderBy('schedules.start_time','desc')->get();
+                })->orderBy('schedules.start_time','ASC')->get();
+
 
             if(!empty($Filterdata))
             {
@@ -142,8 +120,11 @@ class ScheduleController extends Controller
                     $response[$i]['is_live'] = strtoupper($obj->is_live);
                     if(auth()->user()->hasRole('super-admin') || auth()->user()->can('manage_schedules'))
                     {
-                        $response[$i]['action'] = '<a href="javascript:void(0)" class="btn edit" data-id="'. $obj->id .'"><i class="fa fa-edit  text-info"></i></a>
-											<a href="javascript:void(0)" class="btn delete " data-id="'. $obj->id .'"><i class="fa fa-trash-alt text-danger"></i></a>';
+                        $liveSwitch = ($obj->is_live) ? 'checked' : '';
+                        $response[$i]['action'] = '
+                            <input type="checkbox" class="isLiveStatusSwitch" data-id="is_live_status-'.$obj->id.'" data-schedule-id="'.$obj->id.'" '.$liveSwitch.' data-bootstrap-switch data-off-color="danger" data-on-color="info">
+                            <a href="javascript:void(0)" class="btn edit" data-id="'. $obj->id .'"><i class="fa fa-edit  text-info"></i></a>
+							<a href="javascript:void(0)" class="btn delete " data-id="'. $obj->id .'"><i class="fa fa-trash-alt text-danger"></i></a>';
                     }
                     else
                     {
@@ -159,6 +140,20 @@ class ScheduleController extends Controller
                 ->make(true);
         }
     }
+
+    public function updateScheduleLiveStatus(Request $request){
+
+        $input['is_live'] = $request->is_live;
+        Schedules::updateOrCreate(
+        [
+            'id' => $request->schedule_id
+        ],
+        $input);
+
+        return response()->json(['success' => true]);
+
+    }
+
 
 
 }

@@ -17,6 +17,7 @@ class CreateSchedulesTable extends Migration
             $table->id();
             $table->string('label')->nullable();
             $table->bigInteger('sports_id');
+            $table->bigInteger('leagues_id')->nullable();
             $table->bigInteger('home_team_id');
             $table->bigInteger('away_team_id');
             $table->dateTime('start_time')->nullable();
