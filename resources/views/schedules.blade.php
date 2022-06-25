@@ -263,7 +263,11 @@
 
         function fetchData(filter_league = "")
         {
-             $.ajaxSetup({
+            $("input[data-bootstrap-switch]").each(function(){
+                $(this).bootstrapSwitch('state', $(this).prop('checked'));
+            });
+
+            $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
@@ -290,6 +294,18 @@
                     type:"POST",
                     data:{
                         filter_league:filter_league
+                    },
+                    dataSrc: function ( json ) {
+                        //Make your callback here.
+
+                        setTimeout(function () {
+                             $("input[data-bootstrap-switch]").each(function(){
+                                $(this).bootstrapSwitch('state', $(this).prop('checked'));
+                            });
+                         },600);
+
+
+                        return json.data;
                     }
                 },
                 columns: [
@@ -320,12 +336,11 @@
                     },
 
                     {data: 'action', name: 'action', orderable: false , render: function( data, type, full, meta,rowData ) {
-
                             $("input[data-bootstrap-switch]").each(function(){
                                 $(this).bootstrapSwitch('state', $(this).prop('checked'));
                             });
-
                             return data;
+
 
                         }
                     },
@@ -334,6 +349,10 @@
             });
 
 
+            setTimeout(function(){
+
+
+            },1500);
         }
 
         $(document).ready(function($){
