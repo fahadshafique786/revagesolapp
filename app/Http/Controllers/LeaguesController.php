@@ -89,15 +89,24 @@ class LeaguesController extends Controller
 
     }
 
-    public function fetchleaguesdata()
+    public function fetchleaguesdata(Request  $request)
     {
+
         if(request()->ajax()) {
 
             $response = array();
-            $Filterdata = Leagues::select('leagues.*','sports.name as sport_name')
-                ->join('sports', function ($join) {
-                    $join->on('leagues.sports_id', '=', 'sports.id');
-                })->orderBy('leagues.id','asc')->get();
+            $Filterdata = Leagues::select('leagues.*','sports.name as sport_name');
+
+
+            if(isset($request->filter_sports) && !empty($request->filter_sports)){
+                $Filterdata = $Filterdata->where('leagues.sports_id',$request->filter_sports);
+            }
+
+            $Filterdata = $Filterdata->join('sports', function ($join) {
+                $join->on('leagues.sports_id', '=', 'sports.id');
+            })->orderBy('leagues.id','asc')->get();
+
+
 
             if(!empty($Filterdata))
             {

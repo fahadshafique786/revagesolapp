@@ -31,6 +31,29 @@
 
                                 </div>
                             </div>
+
+
+                            <div class="row">
+
+                                <div class="col-sm-2 pt-4">
+                                    <select class="form-control" id="sports_filter" name="sports_filter" >
+                                        <option value="">   Select Sports </option>
+                                        @foreach ($sports_list as $sport)
+                                            <option value="{{ $sport->id }}"  {{ (isset($sport->id) && old('id')) ? "selected":"" }}>{{ $sport->name }}</option>
+                                        @endforeach
+                                    </select>
+
+                                </div>
+
+                                <div class="col-sm-2 pt-4">
+
+                                    <button type="button" class="btn btn-primary" id="filter"> <i class="fa fa-filter"></i> Apply Filter </button>
+                                </div>
+
+
+                            </div>
+
+
                         </div>
                         <div class="card-body">
                             <table class="table table-bordered table-hover" id="DataTbl">
@@ -135,9 +158,28 @@
 
 @push('scripts')
     <script type="text/javascript">
+
+
+        $('#filter').click(function(){
+            var sports_filter = $('#sports_filter').val();
+            if(sports_filter != '')
+            {
+                $('#DataTbl').DataTable().destroy();
+                fetchData(sports_filter);
+            }
+            else
+            {
+                alert('Select  Filter Option');
+                $('#DataTbl').DataTable().destroy();
+                fetchData();
+            }
+        });
+
+
+
         var Table_obj = "";
 
-        function fetchData()
+        function fetchData(filter_sports= '')
         {
             $.ajaxSetup({
                 headers: {
@@ -154,14 +196,23 @@
 
 
             Table_obj = $('#DataTbl').DataTable({
-                processing: true,
-                columnDefs: [
-                    { targets: '_all',
-                        orderable: true
-                    },
-                ],
+                "processing" : true,
+                "serverSide" : true,
+                "order" : [],
+                "searching" : true,
+                "paging": false,
+                columnDefs: [{
+                    "defaultContent": "-",
+                    "targets": "_all"
+                }],
                 serverSide: true,
-                ajax: "{{ url('admin/fetch-leagues-data') }}",
+                "ajax" : {
+                    url:"{{ url('admin/fetch-leagues-data') }}",
+                    type:"POST",
+                    data:{
+                        filter_sports:filter_sports
+                    }
+                },
                 columns: [
                     { data: 'srno', name: 'srno' , searchable:false},
                     { data: 'icon', name: 'icon', searchable:false},

@@ -96,16 +96,21 @@ class TeamsController extends Controller
         return response()->json(['success' => true]);
     }
 
-    public function fetchteamsdata($sports_id)
+    public function fetchteamsdata(Request $request,$sports_id)
     {
         if(request()->ajax()) {
 
             $response = array();
             $Filterdata = Teams::select('teams.*','leagues.name as league_name')
-                ->where('teams.sports_id',$sports_id)
-                ->join('leagues', function ($join) {
-                    $join->on('leagues.id', '=', 'teams.leagues_id');
-                })->orderBy('teams.id','asc')->get();
+                ->where('teams.sports_id',$sports_id);
+
+            if(isset($request->filter_league) && !empty($request->filter_league)){
+                $Filterdata = $Filterdata->where('teams.leagues_id',$request->filter_league);
+            }
+
+            $Filterdata = $Filterdata->join('leagues', function ($join) {
+                $join->on('leagues.id', '=', 'teams.leagues_id');
+            })->orderBy('teams.id','asc')->get();
 
             if(!empty($Filterdata))
             {

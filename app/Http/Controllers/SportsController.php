@@ -101,7 +101,6 @@ class SportsController extends Controller
 
             $response = array();
             $Filterdata = Sports::select('*');
-//            ->orderBy('id','asc');
 
             if(isset($request->filter_sports) && !empty($request->filter_sports)){
                 $Filterdata = $Filterdata->where('id',$request->filter_sports);

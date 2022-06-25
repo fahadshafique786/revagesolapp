@@ -22,6 +22,30 @@
                                     </div>
                                 </div>
                             </div>
+
+
+                            <div class="row">
+
+                                <div class="col-sm-2 pt-4">
+                                    <select class="form-control" id="league_filter" name="league_filter" >
+                                        <option value="">   Select League </option>
+                                        @foreach ($leagues_list as $obj)
+                                            <option value="{{ $obj->id }}"  {{ (isset($obj->id) && old('id')) ? "selected":"" }}>{{ $obj->name }}</option>
+                                        @endforeach
+                                    </select>
+
+                                </div>
+
+                                <div class="col-sm-2 pt-4">
+
+                                    <button type="button" class="btn btn-primary" id="filter"> <i class="fa fa-filter"></i> Apply Filter </button>
+                                </div>
+
+
+                            </div>
+
+
+
                         </div>
                         <div class="card-body">
                             <table class="table table-bordered table-hover" id="DataTbl">
@@ -139,9 +163,29 @@
 
 @push('scripts')
     <script type="text/javascript">
+
+
+        $('#filter').click(function(){
+            var league_filter = $('#league_filter').val();
+            if(league_filter != '')
+            {
+                $('#DataTbl').DataTable().destroy();
+                fetchData(league_filter);
+            }
+            else
+            {
+                alert('Select Filter Option');
+                $('#DataTbl').DataTable().destroy();
+                fetchData();
+            }
+        });
+
+
+
+
         var Table_obj = "";
 
-        function fetchData()
+        function fetchData(filter_league)
         {
             $.ajaxSetup({
                 headers: {
@@ -165,14 +209,19 @@
                     },
                 ],
                 serverSide: true,
-                ajax: "{{ url('admin/fetch-teams-data/'.$sports_id) }}",
-                columns: [
-                    { data: 'srno', name: 'srno' },
-                    { data: 'icon', name: 'icon'},
+                "ajax" : {
+                    url:"{{ url('admin/fetch-teams-data/'.$sports_id) }}",
+                    type:"POST",
+                    data:{
+                        filter_league:filter_league
+                    }
+                },                columns: [
+                    { data: 'srno', name: 'srno' ,searchable:false},
+                    { data: 'icon', name: 'icon' ,searchable:false},
                     { data: 'name', name: 'name' },
                     { data: 'league_name', name: 'league_name' },
-                    { data: 'points', name: 'points' },
-                    {data: 'action', name: 'action', orderable: false},
+                    { data: 'points', name: 'points'  ,searchable:false},
+                    {data: 'action', name: 'action', orderable: false ,searchable:false},
                 ],
                 order: [[0, 'asc']]
             });
