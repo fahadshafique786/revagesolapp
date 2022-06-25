@@ -50,7 +50,7 @@ Route::group(
         /******* Sports Module ***********/
 
         Route::get('/sports', [SportsController::class, 'index']);
-        Route::get('/fetchsportsdata', [SportsController::class, 'fetchsportsdata']);
+        Route::post('/fetchsportsdata', [SportsController::class, 'fetchsportsdata']);
         Route::post('/add-update-Sport', [SportsController::class, 'store']);
         Route::post('/edit-Sport', [SportsController::class, 'edit']);
         Route::post('/delete-sport', [SportsController::class, 'destroy']);

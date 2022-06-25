@@ -21,7 +21,8 @@ class LeaguesController extends Controller
     public function index(Request $request)
     {
         $sports_list = Sports::all();
-        return view('leagues')->with('sports_list',$sports_list);
+        return view('leagues')
+            ->with('sports_list',$sports_list);
     }
 
     public function store(Request $request)

@@ -20,7 +20,9 @@ class SportsController extends Controller
 
     public function index(Request $request)
     {
-        return view('sports');
+        $sports_list = Sports::all();
+        return view('sports')
+            ->with('sports_list',$sports_list);
     }
 
     public function store(Request $request)
@@ -93,12 +95,20 @@ class SportsController extends Controller
         return response()->json(['success' => true]);
     }
 
-    public function fetchsportsdata()
+    public function fetchsportsdata(Request $request)
     {
         if(request()->ajax()) {
 
             $response = array();
-            $Filterdata = Sports::select('*')->orderBy('id','asc')->get();
+            $Filterdata = Sports::select('*');
+//            ->orderBy('id','asc');
+
+            if(isset($request->filter_sports) && !empty($request->filter_sports)){
+                $Filterdata = $Filterdata->where('id',$request->filter_sports);
+            }
+
+            $Filterdata =  $Filterdata->orderBy('id','asc')->get();
+
             if(!empty($Filterdata))
             {
                 $i = 0;
