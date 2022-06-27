@@ -26,7 +26,7 @@
             <div class="small-box bg-success">
               <div class="inner">
                 <h3>
-                    {{getServerLoad()}}
+{{--                    {{getServerLoad()}}--}}
                     <sup style="font-size: 20px">%</sup></h3>
 
                 <p>CPU Load</p>
