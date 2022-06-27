@@ -46,7 +46,7 @@ if ( ! function_exists('getServerLoad'))
             if(function_exists('sys_getloadavg')){
                 $exec_loads = sys_getloadavg();
                 $exec_cores = trim(shell_exec("grep -P '^processor' /proc/cpuinfo|wc -l"));
-                $cpu = round($exec_loads[1]/($exec_cores + 1)*100, 0) . '%';
+                $cpu = round($exec_loads[1]/($exec_cores + 1)*100, 0);
 
 //                $loads=sys_getloadavg();
 //                $core_nums=trim(shell_exec("grep -P '^physical id' /proc/cpuinfo|wc -l"));
