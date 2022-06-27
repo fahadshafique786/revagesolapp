@@ -41,6 +41,29 @@ if ( ! function_exists('getServerLoad'))
     {
         function getServerLoad(){
 
+            if(file_exists('/proc/stat')){
+                $cont = file('/proc/stat');
+                $cpuloadtmp = explode(' ',$cont[0]);
+                $cpuload0[0] = $cpuloadtmp[2] + $cpuloadtmp[4];
+                $cpuload0[1] = $cpuloadtmp[2] + $cpuloadtmp[4]+ $cpuloadtmp[5];
+                sleep(1);
+                $cont = file('/proc/stat');
+                $cpuloadtmp = explode(' ',$cont[0]);
+                $cpuload1[0] = $cpuloadtmp[2] + $cpuloadtmp[4];
+                $cpuload1[1] = $cpuloadtmp[2] + $cpuloadtmp[4]+ $cpuloadtmp[5];
+                return ($cpuload1[0] - $cpuload0[0])*100/($cpuload1[1] - $cpuload0[1]);
+
+            }
+            else{
+
+                return 0;
+
+            }
+
+        }
+
+        function getServerLoadXXX(){
+
 
 
             if(function_exists('sys_getloadavg')){
