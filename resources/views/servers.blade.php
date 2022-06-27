@@ -228,6 +228,7 @@
                 $('#addEditForm').trigger("reset");
                 $("#password").prop("required",true);
                 $('#ajaxheadingModel').html("Add Server");
+                $('#nameError').text('');
                 $('#ajax-model').modal('show');
             });
 

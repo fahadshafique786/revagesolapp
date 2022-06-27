@@ -176,7 +176,7 @@
 
                                 </select>
 
-                                <span class="text-danger" id="serversError"></span>
+                                <span class="text-danger" id="linked_serverError"></span>
 
                             </div>
 
@@ -334,6 +334,8 @@
         $("#addEditForm").on('submit',(function(e) {
             e.preventDefault();
             var Form_Data = new FormData(this);
+
+
             $("#btn-save").html('Please Wait...');
             $("#btn-save"). attr("disabled", true);
 
@@ -375,6 +377,7 @@
         $("#addEditForm-LinkServer").on('submit',(function(e) {
             e.preventDefault();
             var Form_Data = new FormData(this);
+
             $("#btn-save-LinkServer").html('Please Wait...');
             $("#btn-save-LinkServer").attr("disabled", true);
 
@@ -396,7 +399,7 @@
                 error:function (response) {
                     $("#btn-save-LinkServer").html(' Save');
                     $("#btn-save-LinkServer"). attr("disabled", false);
-                    $('#server_idError').text(response.responseJSON.errors.server_id);
+                    $('#linked_serverError').text(response.responseJSON.errors.message);
                 }
             });
         }));

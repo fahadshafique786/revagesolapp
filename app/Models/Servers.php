@@ -12,6 +12,7 @@ class Servers extends Model
 
     protected $fillable = [
         'sports_id',
+            'leagues_id',
         'name',
         'link',
         'isHeader',

@@ -8,6 +8,9 @@ use App\Models\ScheduledServers;
 use App\Models\Schedules;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
+//use Illuminate\Contracts\Validation\Validator;
+
 
 class ServersController extends Controller
 {
@@ -35,14 +38,14 @@ class ServersController extends Controller
         if(!empty($request->id))
         {
             $this->validate($request, [
-                'name' => 'required',
+                'name' => 'required|unique:servers,name,'.$request->id,
                 'sports_id' => 'required',
             ]);
         }
         else
         {
             $this->validate($request, [
-                'name' => 'required',
+                'name' => 'required|unique:servers,name,'.$request->id,
                 'sports_id' => 'required',
             ]);
         }
@@ -176,6 +179,24 @@ class ServersController extends Controller
     public function attachServers(Request $request,$schedule_id){
 
         if($schedule_id){
+            $request->merge(['schedule_id' => $schedule_id]);
+
+             $checkExistance = ScheduledServers::where('schedule_id',$request->schedule_id)
+                    ->where('server_id',$request->server_id);
+
+             if($checkExistance->exists()){
+                 return response()->json([
+                     'errors' =>
+                     [
+                         'message'=> 'This server is already linked with the same schedule',
+                         'status_code' => 400
+                     ]
+                 ], 400);
+
+                 exit();
+             }
+
+
             $data['schedule_id'] = $schedule_id;
             $data['server_id'] = $request->server_id;
             $scheduledServers   =   ScheduledServers::create($data);
