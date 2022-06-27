@@ -76,7 +76,7 @@ Route::group(
         Route::post('/add-update-leagues', [LeaguesController::class, 'store']);
         Route::post('/edit-league', [LeaguesController::class, 'edit']);
         Route::post('/delete-league', [LeaguesController::class, 'destroy']);
-
+        Route::post('/leagueslistbysport', [LeaguesController::class, 'getLeaguesOptionBySports']);
 
         /******* Teams Module ***********/
         Route::get('/teams/{sports_id}', [TeamsController::class, 'index']);
@@ -98,7 +98,7 @@ Route::group(
 
         /******* Servers Module ***********/
         Route::get('/servers', [ServersController::class, 'index']);
-        Route::get('/fetch-servers-data', [ServersController::class, 'fetchserversdata']);
+        Route::post('/fetch-servers-data', [ServersController::class, 'fetchserversdata']);
         Route::post('/add-update-servers', [ServersController::class, 'store']);
         Route::post('/delete-server', [ServersController::class, 'destroy']);
         Route::post('/edit-server', [ServersController::class, 'edit']);

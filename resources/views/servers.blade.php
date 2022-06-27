@@ -22,6 +22,35 @@
                                     </div>
                                 </div>
                             </div>
+
+
+                            <div class="row">
+
+                                <div class="col-sm-2 pt-4">
+                                    <select class="form-control" id="sports_filter" name="sports_filter" onchange="getLeaguesOptionBySports(this.value,'leagues_filter')">
+                                        <option value="">   Select Sports </option>
+                                        @foreach ($sports_list as $obj)
+                                            <option value="{{ $obj->id }}"  {{ (isset($obj->id) && old('id')) ? "selected":"" }}>{{ $obj->name }}</option>
+                                        @endforeach
+                                    </select>
+
+                                </div>
+                                <div class="col-sm-2 pt-4">
+                                    <select class="form-control" id="leagues_filter" name="leagues_filter" >
+                                        <option value="">   Select League </option>
+                                    </select>
+
+                                </div>
+
+                                <div class="col-sm-2 pt-4">
+
+                                    <button type="button" class="btn btn-primary" id="filter"> <i class="fa fa-filter"></i> Apply Filter </button>
+                                </div>
+
+
+                            </div>
+
+
                         </div>
                         <div class="card-body">
                             <table class="table table-bordered table-hover" id="DataTbl">
@@ -30,6 +59,7 @@
                                     <th scope="col" width="10px">#</th>
                                     <th scope="col">Name</th>
                                     <th scope="col">Sport</th>
+                                    <th scope="col">League</th>
                                     <th scope="col">Link</th>
                                     <th scope="col">Headers</th>
                                     <th scope="col">Premium</th>
@@ -66,7 +96,7 @@
 
                                 <div class="col-sm-12">
                                     <label for="name" class="control-label">Sport</label>
-                                    <select class="form-control" id="sports_id" name="sports_id" required>
+                                    <select class="form-control" id="sports_id" name="sports_id" required onchange="getLeaguesOptionBySports(this.value,'leagues_id')">
                                         <option value="">   Select Sport </option>
                                         @foreach ($sports_list as $sport)
                                             <option value="{{ $sport->id }}"  {{ (isset($sport->id) && old('id')) ? "selected":"" }}>{{ $sport->name }}</option>
@@ -74,6 +104,20 @@
                                     </select>
 
                                     <span class="text-danger" id="sports_idError"></span>
+
+                                </div>
+
+                            </div>
+
+                            <div class="form-group row">
+
+                                <div class="col-sm-12">
+                                    <label for="name" class="control-label">Leagues</label>
+                                    <select class="form-control" id="leagues_id" name="leagues_id" required>
+                                        <option value="">   Select League </option>
+                                    </select>
+
+                                    <span class="text-danger" id="leagues_idError"></span>
 
                                 </div>
 
@@ -173,9 +217,30 @@
 
 @push('scripts')
     <script type="text/javascript">
+
+
+
+        $('#filter').click(function(){
+            var sports_filter = $('#sports_filter').val();
+            if(sports_filter != '')
+            {
+                $('#DataTbl').DataTable().destroy();
+                fetchData(sports_filter);
+            }
+            else
+            {
+                alert('Select Filter Option');
+                $('#DataTbl').DataTable().destroy();
+                fetchData();
+            }
+        });
+
+
+
+
         var Table_obj = "";
 
-        function fetchData()
+        function fetchData(filter_sports = "")
         {
             $.ajaxSetup({
                 headers: {
@@ -199,14 +264,42 @@
                     },
                 ],
                 serverSide: true,
-                ajax: "{{ url('admin/fetch-servers-data') }}",
+                "ajax" : {
+                    url:"{{ url('admin/fetch-servers-data') }}",
+                    type:"POST",
+                    data:{
+                        filter_sports:filter_sports
+                    }
+                },
                 columns: [
                     { data: 'srno', name: 'srno' },
                     { data: 'name', name: 'name' },
                     { data: 'sport_name', name: 'sport_name' },
+                    { data: 'league_name', name: 'league_name' },
                     { data: 'link', name: 'sport_name' },
-                    { data: 'isHeader', name: 'isHeader' },
-                    { data: 'isPremium', name: 'isPremium' },
+                    { data: 'isHeader', name: 'isHeader' , render: function( data, type, full, meta,rowData ) {
+
+                            if(data=='Yes'){
+                                return "<a href='javascript:void(0)' class='badge badge-success text-xs text-capitalize'>"+data+"</a>" +" ";
+                            }
+                            else{
+                                return "<a href='javascript:void(0)' class='badge badge-danger text-xs text-capitalize'>"+data+"</a>" +" ";
+                            }
+                        },
+
+                    },
+
+                    { data: 'isPremium', name: 'isPremium' , render: function( data, type, full, meta,rowData ) {
+
+                            if(data=='Yes'){
+                                return "<a href='javascript:void(0)' class='badge badge-success text-xs text-capitalize'>"+data+"</a>" +" ";
+                            }
+                            else{
+                                return "<a href='javascript:void(0)' class='badge badge-danger text-xs text-capitalize'>"+data+"</a>" +" ";
+                            }
+                        },
+
+                    },
                     {data: 'action', name: 'action', orderable: false},
                 ],
                 order: [[0, 'asc']]
@@ -226,9 +319,10 @@
             $('#addNew').click(function () {
                 $('#id').val("");
                 $('#addEditForm').trigger("reset");
-                $("#password").prop("required",true);
                 $('#ajaxheadingModel').html("Add Server");
                 $('#nameError').text('');
+                $('#leagues_idError').text('');
+                $('#sports_idError').text('');
                 $('#ajax-model').modal('show');
             });
 
@@ -294,9 +388,10 @@
 
                 $('#nameError').text('');
                 $('#sports_idError').text('');
-                $('#linkError').text('');
-                $('#isHeaderError').text('');
-                $('#isPremiumError').text('');
+                $('#leagues_idError').text('');
+                // $('#linkError').text('');
+                // $('#isHeaderError').text('');
+                // $('#isPremiumError').text('');
 
                 $.ajax({
                     type:"POST",
@@ -319,9 +414,10 @@
 
                         $('#nameError').text(response.responseJSON.errors.name);
                         $('#sports_idError').text(response.responseJSON.errors.sports_id);
-                        $('#linkError').text(response.responseJSON.errors.link);
-                        $('#isHeaderError').text(response.responseJSON.errors.isHeader);
-                        $('#isPremiumError').text(response.responseJSON.errors.isPremium);
+                        $('#leagues_idError').text(response.responseJSON.errors.leagues_id);
+                        // $('#linkError').text(response.responseJSON.errors.link);
+                        // $('#isHeaderError').text(response.responseJSON.errors.isHeader);
+                        // $('#isPremiumError').text(response.responseJSON.errors.isPremium);
                     }
                 });
             }));

@@ -141,5 +141,18 @@ class LeaguesController extends Controller
     }
 
 
+    public function getLeaguesOptionBySports(Request $request){
+        $leaguesList = Leagues::where('sports_id',$request->sports_id)->get();
+        $options = '<option value="">Select League </option>';
+        if(!empty($leaguesList)){
+            foreach($leaguesList as $obj){
+                $options .= '<option value="'.$obj->id.'">   '  .   $obj->name    .   '    </option>';
+            }
+        }
+
+        return $options;
+    }
+
+
 
 }

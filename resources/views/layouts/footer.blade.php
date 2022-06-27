@@ -49,6 +49,22 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
 
 <script>
+
+
+    function getLeaguesOptionBySports(sports_id,league_filter_id){
+
+        $.ajax({
+            type:"POST",
+            url: "{{ url('admin/leagueslistbysport') }}",
+            data: { sports_id: sports_id},
+            success: function(response){
+                $("#"+league_filter_id).html(response);
+            }
+        });
+
+    }
+
+
     const convertTime12to24 = (dateTime12h) => {
         const [date, time , modifier] = dateTime12h.split(' ');
 
