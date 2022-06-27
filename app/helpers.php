@@ -39,7 +39,17 @@ if ( ! function_exists('getBooleanStr'))
 
 if ( ! function_exists('getServerLoad'))
     {
-        function getServerLoad($windows = false){
+        function getServerLoad(){
+
+            $loads=sys_getloadavg();
+            $core_nums=trim(shell_exec("grep -P '^physical id' /proc/cpuinfo|wc -l"));
+            $load=$loads[0]/$core_nums;
+            
+            return $load;
+
+        }
+
+        function getServerLoad1($windows = false){
             $os=strtolower(PHP_OS);
             if(strpos($os, 'win') === false){
                 if(file_exists('/proc/loadavg')){
