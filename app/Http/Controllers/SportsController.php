@@ -89,7 +89,6 @@ class SportsController extends Controller
         Teams::where('sports_id',$request->id)->delete();
         Leagues::where('sports_id',$request->id)->delete();
 
-
         Sports::where('id',$request->id)->delete();
 
         return response()->json(['success' => true]);

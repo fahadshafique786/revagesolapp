@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Leagues;
 use App\Models\Sports;
 use App\Models\Teams;
+use App\Models\Schedules;
 
 class TeamsController extends Controller
 {
@@ -92,7 +93,12 @@ class TeamsController extends Controller
 
     public function destroy(Request $request)
     {
+        Schedules::where('home_team_id',$request->id)
+            ->orWhere('away_team_id')
+            ->delete();
+
         $teams = Teams::where('id',$request->id)->delete();
+
         return response()->json(['success' => true]);
     }
 
@@ -149,7 +155,6 @@ class TeamsController extends Controller
     public function getTeamsByLeagueId(Request $request)
     {
         $teamsList = Teams::where('leagues_id',$request->leagues_id)->get();
-        //dd($teamsList);
         $options = '<option value="">Select Team </option>';
         if(!empty($teamsList)){
             foreach($teamsList as $obj){

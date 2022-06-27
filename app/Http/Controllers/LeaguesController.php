@@ -80,8 +80,11 @@ class LeaguesController extends Controller
 
     public function destroy(Request $request)
     {
+        // get servers list from schedule server table!
+        // get schedules list from schedule server table!
 
-//        Schedule::where('leagues_id',$request->id)->delete();
+        Servers::where('leagues_id',$request->id)->delete();
+        Schedules::where('leagues_id',$request->id)->delete();
         Teams::where('leagues_id',$request->id)->delete();
         Leagues::where('id',$request->id)->delete();
 
