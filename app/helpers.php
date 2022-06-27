@@ -51,7 +51,7 @@ if ( ! function_exists('getServerLoad'))
                 $cpuloadtmp = explode(' ',$cont[0]);
                 $cpuload1[0] = $cpuloadtmp[2] + $cpuloadtmp[4];
                 $cpuload1[1] = $cpuloadtmp[2] + $cpuloadtmp[4]+ $cpuloadtmp[5];
-                return ($cpuload1[0] - $cpuload0[0])*100/($cpuload1[1] - $cpuload0[1]);
+                return round(($cpuload1[0] - $cpuload0[0])*100/($cpuload1[1] - $cpuload0[1]),3);
 
             }
             else{
