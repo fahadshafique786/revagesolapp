@@ -41,11 +41,17 @@ if ( ! function_exists('getServerLoad'))
     {
         function getServerLoad(){
 
-            $loads=sys_getloadavg();
-            $core_nums=trim(shell_exec("grep -P '^physical id' /proc/cpuinfo|wc -l"));
-            $load=$loads[0]/$core_nums;
-            
-            return $load;
+            if(function_exists('sys_getloadavg')){
+                $loads=sys_getloadavg();
+                $core_nums=trim(shell_exec("grep -P '^physical id' /proc/cpuinfo|wc -l"));
+                $load=$loads[0]/$core_nums;
+
+                return round($load,2);
+            }
+            else{
+                return 0;
+            }
+
 
         }
 
