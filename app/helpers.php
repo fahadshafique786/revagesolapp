@@ -49,7 +49,7 @@ if ( ! function_exists('getServerLoad'))
                 return round($load,2);
             }
             else{
-                return 0;
+                return 3;
             }
 
 
