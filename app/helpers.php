@@ -148,14 +148,31 @@ if ( ! function_exists('getServerLoad'))
 //
 //}
 
+if (! function_exists('directoryList')){
+    function directoryList ($url) {
+        $outp = 0;
+        if(dir($url))
+        {
+            $d = dir($url);
+            while($entry = $d->read()) {
+                $size = round(filesize($url.$entry)/1024);
+                if ($size > 999) $sizestring = ((round($size/100))/10)." mb";
+                else $sizestring = $size." kb";
+                $outp .= "<a href='".$url.$entry."'>".$entry."</a> [ ".$sizestring." ]<br>\n";
+            }
+            $outp = "Path: ".$d->path."<br>\n".$outp;
+            $d->close();
+        }
 
+    }
+}
 
 if ( ! function_exists('get_server_memory_usage'))
     {
 
     //  RAM Consumption function
-    function get_server_memory_usage(){
-
+    function get_server_memory_usage()
+    {
         $free = shell_exec('free');
         $free = (string)trim($free);
         $memory_usage = 0;
