@@ -10,7 +10,9 @@
             <!-- small box -->
             <div class="small-box bg-info">
               <div class="inner">
-                <h3>{{get_server_memory_usage()}}</h3>
+                <h3>{{get_server_memory_usage()}}
+                    <sup style="font-size: 20px">%</sup></h3>
+                  </h3>
 
                 <p>RAM Usage</p>
               </div>
