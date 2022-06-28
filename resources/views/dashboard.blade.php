@@ -10,9 +10,9 @@
             <!-- small box -->
             <div class="small-box bg-info">
               <div class="inner">
-                <h3>150</h3>
+                <h3>{{get_server_memory_usage()}}</h3>
 
-                <p>Installs</p>
+                <p>RAM Usage</p>
               </div>
               <div class="icon">
                 <i class="ion ion-bag"></i>
