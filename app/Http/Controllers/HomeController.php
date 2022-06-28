@@ -15,7 +15,7 @@ class HomeController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('role_or_permission:super-admin|view_dashboard', ['only' => ['index']]);
+//        $this->middleware('role_or_permission:view-dashboard', ['only' => ['index']]);
 
     }
 

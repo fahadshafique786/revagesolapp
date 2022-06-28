@@ -14,8 +14,8 @@ class SportsController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('role_or_permission:super-admin|view_sports', ['only' => ['index','fetchsportsdata']]);
-        $this->middleware('role_or_permission:super-admin|manage_sports',['only' => ['edit','store','editProfile','updateRole','destroy']]);
+        $this->middleware('role_or_permission:super-admin|view-sports', ['only' => ['index','fetchsportsdata']]);
+        $this->middleware('role_or_permission:super-admin|manage-sports',['only' => ['edit','store','editProfile','updateRole','destroy']]);
     }
 
     public function index(Request $request)

@@ -14,8 +14,8 @@ class TeamsController extends Controller
     {
         $this->sports_id = null;
         $this->middleware('auth');
-        $this->middleware('role_or_permission:super-admin|view_teams', ['only' => ['index','fetchteamsdata']]);
-        $this->middleware('role_or_permission:super-admin|manage_teams',['only' => ['edit','store','destroy']]);
+        $this->middleware('role_or_permission:super-admin|view-teams', ['only' => ['index','fetchteamsdata']]);
+        $this->middleware('role_or_permission:super-admin|manage-teams',['only' => ['edit','store','destroy']]);
     }
 
 
@@ -131,7 +131,7 @@ class TeamsController extends Controller
                     $response[$i]['name'] = $team->name;
                     $response[$i]['league_name'] = $team->league_name;
                     $response[$i]['points'] = $team->points;
-                    if(auth()->user()->hasRole('super-admin') || auth()->user()->can('manage_teams'))
+                    if(auth()->user()->hasRole('super-admin') || auth()->user()->can('manage-teams'))
                     {
                         $response[$i]['action'] = '<a href="javascript:void(0)" class="btn edit" data-id="'. $team->id .'"><i class="fa fa-edit  text-info"></i></a>
 											<a href="javascript:void(0)" class="btn delete " data-id="'. $team->id .'"><i class="fa fa-trash-alt text-danger"></i></a>';

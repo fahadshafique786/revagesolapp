@@ -13,9 +13,9 @@ class LeaguesController extends Controller
 {
     public function __construct()
     {
-//        $this->middleware('auth');
-//        $this->middleware('role_or_permission:super-admin|view-sports', ['only' => ['index','fetchsportsdata']]);
-//        $this->middleware('role_or_permission:super-admin|manage-sports',['only' => ['edit','store','editProfile','updateRole','destroy']]);
+        $this->middleware('auth');
+        $this->middleware('role_or_permission:super-admin|view-leagues', ['only' => ['index','fetchleaguesdata']]);
+        $this->middleware('role_or_permission:super-admin|manage-leagues',['only' => ['edit','store','destroy']]);
     }
 
     public function index(Request $request)
@@ -123,7 +123,7 @@ class LeaguesController extends Controller
                     $response[$i]['icon'] = $sport_logo;
                     $response[$i]['name'] = $leagues->name;
                     $response[$i]['sport_name'] = $leagues->sport_name;
-                    if(auth()->user()->hasRole('super-admin') || auth()->user()->can('manage_leagues'))
+                    if(auth()->user()->hasRole('super-admin') || auth()->user()->can('manage-leagues'))
                     {
                         $response[$i]['action'] = '<a href="javascript:void(0)" class="btn edit" data-id="'. $leagues->id .'"><i class="fa fa-edit  text-info"></i></a>
 											<a href="javascript:void(0)" class="btn delete " data-id="'. $leagues->id .'"><i class="fa fa-trash-alt text-danger"></i></a>';
@@ -142,7 +142,6 @@ class LeaguesController extends Controller
                 ->make(true);
         }
     }
-
 
     public function getLeaguesOptionBySports(Request $request){
         $leaguesList = Leagues::where('sports_id',$request->sports_id)->get();

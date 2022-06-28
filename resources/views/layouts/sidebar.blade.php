@@ -28,7 +28,7 @@
 {{--            {{ dd(auth()->user())}}--}}
 
 
-            @if(auth()->user()->can('view_dashboard')  || auth()->user()->hasRole('super-admin'))
+{{--            @if(auth()->user()->can('view-dashboard')  || auth()->user()->hasRole('super-admin'))--}}
           <li class="nav-item has-treeview  {{ ( Request::segment(2) == 'dashboard' || Request::segment(2) == '' ) ? 'menu-open' : '' }} ">
             <a href="{{ route('dashboard') }}" class="nav-link  {{ ( Request::segment(2) == 'dashboard' || Request::segment(2) == '' ) ? 'active' : '' }} ">
                 <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -37,10 +37,10 @@
               </p>
             </a>
           </li>
-        @endif
+{{--        @endif--}}
 
 
-            @if(auth()->user()->can('view_users') OR auth()->user()->can('view_roles') OR auth()->user()->can('view_permissions') || auth()->user()->hasRole('super-admin'))
+            @if(auth()->user()->can('view-users') OR auth()->user()->can('view-roles') OR auth()->user()->can('view-permissions') || auth()->user()->hasRole('super-admin'))
             <li class="nav-item   {{(Request::segment(2) == 'users' || Request::segment(2) == 'roles' || Request::segment(2) == 'permissions')  ? 'menu-open' : 'hello'}}">
 
                 <a href="#" class="nav-link">
@@ -52,7 +52,7 @@
                 </a>
                 <ul class="nav nav-treeview {{ ( Request::segment(2) == 'users' || Request::segment(2) == 'roles' ) ? 'menu-open' : '' }}">
 
-                    @if(auth()->user()->can('view_users') || auth()->user()->hasRole('super-admin'))
+                    @if(auth()->user()->can('view-users') || auth()->user()->hasRole('super-admin'))
                     <li class="nav-item">
                         <a class="nav-link {{ (Request::segment(2) == 'users') ? 'active' : '' }}" href="{{ url('admin/users') }}">
                             <i class="nav-icon fa fa-minus"></i>
@@ -62,7 +62,7 @@
                         </a>
                     </li>
                     @endif
-                        @if(auth()->user()->can('view_roles') || auth()->user()->hasRole('super-admin'))
+                        @if(auth()->user()->can('view-roles') || auth()->user()->hasRole('super-admin'))
                     <li class="nav-item">
                         <a class="nav-link {{ (Request::segment(2) == 'roles') ? 'active' : '' }}" href="{{ url('admin/roles') }}">
                             <i class="nav-icon fa fa-minus"></i>
@@ -72,7 +72,7 @@
                         </a>
                     </li>
                         @endif
-                            @if(auth()->user()->can('view_permissions') || auth()->user()->hasRole('super-admin'))
+                            @if(auth()->user()->can('view-permissions') || auth()->user()->hasRole('super-admin'))
                     <li class="nav-item">
                         <a class="nav-link {{ (Request::segment(2) == 'permissions') ? 'active' : '' }}" href="{{ url('admin/permissions') }}">
                             <i class="nav-icon fa fa-minus"></i>
@@ -87,10 +87,10 @@
             </li>
             @endif
 
-            @if(auth()->user()->can('view_sports') || auth()->user()->can('view_leagues') || auth()->user()->can('view_teams') || auth()->user()->hasRole('super-admin'))
+            @if(auth()->user()->can('view-sports') || auth()->user()->can('view-leagues') || auth()->user()->can('view-teams') || auth()->user()->hasRole('super-admin'))
 
             <li class="nav-header py-3">SPORTS MANAGEMENT </li>
-                @if(auth()->user()->can('view_sports')  || auth()->user()->hasRole('super-admin'))
+                @if(auth()->user()->can('view-sports')  || auth()->user()->hasRole('super-admin'))
                     <li class="nav-item">
                         <a href="{{ url('admin/sports') }}" class="nav-link {{ (Request::segment(2) == 'sports') ? 'active' : '' }}">
                             <!-- <i class="far fa fa-life-ring nav-icon"></i> -->
@@ -99,7 +99,7 @@
                         </a>
                     </li>
                 @endif
-                @if(auth()->user()->can('view_leagues')  || auth()->user()->hasRole('super-admin'))
+                @if(auth()->user()->can('view-leagues')  || auth()->user()->hasRole('super-admin'))
                     <li class="nav-item">
                         <a href="{{ url('admin/leagues') }}" class="nav-link {{ (Request::segment(2) == 'leagues') ? 'active' : '' }}">
 							<img src="{{ asset('dist/img/sidebar-icons/league.png') }}" class="elevation-2 "/>
@@ -107,7 +107,7 @@
                         </a>
                     </li>
                 @endif
-                @if(auth()->user()->can('view_teams') ||  auth()->user()->hasRole('super-admin'))
+                @if(auth()->user()->can('view-teams') ||  auth()->user()->hasRole('super-admin'))
                    <li class="nav-item custom {{Request::segment(2) == 'teams' ? 'menu-open' : ''}}">
                 <a href="#" class="nav-link">
 				<img src="{{ asset('dist/img/sidebar-icons/team.png') }}" class="elevation-2 "/>
@@ -130,7 +130,7 @@
             </li>
                 @endif
 
-                @if(auth()->user()->can('view_schedules')  OR auth()->user()->hasRole('super-admin'))
+                @if(auth()->user()->can('view-schedules')  OR auth()->user()->hasRole('super-admin'))
                     <li class="nav-item custom {{Request::segment(2) == 'schedules' ? 'menu-open' : ''}}">
                         <a href="#" class="nav-link">
 							<img src="{{ asset('dist/img/sidebar-icons/schedule.png') }}" class="elevation-2 "/>
@@ -152,7 +152,7 @@
                 </ul>
             </li>
                 @endif
-            @if(auth()->user()->can('view_servers')  OR auth()->user()->hasRole('super-admin'))
+            @if(auth()->user()->can('view-servers')  OR auth()->user()->hasRole('super-admin'))
             <li class="nav-item">
                 <a href="{{ url('admin/servers') }}" class="nav-link {{ (Request::segment(2) == 'servers') ? 'active' : '' }}">
                     <i class="far fa fa-server nav-icon"></i>

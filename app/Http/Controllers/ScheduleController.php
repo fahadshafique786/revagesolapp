@@ -16,8 +16,8 @@ class ScheduleController extends Controller
     {
         $this->sports_id = null;
 //        $this->middleware('auth');
-        $this->middleware('role_or_permission:super-admin|view_schedules', ['only' => ['index','fetchschedulesdata']]);
-        $this->middleware('role_or_permission:super-admin|manage_schedules',['only' => ['edit','store','destroy']]);
+        $this->middleware('role_or_permission:super-admin|view-schedules', ['only' => ['index','fetchschedulesdata']]);
+        $this->middleware('role_or_permission:super-admin|manage-schedules',['only' => ['edit','store','destroy']]);
     }
 
     public function index(Request $request, $sports_id)
@@ -139,7 +139,7 @@ class ScheduleController extends Controller
                     $response[$i]['score'] = $obj->home_points . " - " . $obj->away_points;
                     $response[$i]['start_time'] = $obj->start_time;
                     $response[$i]['is_live'] = getBooleanStr($obj->is_live,true);
-                    if(auth()->user()->hasRole('super-admin') || auth()->user()->can('manage_schedules'))
+                    if(auth()->user()->hasRole('super-admin') || auth()->user()->can('manage-schedules'))
                     {
                         $liveSwitch = ($obj->is_live) ? 'checked' : '';
                         $response[$i]['action'] = '

@@ -14,8 +14,8 @@ class RolesController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('role_or_permission:super-admin|view_roles', ['only' => ['index','fetchRolesdata']]);
-        $this->middleware('role_or_permission:super-admin|manage_roles',['only' => ['edit','store','editProfile','updateRole','destroy']]);
+        $this->middleware('role_or_permission:super-admin|view-roles', ['only' => ['index','fetchRolesdata']]);
+        $this->middleware('role_or_permission:super-admin|manage-roles',['only' => ['edit','store','editProfile','updateRole','destroy']]);
     }
     public function index(Request $request)
     {
@@ -123,12 +123,8 @@ class RolesController extends Controller
                     $response[$i]['id'] = $role->id;
                     $response[$i]['name'] = $role->name;
                     $response[$i]['permissions'] = $role->permissions;;
-                  //  $response[$i]['email'] = $user->email;
-//					$response[$i]['phone'] = $user->phone;
-//					$response[$i]['status'] = $status;
 
                     if(auth()->user()->hasRole("super-admin") OR auth()->user()->can("manage-roles") )
-                   // if(auth()->user()->hasRole('superadmin'))
                     {
                         $response[$i]['action'] = '<a href="javascript:void(0)" class="btn  editRole" data-id="'. $role->id .'"><i class="fa fa-edit  text-info"></i></a>
 											<a href="javascript:void(0)" class="btn  delete" data-id="'. $role->id .'"><i class="fa fa-trash text-danger"></i></a>';

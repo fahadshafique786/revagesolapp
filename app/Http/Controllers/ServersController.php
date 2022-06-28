@@ -16,9 +16,9 @@ class ServersController extends Controller
 {
     public function __construct()
     {
-//        $this->middleware('auth');
-//        $this->middleware('role_or_permission:super-admin|view_servers', ['only' => ['index','fetchserversdata']]);
-//        $this->middleware('role_or_permission:super-admin|manage-servers',['only' => ['edit','store','destroy']]);
+        $this->middleware('auth');
+        $this->middleware('role_or_permission:super-admin|view-servers', ['only' => ['index','fetchserversdata']]);
+        $this->middleware('role_or_permission:super-admin|manage-servers',['only' => ['edit','store','destroy']]);
     }
 
     public function index(Request $request)
@@ -136,7 +136,7 @@ class ServersController extends Controller
                     $response[$i]['link'] = $obj->link;
                     $response[$i]['isHeader'] = getBooleanStr($obj->isHeader,true);
                     $response[$i]['isPremium'] = getBooleanStr($obj->isPremium,true);
-                    if(auth()->user()->hasRole('super-admin') || auth()->user()->can('manage_servers'))
+                    if(auth()->user()->hasRole('super-admin') || auth()->user()->can('manage-servers'))
                     {
                         $response[$i]['action'] = '<a href="javascript:void(0)" class="btn edit" data-id="'. $obj->id .'"><i class="fa fa-edit  text-info"></i></a>
 											<a href="javascript:void(0)" class="btn delete hide " data-id="'. $obj->id .'"><i class="fa fa-trash-alt text-danger"></i></a>';
