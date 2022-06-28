@@ -164,8 +164,7 @@ if ( ! function_exists('get_server_memory_usage'))
             $mem = explode(" ", $free_arr[1]);
             $mem = array_filter($mem);
             $mem = array_merge($mem);
-            $memory_usage = $mem[2]/$mem[1]*100;
-
+            $memory_usage = round($mem[2]/$mem[1]*100,2);
         }
 
         return $memory_usage;
