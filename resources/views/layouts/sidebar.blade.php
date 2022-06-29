@@ -86,9 +86,8 @@
                 </ul>
             </li>
             @endif
-
-            @if(auth()->user()->can('view-sports') || auth()->user()->can('view-leagues') || auth()->user()->can('view-teams') || auth()->user()->can('view-schedules') || auth()->user()->can('view-servers') || auth()->user()->hasRole('super-admin'))
-
+			
+			@if(auth()->user()->can('view-sports') || auth()->user()->can('view-leagues') || auth()->user()->can('view-teams') || auth()->user()->can('view-schedules') || auth()->user()->can('view-servers') || auth()->user()->hasRole('super-admin'))
             <li class="nav-header py-3">SPORTS MANAGEMENT </li>
                 @if(auth()->user()->can('view-sports')  || auth()->user()->hasRole('super-admin'))
                     <li class="nav-item">
@@ -154,14 +153,14 @@
 				@endif	
             
 				
-            @if(auth()->user()->can('view-servers')  || auth()->user()->hasRole('super-admin'))
-            <li class="nav-item">
-                <a href="{{ url('admin/servers') }}" class="nav-link {{ (Request::segment(2) == 'servers') ? 'active' : '' }}">
-                    <i class="far fa fa-server nav-icon"></i>
-                    <p>Live Servers</p>
-                </a>
-            </li>
-                @endif
+				@if(auth()->user()->can('view-servers')  || auth()->user()->hasRole('super-admin'))
+					<li class="nav-item">
+						<a href="{{ url('admin/servers') }}" class="nav-link {{ (Request::segment(2) == 'servers') ? 'active' : '' }}">
+							<i class="far fa fa-server nav-icon"></i>
+							<p>Live Servers</p>
+						</a>
+					</li>
+				@endif
 
 
             @endif

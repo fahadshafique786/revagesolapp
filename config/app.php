@@ -14,6 +14,9 @@ return [
     */
 
     'name' => env('APP_NAME', 'Laravel'),
+	
+	'environment' => env('DOMAIN_ENVIRONMENT', 'live'), // 'LIVE' is default if DOMAIN_ENVIRONMENT is missing in .env	
+	
 
     /*
     |--------------------------------------------------------------------------
@@ -233,5 +236,7 @@ return [
         'Datatables' => Yajra\Datatables\Facades\Datatables::class,
         Spatie\Permission\PermissionServiceProvider::class,
     ],
+	
+	
 
 ];
