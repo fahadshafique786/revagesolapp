@@ -121,7 +121,7 @@ class SportsController extends Controller
                     $response[$i]['sports_type'] = $sports->sports_type;
                     $response[$i]['multi_league'] = $sports->multi_league;
                     $response[$i]['image_required'] = $sports->image_required;
-                    if(auth()->user()->hasRole('super-admin') || auth()->user()->can('manage_sports'))
+                    if(auth()->user()->hasRole('super-admin') || auth()->user()->can('manage-sports'))
                     {
                         $response[$i]['action'] = '<a href="javascript:void(0)" class="btn edit" data-id="'. $sports->id .'"><i class="fa fa-edit  text-info"></i></a>
 											<a href="javascript:void(0)" class="btn delete " data-id="'. $sports->id .'"><i class="fa fa-trash-alt text-danger"></i></a>';

@@ -20,52 +20,64 @@ class DatabaseSeeder extends Seeder
     $user=  User::create([
             'name' => 'Admin',
             'user_name' => 'Admin',
-            'email'=>'admin@test.com',
+            'email'=>'superadmin@test.com',
             'password'=>bcrypt('admin123'),
 
         ]);
         Permission::create(
             [
-            'name'=>'view_dashboard',
+            'name'=>'view-dashboard',
             ],
             [
-            'name'=>'manage_dasboard',
+            'name'=>'manage-dasboard',
             ],
             [
-                'name'=>'view_users',
+                'name'=>'view-users',
             ],
             [
-                'name'=>'manage_users',
+                'name'=>'manage-users',
             ],
             [
-                'name'=>'view_roles',
+                'name'=>'view-roles',
             ],
             [
-                'name'=>'manage_roles',
+                'name'=>'manage-roles',
             ],
             [
-                'name'=>'view_permissions',
+                'name'=>'view-permissions',
             ],
             [
-                'name'=>'manage_permissions',
+                'name'=>'manage-permissions',
             ],
             [
-                'name'=>'view_sports',
+                'name'=>'view-sports',
             ],
             [
-                'name'=>'manage_sports',
+                'name'=>'manage-sports',
             ],
             [
-                'name'=>'view_leagues',
+                'name'=>'view-leagues',
             ],
             [
-                'name'=>'manage_leagues',
+                'name'=>'manage-leagues',
             ],
             [
-                'name'=>'view_teams',
+                'name'=>'view-teams',
             ],
             [
-                'name'=>'manage_teams',
+                'name'=>'manage-teams',
+            ],
+            [
+                'name'=>'view-schedules',
+            ],
+            [
+                'name'=>'manage-schedules',
+            ],
+            [
+                'name'=>'view-servers',
+            ],
+            [
+                'name'=>'manage-servers',
             ]
         );
 

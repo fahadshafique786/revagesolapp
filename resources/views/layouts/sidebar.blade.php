@@ -87,7 +87,7 @@
             </li>
             @endif
 
-            @if(auth()->user()->can('view-sports') || auth()->user()->can('view-leagues') || auth()->user()->can('view-teams') || auth()->user()->hasRole('super-admin'))
+            @if(auth()->user()->can('view-sports') || auth()->user()->can('view-leagues') || auth()->user()->can('view-teams') || auth()->user()->can('view-schedules') || auth()->user()->can('view-servers') || auth()->user()->hasRole('super-admin'))
 
             <li class="nav-header py-3">SPORTS MANAGEMENT </li>
                 @if(auth()->user()->can('view-sports')  || auth()->user()->hasRole('super-admin'))
@@ -130,7 +130,7 @@
             </li>
                 @endif
 
-                @if(auth()->user()->can('view-schedules')  OR auth()->user()->hasRole('super-admin'))
+				@if(auth()->user()->can('view-schedules')  || auth()->user()->hasRole('super-admin'))
                     <li class="nav-item custom {{Request::segment(2) == 'schedules' ? 'menu-open' : ''}}">
                         <a href="#" class="nav-link">
 							<img src="{{ asset('dist/img/sidebar-icons/schedule.png') }}" class="elevation-2 "/>
@@ -139,20 +139,22 @@
                                 <i class="fas fa-angle-left right"></i>
                             </p>
                         </a>
-                <ul class="nav nav-treeview">
-                    @php $sportsList = \App\Models\Sports::all(); @endphp
-                    @foreach($sportsList as $sport)
-                        <li class="nav-item">
-                            <a href="{{ url('admin/schedules/'.$sport->id) }}" class="nav-link  custom {{Request::segment(3) == $sport->id ? 'active' : ''}}">
-                                <i class="far fa fa-minus nav-icon text-sm"></i>
-                                <p class="text-capitalize">{{$sport->name}}</p>
-                            </a>
-                        </li>
-                    @endforeach
-                </ul>
-            </li>
-                @endif
-            @if(auth()->user()->can('view-servers')  OR auth()->user()->hasRole('super-admin'))
+						<ul class="nav nav-treeview">
+							@php $sportsList = \App\Models\Sports::all(); @endphp
+							@foreach($sportsList as $sport)
+								<li class="nav-item">
+									<a href="{{ url('admin/schedules/'.$sport->id) }}" class="nav-link  custom {{Request::segment(3) == $sport->id ? 'active' : ''}}">
+										<i class="far fa fa-minus nav-icon text-sm"></i>
+										<p class="text-capitalize">{{$sport->name}}</p>
+									</a>
+								</li>
+							@endforeach
+						</ul>
+					</li>
+				@endif	
+            
+				
+            @if(auth()->user()->can('view-servers')  || auth()->user()->hasRole('super-admin'))
             <li class="nav-item">
                 <a href="{{ url('admin/servers') }}" class="nav-link {{ (Request::segment(2) == 'servers') ? 'active' : '' }}">
                     <i class="far fa fa-server nav-icon"></i>
