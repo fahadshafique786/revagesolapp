@@ -237,8 +237,27 @@
                 { data: 'name', name: 'name' },
                 { data: 'sport_name', name: 'sport_name' },
                 { data: 'link', name: 'sport_name' },
-                { data: 'isHeader', name: 'isHeader' },
-                { data: 'isPremium', name: 'isPremium' },
+                {
+                    data: 'isHeader', name: 'isHeader', render: function (data, type, full, meta, rowData) {
+
+                        if (data == 'Yes') {
+                            return "<a href='javascript:void(0)' class='badge badge-success text-xs text-capitalize'>" + data + "</a>" + " ";
+                        } else {
+                            return "<a href='javascript:void(0)' class='badge badge-danger text-xs text-capitalize'>" + data + "</a>" + " ";
+                        }
+                    },
+                },
+                {
+                    data: 'isPremium', name: 'isPremium', render: function (data, type, full, meta, rowData) {
+
+                        if (data == 'Yes') {
+                            return "<a href='javascript:void(0)' class='badge badge-success text-xs text-capitalize'>" + data + "</a>" + " ";
+                        } else {
+                            return "<a href='javascript:void(0)' class='badge badge-danger text-xs text-capitalize'>" + data + "</a>" + " ";
+                        }
+                    },
+                },
+                
                 {data: 'action', name: 'action', orderable: false},
             ],
             order: [[0, 'asc']]
@@ -319,7 +338,7 @@
 
                 $.ajax({
                     type:"POST",
-                    url: "{{ url('admin/delete-server') }}",
+                    url: "{{ url('admin/delete-server/' . $schedule_id) }}",
                     data: { id: id },
                     dataType: 'json',
                     success: function(res){

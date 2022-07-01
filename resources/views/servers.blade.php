@@ -222,10 +222,12 @@
 
         $('#filter').click(function(){
             var sports_filter = $('#sports_filter').val();
-            if(sports_filter != '')
+            var leagues_filter = $('#leagues_filter').val();
+
+            if(sports_filter != '' || leagues_filter != '')
             {
                 $('#DataTbl').DataTable().destroy();
-                fetchData(sports_filter);
+                fetchData(sports_filter,leagues_filter);
             }
             else
             {
@@ -240,7 +242,7 @@
 
         var Table_obj = "";
 
-        function fetchData(filter_sports = "")
+        function fetchData(filter_sports = "",filter_leagues = "")
         {
             $.ajaxSetup({
                 headers: {
@@ -268,7 +270,7 @@
                     url:"{{ url('admin/fetch-servers-data') }}",
                     type:"POST",
                     data:{
-                        filter_sports:filter_sports
+                        filter_sports:filter_sports,filter_leagues:filter_leagues
                     }
                 },
                 columns: [

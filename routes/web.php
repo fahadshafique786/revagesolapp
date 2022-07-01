@@ -108,5 +108,6 @@ Route::group(
         Route::get('/fetch-servers-data/{schedule_id}', [ServersController::class, 'fetchserversdata']);
         Route::post('/add-update-servers/{schedule_id}', [ServersController::class, 'store']);
         Route::post('/attach-servers/{schedule_id}', [ServersController::class, 'attachServers']);
+        Route::post('/delete-server/{schedule_id}', [ServersController::class, 'destroy']);
 
     });

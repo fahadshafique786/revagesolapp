@@ -11,7 +11,7 @@
                     <div class="card">
                         <div class="card-header">
                             <div class="row">
-                                <div class="col-12 text-left">
+                                <div class="col-6 text-left">
                                     <div class="pull-left">
 
                                         @if(auth()->user()->hasRole('super-admin') || auth()->user()->can('manage-sports'))
@@ -21,6 +21,17 @@
                                         @endif
                                     </div>
                                 </div>
+
+
+                                <div class="col-6 text-right">
+                                    @if(auth()->user()->hasRole('super-admin') || auth()->user()->can('manage-schedules'))
+                                        <a class="btn btn-warning" href="javascript:window.location.reload()" id="">
+                                            <i class="fa fa-spinner"></i> &nbsp; Refresh Screen
+                                        </a>
+                                    @endif
+
+                                </div>
+
                             </div>
 
 

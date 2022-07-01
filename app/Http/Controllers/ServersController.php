@@ -72,7 +72,15 @@ class ServersController extends Controller
             $data['schedule_id'] = $schedule_id;
             $data['server_id'] = $servers->id;
 
-            $scheduledServers   =   ScheduledServers::create($data);
+            $checkExistance = ScheduledServers::where('schedule_id',$schedule_id)
+                ->where('server_id',$servers->id);
+
+//          dd($checkExistance->exists());
+
+            if(!$checkExistance->exists()){
+                ScheduledServers::create($data);
+            }
+
         }
 
         return response()->json(['success' => true]);
@@ -85,10 +93,16 @@ class ServersController extends Controller
         return response()->json($servers);
     }
 
-    public function destroy(Request $request)
+    public function destroy(Request $request,$schedule_id = null)
     {
-        ScheduledServers::where('server_id',$request->id)->delete();
-        $servers = Servers::where('id',$request->id)->delete();
+        if($schedule_id){
+            ScheduledServers::where('server_id',$request->id)
+                ->where('schedule_id',$schedule_id)
+                ->delete();
+        }
+        else{
+            Servers::where('id',$request->id)->delete();
+        }
         return response()->json(['success' => true]);
     }
 
@@ -118,8 +132,8 @@ class ServersController extends Controller
                 $Filterdata = $Filterdata->where('servers.sports_id',$request->filter_sports);
             }
 
-            if(isset($request->leagues_id) && !empty($request->leagues_id)){
-                $Filterdata = $Filterdata->where('servers.leagues_id',$request->leagues_id);
+            if(isset($request->filter_leagues) && !empty($request->filter_leagues)){
+                $Filterdata = $Filterdata->where('servers.leagues_id',$request->filter_leagues);
             }
 
             $Filterdata = $Filterdata->orderBy('servers.id','asc')->get();
@@ -191,6 +205,8 @@ class ServersController extends Controller
     }
 
     public function attachServers(Request $request,$schedule_id){
+
+//                dd($request->all(),$schedule_id);
 
         if($schedule_id){
             $request->merge(['schedule_id' => $schedule_id]);
