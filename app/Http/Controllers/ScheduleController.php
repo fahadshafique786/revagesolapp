@@ -8,7 +8,7 @@ use App\Models\Leagues;
 use App\Models\Teams;
 use App\Models\Schedules;
 use App\Models\ScheduledServers;
-use Carbon\Carbon;
+use DB;
 
 class ScheduleController extends Controller
 {
@@ -113,7 +113,12 @@ class ScheduleController extends Controller
                 })
                 ->join('teams as awayTeam', function ($join) {
                     $join->on('schedules.away_team_id', '=', 'awayTeam.id');
-                })->orderBy('schedules.start_time','ASC')->get();
+                })
+                ->where('schedules.start_time', '>=', NOW()) // to get those servers having start time greater than current datetime
+                ->orderBy('schedules.start_time','DESC')
+                ->get();
+
+
 
 
             if(!empty($Filterdata))

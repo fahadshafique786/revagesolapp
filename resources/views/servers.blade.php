@@ -341,11 +341,12 @@
                         $('#id').val("");
                         $('#addEditForm').trigger("reset");
                         $('#ajaxheadingModel').html("Edit Server");
-                        $('#ajax-model').modal('show');
+
+                        $('#sports_id').val(res.sports_id);
+                        getLeaguesOptionBySports(res.sports_id,'leagues_id');
 
                         $('#id').val(res.id);
                         $('#name').val(res.name);
-                        $('#sports_id').val(res.sports_id);
                         $('#link').val(res.link);
 
                         if(res.isHeader == 1){
@@ -361,6 +362,12 @@
                         else{
                             $("#isPremiumNo").prop("checked",true);
                         }
+
+                        setTimeout(function(){
+                            $('#leagues_id').val(res.leagues_id);
+                            $('#ajax-model').modal('show');
+                        },500);
+
 
                     }
                 });
