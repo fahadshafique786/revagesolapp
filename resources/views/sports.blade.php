@@ -308,7 +308,8 @@
                         data: { id: id },
                         dataType: 'json',
                         success: function(res){
-                            fetchData();
+                            // fetchData();
+                            location.reload();
                         }
                     });
                 }

@@ -1,7 +1,7 @@
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-dark-info elevation-4 custom-siderbar-dark">
 
-	<a class="brand-link" href="{{ url('/') }}">
+	<a class="brand-link" href="{{ route('dashboard') }}">
 		<img src="{{ asset('images/logo.png') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
            style="opacity: .8">
 		<span class="visiblilty-hidden"> {{ config('app.name', 'Revage Solution') }} </span>
@@ -86,7 +86,7 @@
                 </ul>
             </li>
             @endif
-			
+
 			@if(auth()->user()->can('view-sports') || auth()->user()->can('view-leagues') || auth()->user()->can('view-teams') || auth()->user()->can('view-schedules') || auth()->user()->can('view-servers') || auth()->user()->hasRole('super-admin'))
             <li class="nav-header py-3">SPORTS MANAGEMENT </li>
                 @if(auth()->user()->can('view-sports')  || auth()->user()->hasRole('super-admin'))
@@ -150,9 +150,9 @@
 							@endforeach
 						</ul>
 					</li>
-				@endif	
-            
-				
+				@endif
+
+
 				@if(auth()->user()->can('view-servers')  || auth()->user()->hasRole('super-admin'))
 					<li class="nav-item">
 						<a href="{{ url('admin/servers') }}" class="nav-link {{ (Request::segment(2) == 'servers') ? 'active' : '' }}">
