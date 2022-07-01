@@ -30,9 +30,11 @@ class ServersController extends Controller
     public function store(Request $request,$schedule_id = null)
     {
         if($schedule_id){
-            $scheduleSports = Schedules::where('id',$schedule_id)->select('sports_id')->first();
+            $scheduleSports = Schedules::where('id',$schedule_id)->select('sports_id','leagues_id')->first();
             $sports_id  = $scheduleSports->sports_id;
+            $leagues_id  = $scheduleSports->leagues_id;
             $request->merge(['sports_id' => $sports_id]);
+            $request->merge(['leagues_id' => $leagues_id]);
         }
 
         if(!empty($request->id))
