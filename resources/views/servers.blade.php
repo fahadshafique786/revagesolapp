@@ -127,7 +127,7 @@
 
                                 <div class="col-sm-12">
                                     <label for="name" class="control-label">Name</label>
-                                    <input type="text" class="form-control" id="name" name="name" placeholder="Enter Name" value="" maxlength="50" required="">
+                                    <input type="text" class="form-control" id="name" name="name" placeholder="Enter Name" value="" maxlength="50" required>
 
                                     <span class="text-danger" id="nameError"></span>
 
@@ -139,7 +139,7 @@
 
                                 <div class="col-sm-12">
                                     <label for="name" class="control-label">Link</label>
-                                    <input type="text" class="form-control" id="link" name="link" placeholder="Enter Link" value="">
+                                    <input type="text" class="form-control" id="link" name="link" placeholder="Enter Link" value="" required>
 
                                     <span class="text-danger" id="linkError"></span>
 

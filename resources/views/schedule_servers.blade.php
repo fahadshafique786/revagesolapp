@@ -81,7 +81,7 @@
 
                             <div class="col-sm-12">
                                 <label for="name" class="control-label">URL</label>
-                                <input type="text" class="form-control" id="link" name="link" placeholder="Enter URL" value="">
+                                <input type="text" class="form-control" id="link" name="link" placeholder="Enter URL" value="" required>
 
                                 <span class="text-danger" id="linkError"></span>
 
