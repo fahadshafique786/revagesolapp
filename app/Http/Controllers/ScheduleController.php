@@ -143,7 +143,7 @@ class ScheduleController extends Controller
                     {
                         $liveSwitch = ($obj->is_live) ? 'checked' : '';
                         $response[$i]['action'] = '
-                            <input type="checkbox" class="isLiveStatusSwitch" data-id="is_live_status-'.$obj->id.'" data-schedule-id="'.$obj->id.'" '.$liveSwitch.' data-bootstrap-switch data-off-color="danger" data-on-color="info">
+                            <input type="checkbox" class="isLiveStatusSwitch" data-id="is_live_status-'.$obj->id.'" data-schedule-id="'.$obj->id.'" '.$liveSwitch.' data-bootstrap-switch data-off-color="danger" data-on-color="success">
                             <a href="javascript:void(0)" class="btn edit" data-id="'. $obj->id .'"><i class="fa fa-edit  text-info"></i></a>
 							<a href="javascript:void(0)" class="btn delete " data-id="'. $obj->id .'"><i class="fa fa-trash-alt text-danger"></i></a>';
                     }

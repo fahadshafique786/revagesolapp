@@ -164,3 +164,6 @@ LOGIN PAGE
     background-color: #ffffff !important;
     color:#17a2b8 !important;
 }
+input[disabled]{
+    cursor: not-allowed !important;
+}

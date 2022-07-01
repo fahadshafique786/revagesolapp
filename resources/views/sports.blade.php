@@ -134,12 +134,12 @@
                                     <label for="name" class="control-label d-block">Image Required</label>
 
                                     <label for="image_required_yes" class="cursor-pointer">
-                                        <input type="radio" class="" id="image_required_yes" name="image_required" value="yes" checked/>
+                                        <input type="radio" class="EnableDisableFileUpload" id="image_required_yes" name="image_required" value="1" checked/>
                                         <span class="">Yes</span>
                                     </label>
                                     &nbsp;&nbsp;&nbsp;&nbsp;
                                     <label for="image_required_no" class="cursor-pointer">
-                                        <input type="radio" class="" id="image_required_no" name="image_required" value="no"  />
+                                        <input type="radio" class="EnableDisableFileUpload" id="image_required_no" name="image_required" value="0"  />
                                         <span class="">No</span>
                                     </label>
                                     <span class="text-danger" id="image_requiredError"></span>
@@ -155,7 +155,7 @@
                                 <div class="col-sm-12">
                                     <label for="name" class="control-label d-block">Sport Logo</label>
 
-                                        <input type="file" class="" id="sport_logo" name="sport_logo" onchange="allowonlyImg(this)">
+                                        <input type="file" class="EnableDisableFileUpload-File" id="sport_logo" name="sport_logo" onchange="allowonlyImg(this)">
                                         <input type="hidden" readonly class="" id="sport_logo_hidden" name="sport_logo_hidden" >
                                         <span class="text-danger" id="sport_logoError"></span>
 
@@ -224,7 +224,7 @@
                     { data: 'sports_type', name: 'sports_type' },
                     { data: 'image_required', name: 'image_required' , searchable:false , render: function( data, type, full, meta,rowData ) {
 
-                            if(data=='yes'){
+                            if(data=='Yes'){
                                 return "<a href='javascript:void(0)' class='badge badge-success text-xs text-capitalize'>"+data+"</a>" +" ";
                             }
                             else{
@@ -233,7 +233,7 @@
                         },
                     },
                     { data: 'multi_league', name: 'multi_league' , searchable:false , render: function( data, type, full, meta,rowData ) {
-                            if(data=='yes'){
+                            if(data=='Yes'){
                                 return "<a href='javascript:void(0)' class='badge badge-success text-xs text-capitalize'>"+data+"</a>" +" ";
                             }
                             else{

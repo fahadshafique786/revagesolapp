@@ -119,8 +119,8 @@ class SportsController extends Controller
                     $response[$i]['icon'] = $sport_logo;
                     $response[$i]['name'] = $sports->name;
                     $response[$i]['sports_type'] = $sports->sports_type;
-                    $response[$i]['multi_league'] = $sports->multi_league;
-                    $response[$i]['image_required'] = $sports->image_required;
+                    $response[$i]['multi_league'] = getBooleanStr($sports->multi_league,true);
+                    $response[$i]['image_required'] = getBooleanStr($sports->image_required,true);
                     if(auth()->user()->hasRole('super-admin') || auth()->user()->can('manage-sports'))
                     {
                         $response[$i]['action'] = '<a href="javascript:void(0)" class="btn edit" data-id="'. $sports->id .'"><i class="fa fa-edit  text-info"></i></a>

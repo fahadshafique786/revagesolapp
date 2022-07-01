@@ -50,7 +50,6 @@
 
 <script>
 
-
     function getLeaguesOptionBySports(sports_id,league_filter_id){
 
         $.ajax({
@@ -103,6 +102,14 @@
 
     $(document).ready(function() {
 
+        $(".EnableDisableFileUpload").click(function(){
+             if($(this).val() === '1'){
+                $(".EnableDisableFileUpload-File").removeAttr('disabled')
+            }
+            else{
+                $(".EnableDisableFileUpload-File").attr('disabled','disabled');
+            }
+        });
 
         $("input[data-bootstrap-switch]").each(function(){
             $(this).bootstrapSwitch('state', $(this).prop('checked'));
@@ -125,9 +132,12 @@
 
 
 		$('#start_time').datetimepicker({
-				format: 'd/m/Y g:i A',
+                setDate: new Date(),
+                minDate: new Date(),
+                format: 'd/m/Y g:i A',
 				formatTime: 'g:i A',
                 validateOnBlur: false,
+
 		});
 
 
