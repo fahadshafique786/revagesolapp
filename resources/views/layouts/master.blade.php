@@ -94,6 +94,7 @@
 	$link_label_array['servers'] = "Servers";
 	$link_label_array['roles'] = "Roles";
 	$link_label_array['permissions'] = "Permissions";
+	$link_label_array['app'] = "Applications";
 
 	$link_label_array1['sports']['icon'] = "sports.png";
 	$link_label_array1['teams']['icon']  = "team.png";
@@ -125,6 +126,8 @@
                         <i class="fas fa-users icon-bg  vertical-super"></i>
 				@elseif(Request::segment(2) == 'servers')
 						<i class="fas fa-server vertical-super icon-bg"></i>
+				@elseif(Request::segment(2) == 'app')
+						<i class="fas fa fa-mobile vertical-super icon-bg"></i>
 
 				@endif
 
@@ -132,8 +135,10 @@
                 <p class="page-title {{  Request::segment(2) == 'dashboard' ? 'd-inline' : 'd-inline-block' }}  ml-2">{{ $link_label_array[Request::segment(2)] }}
                     @if(Request::segment(2) == 'teams' || Request::segment(2) == 'schedules')
                         <small class="d-block text-sm"> Add or update {{$sportData->name}} Teams</small>
-                    @elseif(Request::segment(2) == 'server' || Request::segment(3) > 0)
+                    @elseif(Request::segment(2) == 'server' || (Request::segment(2) == 'server'  && Request::segment(3) > 0))
                         <small class="d-block text-sm"> {{ $scheduleData->home_team_name .' vs  ' . $scheduleData->away_team_name }} </small>
+                    @elseif(Request::segment(2) == 'app'|| (Request::segment(2) == 'app'  && Request::segment(3) > 0))
+                        <small class="d-block text-sm"> Register new apps or update configurations</small>
                     @elseif(Request::segment(2) != 'dashboard')
                         <small class="d-block text-sm"> Add or update  {{Request::segment(2)}} </small>
                     @else

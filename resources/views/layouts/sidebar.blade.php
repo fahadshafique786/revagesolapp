@@ -162,6 +162,14 @@
 					</li>
 				@endif
 
+                <li class="nav-header py-3">CONFIGURATION </li>
+                <li class="nav-item">
+                    <a href="{{ url('admin/app') }}" class="nav-link {{ (Request::segment(2) == 'app') ? 'active' : '' }}">
+                        <i class="fa fa-mobile nav-icon"></i>
+                        <p>Applications</p>
+                    </a>
+                </li>
+
 
             @endif
 

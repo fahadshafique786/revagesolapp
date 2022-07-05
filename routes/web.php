@@ -11,6 +11,7 @@ use App\Http\Controllers\LeaguesController;
 use App\Http\Controllers\TeamsController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\ServersController;
+use App\Http\Controllers\AppDetailsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -109,5 +110,14 @@ Route::group(
         Route::post('/add-update-servers/{schedule_id}', [ServersController::class, 'store']);
         Route::post('/attach-servers/{schedule_id}', [ServersController::class, 'attachServers']);
         Route::post('/delete-server/{schedule_id}', [ServersController::class, 'destroy']);
+
+
+
+        /******* Application Module  ***********/
+        Route::get('/app', [AppDetailsController::class, 'index']);;
+        Route::get('/app/create', [AppDetailsController::class, 'create'])->name('app.create');
+        Route::get('/app/{app_id}', [AppDetailsController::class, 'edit'])->name('app.edit');
+        Route::post('/add-update-apps/{schedule_id}', [AppDetailsController::class, 'store']);
+        Route::post('/delete-app/{schedule_id}', [AppDetailsController::class, 'destroy']);
 
     });
