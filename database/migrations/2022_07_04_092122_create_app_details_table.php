@@ -15,6 +15,7 @@ class CreateAppDetailsTable extends Migration
     {
         Schema::create('app_details', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('sports_id');
             $table->string('appName')->nullable();
             $table->string('appLogo')->nullable();
             $table->string('admobAppId')->nullable();
@@ -30,7 +31,7 @@ class CreateAppDetailsTable extends Migration
             $table->enum('isStartAppAdsShow',['0','1'])->default('0');
             $table->enum('isStartAppOnline',['0','1'])->default('0');
             $table->integer('minimumVersionSupport')->nullable();
-            $table->integer('startAppId')->default('0000');
+            $table->string('startAppId')->default('0000');
             $table->string('newAppPackage')->nullable();
             $table->string('ourAppPackage')->nullable();
             $table->enum('suspendApp',['0','1'])->default('0');

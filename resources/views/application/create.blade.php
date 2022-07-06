@@ -18,7 +18,28 @@
 
                         </div>
                         <div class="card-body">
-                            <form class="" method="post" action="">
+                            <form action="javascript:void(0)" id="addEditForm" name="addEditForm" class="form-horizontal" method="POST" enctype="multipart/form-data">
+
+
+                                <div class="form-group row">
+                                    <label for="staticEmail" class="col-sm-2 col-form-label">Sports</label>
+                                    <div class="col-sm-4">
+                                        <select class="form-control" name="sports_id" id="sports_id" required>
+                                            <option value="">   Select </option>
+                                            @foreach($sportsList as $obj)
+                                                <option value="{{$obj->id}}" >   {{   $obj->name }}    </option>
+                                            @endforeach
+                                        </select>
+
+
+                                    </div>
+
+                                    <label for="staticEmail" class="col-sm-2 col-form-label">App Logo</label>
+                                    <div class="col-sm-4">
+                                        <input type="file" class="" name="appLogo" id="appLogo" value=""  required >
+
+                                    </div>
+                                </div>
 
                                 <div class="form-group row">
                                     <label for="staticEmail" class="col-sm-2 col-form-label">App Name</label>
@@ -266,11 +287,81 @@
 
         $(document).ready(function($){
 
+            var Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000
+            });
+
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
+
+
+
+            $("#addEditForm").on('submit',(function(e) {
+
+                e.preventDefault();
+
+                var Form_Data = new FormData(this);
+
+                $("input[type=submit]").html('Please Wait...');
+                $("input[type=submit]").attr("disabled", true);
+
+                $.ajax({
+                    type: "POST",
+                    url: "{{ url('admin/add-update-apps') }}",
+                    data: Form_Data,
+                    mimeType: "multipart/form-data",
+                    contentType: false,
+                    cache: false,
+                    processData: false,
+                    dataType: 'json',
+                    success: function (res) {
+
+                        $('#ajax-model').modal('hide');
+                        $("input[type=submit]").html('Save');
+                        $("input[type=submit]").attr("disabled", false);
+
+                        Toast.fire({
+                            icon: 'success',
+                            title: 'Application has been registered successfully!'
+                        })
+
+                        $("form#addEditForm")[0].reset();
+
+                    },
+                    error: function (response) {
+
+                        $("input[type=submit]").html('Save');
+                        $("input[type=submit]").attr("disabled", false);
+
+                        var resp = response.responseJSON;
+                        if(typeof resp !== 'undefined'){
+                            Toast.fire({
+                                icon: 'error',
+                                title: 'Please fill required fields!'
+                            })
+                        }
+                        else{
+                            Toast.fire({
+                                icon: 'error',
+                                title: 'Network Error!'
+                            })
+                        }
+
+
+
+                    }
+                });
+
+            }));
+
+
+
 
         });
 

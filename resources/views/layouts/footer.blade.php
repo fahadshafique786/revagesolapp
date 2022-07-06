@@ -45,8 +45,9 @@
 <script src="{{ asset('plugins/jquery-ui/jquery-ui.min.js') }}"></script>
 <script src="{{ asset('plugins/daterangepicker/daterangepicker.js') }}"></script>
 <script src="{{ asset('plugins/bootstrap-switch/js/bootstrap-switch.min.js') }}"></script>
+<script src="{{ asset('plugins/sweetalert2/sweetalert2.min.js') }}"></script>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
 
 <script>
 
@@ -97,6 +98,46 @@
 
         return `${day}/${month}/${year} ${hours}:${minutes} ${modifiers}`;
 
+    }
+
+    function isConfirmSweelAlert(postID,route){
+        // alert("isConfirmSweelAlert" + postID +  " --- " + route );
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+                confirmButton: 'btn btn-success',
+                cancelButton: 'btn btn-danger'
+            },
+            buttonsStyling: false
+        })
+        let urls = "{{ url('admin/') }}"+'/'+route+"";
+        // alert(urls);
+
+        swalWithBootstrapButtons.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'No, cancel!',
+            reverseButtons: true
+        }).then((result) => {
+            // console.log(result.value);
+            // return false;
+            alert(result.value);
+            if (result.value) {
+                var id = postID;
+                $.ajax({
+                    type:"POST",
+                    url: urls,
+                    data: { id: id },
+                    dataType: 'json',
+                    success: function(res){
+                        alert(786)
+                        // fetchData();
+                    }
+                });
+            }
+        })
     }
 
 

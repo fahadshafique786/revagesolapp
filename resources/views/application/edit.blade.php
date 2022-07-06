@@ -14,11 +14,33 @@
                                 <div class="col-12 text-center">
                                     <h4 class="">Register New Application</h4>
                                 </div>
+
                             </div>
 
                         </div>
                         <div class="card-body">
-                            <form class="" method="post" action="">
+                            <form action="javascript:void(0)" id="addEditForm" name="addEditForm" class="form-horizontal" method="POST" enctype="multipart/form-data">
+
+                                <div class="form-group row">
+                                    <label for="staticEmail" class="col-sm-2 col-form-label">Sports</label>
+                                    <div class="col-sm-4">
+                                        <select class="form-control" name="sports_id" id="sports_id" required>
+                                            <option value="">   Select </option>
+                                            @foreach($sportsList as $obj)
+                                                <option value="{{$obj->id}}" {{($obj->id == $appData->sports_id) ? 'selected' : '' }}>   {{   $obj->name }}    </option>
+                                            @endforeach
+                                        </select>
+
+
+                                     </div>
+
+                                    <label for="staticEmail" class="col-sm-2 col-form-label">App Logo</label>
+                                    <div class="col-sm-4">
+                                        <input type="file" class="" name="appLogo" id="appLogo" value="{{$appData->appLogo}}"  {{ (!$appData->appLogo) ? 'required' : '' }} >
+
+                                    </div>
+                                </div>
+
 
                                 <div class="form-group row">
                                     <label for="staticEmail" class="col-sm-2 col-form-label">App Name</label>
@@ -174,12 +196,12 @@
 
 
                                         <label for="isSponsorAdsShow1" class="cursor-pointer">
-                                            <input type="radio" class="" id="isSponsorAdsShow1" name="isSponsorAdsShow" value="1"  />
+                                            <input type="radio" class="" id="isSponsorAdsShow1" name="isSponsorAdsShow" value="1"   {{($appData->isSponsorAdsShow) ? 'checked' : ''}}  />
                                             <span class="">Yes</span>
                                         </label>
 
                                         <label for="isSponsorAdsShow0" class="cursor-pointer">
-                                            <input type="radio" class="" id="isSponsorAdsShow0" name="isSponsorAdsShow" value="0" checked />
+                                            <input type="radio" class="" id="isSponsorAdsShow0" name="isSponsorAdsShow" value="0"  {{(!$appData->isSponsorAdsShow) ? 'checked' : ''}}  />
                                             <span class="">No</span>
                                         </label>
 
@@ -190,12 +212,12 @@
                                     <div class="col-sm-4">
 
                                         <label for="isStartAppAdsShow1" class="cursor-pointer">
-                                            <input type="radio" class="" id="isStartAppAdsShow1" name="isStartAppAdsShow" value="1"  />
+                                            <input type="radio" class="" id="isStartAppAdsShow1" name="isStartAppAdsShow" value="1"   {{($appData->isStartAppAdsShow) ? 'checked' : ''}}  />
                                             <span class="">Yes</span>
                                         </label>
 
                                         <label for="isStartAppAdsShow0" class="cursor-pointer">
-                                            <input type="radio" class="" id="isStartAppAdsShow0" name="isStartAppAdsShow" value="0" checked />
+                                            <input type="radio" class="" id="isStartAppAdsShow0" name="isStartAppAdsShow" value="0"  {{(!$appData->isStartAppAdsShow) ? 'checked' : ''}}  />
                                             <span class="">No</span>
                                         </label>
 
@@ -233,7 +255,7 @@
                                     </div>
 
                                     <div class="col-sm-6 text-right">
-                                        <button class="btn bg-dark vertical-bottom" name="submit" id=submitApp"> SUBMIT </button>
+                                        <input type="submit" class="btn bg-dark vertical-bottom" name="submit" id=submitApp"  value="Update" />
                                     </div>
 
 
@@ -266,11 +288,78 @@
 
         $(document).ready(function($){
 
+            var Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000
+            });
+
+
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
+
+
+            $("#addEditForm").on('submit',(function(e) {
+
+                e.preventDefault();
+
+                var Form_Data = new FormData(this);
+
+                $("input[type=submit]").html('Please Wait...');
+                $("input[type=submit]").attr("disabled", true);
+
+                $.ajax({
+                    type: "POST",
+                    url: "{{ url('admin/add-update-apps/'.$application_id) }}",
+                    data: Form_Data,
+                    mimeType: "multipart/form-data",
+                    contentType: false,
+                    cache: false,
+                    processData: false,
+                    dataType: 'json',
+                    success: function (res) {
+
+                        $('#ajax-model').modal('hide');
+                        $("input[type=submit]").html('Save');
+                        $("input[type=submit]").attr("disabled", false);
+
+                        Toast.fire({
+                            icon: 'success',
+                            title: 'Application has been updated successfully!'
+                        })
+
+
+                    },
+                    error: function (response) {
+
+                        $("input[type=submit]").html('Save');
+                        $("input[type=submit]").attr("disabled", false);
+
+                        var resp = response.responseJSON;
+                        if(typeof resp !== 'undefined'){
+                            Toast.fire({
+                                icon: 'error',
+                                title: 'Please fill required fields!'
+                            })
+                        }
+                        else{
+                            Toast.fire({
+                                icon: 'error',
+                                title: 'Network Error!'
+                            })
+                        }
+
+
+
+                    }
+                });
+
+            }));
+
 
         });
 

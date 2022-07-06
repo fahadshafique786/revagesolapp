@@ -117,7 +117,8 @@ Route::group(
         Route::get('/app', [AppDetailsController::class, 'index']);;
         Route::get('/app/create', [AppDetailsController::class, 'create'])->name('app.create');
         Route::get('/app/{app_id}', [AppDetailsController::class, 'edit'])->name('app.edit');
-        Route::post('/add-update-apps/{schedule_id}', [AppDetailsController::class, 'store']);
-        Route::post('/delete-app/{schedule_id}', [AppDetailsController::class, 'destroy']);
+        Route::post('/add-update-apps', [AppDetailsController::class, 'store']);
+        Route::post('/add-update-apps/{app_id}', [AppDetailsController::class, 'store']);
+        Route::post('/delete-app', [AppDetailsController::class, 'destroy']);
 
     });
