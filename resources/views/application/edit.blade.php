@@ -349,7 +349,7 @@
                         else{
                             Toast.fire({
                                 icon: 'error',
-                                title: 'Network Error!'
+                                title: 'Network Error Occured!'
                             })
                         }
 

@@ -263,6 +263,15 @@
 
         $(document).ready(function($){
 
+            var Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000
+            });
+
+
+
             fetchData();
 
             $.ajaxSetup({
@@ -275,6 +284,7 @@
                 $('#addEditForm').trigger("reset");
                 $("#password").prop("required",true);
                 $('#ajaxheadingModel').html("Add Sponsor Ads");
+                $("form#addEditForm")[0].reset();
                 $('#ajax-model').modal('show');
             });
 
@@ -316,19 +326,16 @@
                     });
                 }
             });
+
             $("#addEditForm").on('submit',(function(e) {
                 e.preventDefault();
                 var Form_Data = new FormData(this);
                 $("#btn-save").html('Please Wait...');
                 $("#btn-save"). attr("disabled", true);
-                $('#nameError').text('');
-                $('#sports_typeError').text('');
-                $('#multi_leagueError').text('');
-                $('#image_requiredError').text('');
 
                 $.ajax({
                     type:"POST",
-                    url: "{{ url('admin/add-update-leagues') }}",
+                    url: "{{ url('admin/add-update-sponsorads') }}",
                     data: Form_Data,
                     mimeType: "multipart/form-data",
                     contentType: false,
@@ -336,18 +343,33 @@
                     processData: false,
                     dataType: 'json',
                     success: function(res){
-                        fetchData();
+//                        fetchData();
                         $('#ajax-model').modal('hide');
                         $("#btn-save").html('Save');
                         $("#btn-save"). attr("disabled", false);
+
+                        Toast.fire({
+                            icon: 'success',
+                            title: 'Sponsor Ads has been saved successfully!'
+                        });
+
+                        $("form#addEditForm")[0].reset();
+
                     },
                     error:function (response) {
+
+                        Toast.fire({
+                            icon: 'error',
+                            title: 'Network Error Occured!'
+                        });
+
+
                         $("#btn-save").html(' Save');
                         $("#btn-save"). attr("disabled", false);
-                        $('#nameError').text(response.responseJSON.errors.name);
-                        $('#sports_typeError').text(response.responseJSON.errors.sports_type);
-                        $('#multi_leagueError').text(response.responseJSON.errors.multi_league);
-                        $('#image_requiredError').text(response.responseJSON.errors.image_required);
+                        $('#adNameError').text(response.responseJSON.errors.adName);
+                        $('#adUrlImageError').text(response.responseJSON.errors.adUrlImage);
+                        $('#clickAdToGoError').text(response.responseJSON.errors.clickAdToGo);
+                        $('#isAdShowError').text(response.responseJSON.errors.isAdShow);
                     }
                 });
             }));

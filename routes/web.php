@@ -125,6 +125,7 @@ Route::group(
 
         /******* Sponsor Ads Module  ***********/
         Route::get('/sponsors', [SponsorsController::class, 'index']);;
+        Route::post('/add-update-sponsorads', [SponsorsController::class, 'store']);;
 //        Route::get('/app/create', [SponsorsController::class, 'create'])->name('app.create');
 //        Route::get('/app/{app_id}', [SponsorsController::class, 'edit'])->name('app.edit');
 //        Route::post('/add-update-apps', [SponsorsController::class, 'store']);
