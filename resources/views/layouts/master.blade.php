@@ -96,6 +96,7 @@
 	$link_label_array['roles'] = "Roles";
 	$link_label_array['permissions'] = "Permissions";
 	$link_label_array['app'] = "Applications";
+	$link_label_array['sponsors'] = "Sponsors";
 
 	$link_label_array1['sports']['icon'] = "sports.png";
 	$link_label_array1['teams']['icon']  = "team.png";

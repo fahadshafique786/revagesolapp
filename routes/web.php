@@ -12,6 +12,7 @@ use App\Http\Controllers\TeamsController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\ServersController;
 use App\Http\Controllers\AppDetailsController;
+use App\Http\Controllers\SponsorsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -120,5 +121,14 @@ Route::group(
         Route::post('/add-update-apps', [AppDetailsController::class, 'store']);
         Route::post('/add-update-apps/{app_id}', [AppDetailsController::class, 'store']);
         Route::post('/delete-app', [AppDetailsController::class, 'destroy']);
+
+
+        /******* Sponsor Ads Module  ***********/
+        Route::get('/sponsors', [SponsorsController::class, 'index']);;
+//        Route::get('/app/create', [SponsorsController::class, 'create'])->name('app.create');
+//        Route::get('/app/{app_id}', [SponsorsController::class, 'edit'])->name('app.edit');
+//        Route::post('/add-update-apps', [SponsorsController::class, 'store']);
+//        Route::post('/add-update-apps/{app_id}', [SponsorsController::class, 'store']);
+//        Route::post('/delete-app', [SponsorsController::class, 'destroy']);
 
     });
