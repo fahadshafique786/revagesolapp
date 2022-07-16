@@ -130,6 +130,8 @@
 						<i class="fas fa-server vertical-super icon-bg"></i>
 				@elseif(Request::segment(2) == 'app')
 						<i class="fas fa fa-mobile vertical-super icon-bg"></i>
+				@elseif(Request::segment(2) == 'sponsors')
+						<i class="fas fa fa-ad vertical-super icon-bg"></i>
 
 				@endif
 

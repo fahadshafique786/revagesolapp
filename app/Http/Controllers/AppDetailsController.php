@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\SponsorAds;
 use Illuminate\Http\Request;
 use App\Models\AppDetails;
 use App\Models\Sports;
+use App\Models\SponsorAds;
 
 class AppDetailsController extends Controller
 {
@@ -107,6 +109,7 @@ class AppDetailsController extends Controller
 
     public function destroy(Request $request)
     {
+        SponsorAds::where('app_detail_id',$request->id)->delete();
         AppDetails::where('id',$request->id)->delete();
 
         return response()->json(['success' => true]);

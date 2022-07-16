@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\Leagues;
 use App\Models\Schedules;
 use App\Models\Sports;
+use App\Models\Servers;
 
 class LeaguesController extends Controller
 {

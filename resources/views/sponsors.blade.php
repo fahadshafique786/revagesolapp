@@ -36,7 +36,7 @@
                             <div class="row">
 
                                 <div class="col-sm-2 pt-4">
-                                    <select class="form-control" id="apps_filter" name="apps_filter" >
+                                    <select class="form-control" id="filter_app_id" name="filter_app_id" >
                                         <option value="">   Select App </option>
                                         @foreach ($appsList as $obj)
                                             <option value="{{ $obj->id }}"  {{ (isset($obj->id) && old('id')) ? "selected":"" }}>{{ $obj->appName }}</option>
@@ -60,9 +60,11 @@
                                 <thead>
                                 <tr>
                                     <th scope="col" width="10px">#</th>
-                                    <th scope="col">Icon</th>
+                                    <th scope="col">App Package</th>
                                     <th scope="col">Name</th>
-                                    <th scope="col">Sport</th>
+                                    <th scope="col">adUrlImage</th>
+                                    <th scope="col">clickAdToGo</th>
+                                    <th scope="col">isAdShow</th>
                                     <th scope="col">Action</th>
                                 </tr>
                                 </thead>
@@ -197,11 +199,11 @@
 
 
         $('#filter').click(function(){
-            var sports_filter = $('#sports_filter').val();
-            if(sports_filter != '')
+            var filter_app_id = $('#filter_app_id').val();
+            if(filter_app_id != '')
             {
                 $('#DataTbl').DataTable().destroy();
-                fetchData(sports_filter);
+                fetchData(filter_app_id);
             }
             else
             {
@@ -215,7 +217,7 @@
 
         var Table_obj = "";
 
-        function fetchData(filter_sports= '')
+        function fetchData(filter_app_id= '')
         {
             $.ajaxSetup({
                 headers: {
@@ -243,17 +245,31 @@
                 }],
                 serverSide: true,
                 "ajax" : {
-                    url:"{{ url('admin/fetch-leagues-data') }}",
+                    url:"{{ url('admin/fetch-sponsor-data/') }}",
                     type:"POST",
                     data:{
-                        filter_sports:filter_sports
+                        filter_app_id:filter_app_id
                     }
                 },
                 columns: [
                     { data: 'srno', name: 'srno' , searchable:false},
-                    { data: 'icon', name: 'icon', searchable:false},
+                    { data: 'appName', name: 'appName' },
                     { data: 'name', name: 'name' },
-                    { data: 'sport_name', name: 'sport_name' },
+                    { data: 'adUrlImage', name: 'adUrlImage', searchable:false},
+                    { data: 'url', name: 'url' },
+                    { data: 'isAdShow', name: 'isAdShow', searchable:false , render: function( data, type, full, meta,rowData ) {
+
+                            if(data=='Yes'){
+                                return "<a href='javascript:void(0)' class='badge badge-success text-xs text-capitalize'>"+data+"</a>" +" ";
+                            }
+                            else{
+                                return "<a href='javascript:void(0)' class='badge badge-danger text-xs text-capitalize'>"+data+"</a>" +" ";
+                            }
+                        },
+
+
+                    },
+
                     {data: 'action', name: 'action', orderable: false , searchable:false},
                 ],
                 order: [[0, 'asc']]
@@ -294,7 +310,7 @@
                 $('#emailError').text('');
                 $.ajax({
                     type:"POST",
-                    url: "{{ url('admin/edit-league') }}",
+                    url: "{{ url('admin/edit-sponsor-ads') }}",
                     data: { id: id },
                     dataType: 'json',
                     success: function(res){
@@ -303,10 +319,13 @@
                         $('#id').val("");
                         $('#addEditForm').trigger("reset");
                         $('#ajaxheadingModel').html("Edit Sponsor Ads");
-                        $('#ajax-model').modal('show');
                         $('#id').val(res.id);
-                        $('#name').val(res.name);
-                        $('#sports_id').val(res.sports_id);
+
+                        $('#app_detail_id').val(res.app_detail_id);
+                        $('#adName').val(res.adName);
+                        $('#clickAdToGo').val(res.clickAdToGo);
+                        $('#isAdShow'+res.isAdShow).prop('checked',true);
+                        $('#ajax-model').modal('show');
 
                     }
                 });
@@ -317,11 +336,22 @@
 
                     $.ajax({
                         type:"POST",
-                        url: "{{ url('admin/delete-league') }}",
+                        url: "{{ url('admin/delete-sponsor-ads') }}",
                         data: { id: id },
                         dataType: 'json',
                         success: function(res){
+                            Toast.fire({
+                                icon: 'success',
+                                title: 'Sponsor Ads has been removed!'
+                            });
                             fetchData();
+                        },
+                        error:function (response) {
+
+                            Toast.fire({
+                                icon: 'error',
+                                title: 'Network Error Occured!'
+                            });
                         }
                     });
                 }
@@ -343,7 +373,7 @@
                     processData: false,
                     dataType: 'json',
                     success: function(res){
-//                        fetchData();
+                       fetchData();
                         $('#ajax-model').modal('hide');
                         $("#btn-save").html('Save');
                         $("#btn-save"). attr("disabled", false);

@@ -106,9 +106,11 @@ class SponsorsController extends Controller
      * @param  \App\Models\sponsors  $sponsors
      * @return \Illuminate\Http\Response
      */
-    public function edit(sponsors $sponsors)
+    public function edit(Request $request)
     {
-        //
+        $where = array('id' => $request->id);
+        $data  = SponsorAds::where($where)->first();
+        return response()->json($data);
     }
 
     /**
@@ -118,6 +120,7 @@ class SponsorsController extends Controller
      * @param  \App\Models\sponsors  $sponsors
      * @return \Illuminate\Http\Response
      */
+
     public function update(Request $request, sponsors $sponsors)
     {
         //
@@ -125,12 +128,67 @@ class SponsorsController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\sponsors  $sponsors
-     * @return \Illuminate\Http\Response
+      * @return \Illuminate\Http\Response
      */
-    public function destroy(sponsors $sponsors)
+
+    public function destroy(Request $request)
     {
-        //
+        SponsorAds::where('id',$request->id)->delete();
+        return response()->json(['success' => true]);
     }
+
+    public function fetchSponsorAdsList(Request  $request)
+    {
+
+        if(request()->ajax()) {
+
+            $response = array();
+            $Filterdata = SponsorAds::select('sponsor_ads.*','app_details.appName');
+
+
+            if(isset($request->filter_sports) && !empty($request->filter_sports)){
+                $Filterdata = $Filterdata->where('leagues.sports_id',$request->filter_sports);
+            }
+
+            $Filterdata = $Filterdata->join('app_details', function ($join) {
+                $join->on('app_details.id', '=', 'sponsor_ads.app_detail_id');
+            })->orderBy('sponsor_ads.id','asc')->get();
+
+
+
+            if(!empty($Filterdata))
+            {
+                $i = 0;
+                foreach($Filterdata as $index => $obj)
+                {
+
+                    $images =  (!empty($obj->adUrlImage)) ? '<img class="dataTable-image" src="'.url("/uploads/sponsor_ads/").'/'.$obj->adUrlImage.'" />' : '<a href="javascript:void(0)" class="" ><i class="fa fa-image text-xl"></i></a>';
+
+                    $response[$i]['srno'] = $i + 1;
+                    $response[$i]['appName'] = $obj->appName;
+                    $response[$i]['name'] = $obj->adName;
+                    $response[$i]['adUrlImage'] = $images;
+                    $response[$i]['url'] = $obj->clickAdToGo;
+                    $response[$i]['isAdShow'] = getBooleanStr($obj->isAdShow,true);
+                    if(auth()->user()->hasRole('super-admin') || auth()->user()->can('manage-sponsors'))
+                    {
+                        $response[$i]['action'] = '<a href="javascript:void(0)" class="btn edit" data-id="'. $obj->id .'"><i class="fa fa-edit  text-info"></i></a>
+											<a href="javascript:void(0)" class="btn delete " data-id="'. $obj->id .'"><i class="fa fa-trash-alt text-danger"></i></a>';
+                    }
+                    else
+                    {
+                        $response[$i]['action'] = "-";
+                    }
+                    $i++;
+                }
+            }
+
+            return datatables()->of($response)
+                ->addIndexColumn()
+                ->rawColumns(['adUrlImage','action'])
+                ->make(true);
+        }
+    }
+
+
 }

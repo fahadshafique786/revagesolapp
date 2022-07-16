@@ -109,8 +109,8 @@
             },
             buttonsStyling: false
         })
+
         let urls = "{{ url('admin/') }}"+'/'+route+"";
-        // alert(urls);
 
         swalWithBootstrapButtons.fire({
             title: 'Are you sure?',
@@ -121,9 +121,6 @@
             cancelButtonText: 'No, cancel!',
             reverseButtons: true
         }).then((result) => {
-            // console.log(result.value);
-            // return false;
-            alert(result.value);
             if (result.value) {
                 var id = postID;
                 $.ajax({
@@ -132,8 +129,7 @@
                     data: { id: id },
                     dataType: 'json',
                     success: function(res){
-                        alert(786)
-                        // fetchData();
+                        location.reload();
                     }
                 });
             }
@@ -142,6 +138,11 @@
 
 
     $(document).ready(function() {
+
+        window.history.pushState(null, "", window.location.href);
+        window.onpopstate = function() {
+            window.history.pushState(null, "", window.location.href);
+        };
 
         $(".EnableDisableFileUpload").click(function(){
              if($(this).val() === '1'){

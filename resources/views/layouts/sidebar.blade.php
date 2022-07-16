@@ -169,6 +169,12 @@
                         <p>Applications</p>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="{{ url('admin/sponsors') }}" class="nav-link {{ (Request::segment(2) == 'sponsors') ? 'active' : '' }}">
+                        <i class="fa fa-ad nav-icon"></i>
+                        <p>Sponsors</p>
+                    </a>
+                </li>
 
 
             @endif

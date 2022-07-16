@@ -37,6 +37,16 @@
 
                             <div class="row">
 
+{{--                                <button type="button" class="btn hide btn-sm btn-toggle active" data-toggle="button" aria-pressed="true" autocomplete="off">--}}
+{{--                                    <div class="handle"></div>--}}
+{{--                                </button>--}}
+
+{{--                                <button type="button" class="btn hide btn-sm btn-toggle" data-toggle="button" aria-pressed="false" autocomplete="off">--}}
+{{--                                    <div class="handle"></div>--}}
+{{--                                </button>--}}
+
+
+
                                 <div class="col-sm-2 pt-4">
                                     <select class="form-control" id="league_filter" name="league_filter" >
                                         <option value="">   Select League </option>
@@ -134,9 +144,6 @@
                                     <select class="form-control" id="home_team_id" name="home_team_id" required
                                             onchange="verifyHomeAwayTeamDuplication('home',this.id,this.value)">
                                         <option value="">   Select Home Team </option>
-{{--                                        @foreach ($teamsList as $team)--}}
-{{--                                            <option value="{{ $team->id }}"  {{ (isset($team->id) && old('id')) ? "selected":"" }}>{{ $team->name }}</option>--}}
-{{--                                        @endforeach--}}
                                     </select>
 
                                     <span class="text-danger" id="home_teamError"></span>
@@ -152,9 +159,6 @@
                                     <select class="form-control" id="away_team_id" name="away_team_id" required
                                             onchange="verifyHomeAwayTeamDuplication('away',this.id,this.value)">
                                         <option value="">   Select Away Team </option>
-{{--                                        @foreach ($teamsList as $team)--}}
-{{--                                            <option value="{{ $team->id }}"  {{ (isset($team->id) && old('id')) ? "selected":"" }}>{{ $team->name }}</option>--}}
-{{--                                        @endforeach--}}
                                     </select>
 
                                     <span class="text-danger" id="away_teamError"></span>

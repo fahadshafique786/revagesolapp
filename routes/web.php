@@ -13,6 +13,7 @@ use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\ServersController;
 use App\Http\Controllers\AppDetailsController;
 use App\Http\Controllers\SponsorsController;
+use \Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,7 +27,13 @@ use App\Http\Controllers\SponsorsController;
 */
 
 Route::get('/', function () {
-    return view('auth.login');
+    if(!empty(Auth::user())){
+//        echo Auth::user()->name;
+        return redirect()->action('App\Http\Controllers\HomeController@index');
+    }
+    else{
+        return view('auth.login');
+    }
 });
 
 Auth::routes();
@@ -125,7 +132,12 @@ Route::group(
 
         /******* Sponsor Ads Module  ***********/
         Route::get('/sponsors', [SponsorsController::class, 'index']);;
-        Route::post('/add-update-sponsorads', [SponsorsController::class, 'store']);;
+        Route::post('/add-update-sponsorads', [SponsorsController::class, 'store']);
+        Route::post('/fetch-sponsor-data/', [SponsorsController::class, 'fetchSponsorAdsList']);
+        Route::post('/edit-sponsor-ads', [SponsorsController::class, 'edit']);
+        Route::post('/delete-sponsor-ads', [SponsorsController::class, 'destroy']);
+
+
 //        Route::get('/app/create', [SponsorsController::class, 'create'])->name('app.create');
 //        Route::get('/app/{app_id}', [SponsorsController::class, 'edit'])->name('app.edit');
 //        Route::post('/add-update-apps', [SponsorsController::class, 'store']);
