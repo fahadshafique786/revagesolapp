@@ -153,6 +153,8 @@
 				@endif
 
 
+            @endif
+
 				@if(auth()->user()->can('view-servers')  || auth()->user()->hasRole('super-admin'))
 					<li class="nav-item">
 						<a href="{{ url('admin/servers') }}" class="nav-link {{ (Request::segment(2) == 'servers') ? 'active' : '' }}">
@@ -162,7 +164,10 @@
 					</li>
 				@endif
 
+                @if(auth()->user()->can('view-applications') || auth()->user()->can('view-sponsors') || auth()->user()->can('view-admob_ads'))
+
                 <li class="nav-header py-3">CONFIGURATION </li>
+
                 <li class="nav-item">
                     <a href="{{ url('admin/app') }}" class="nav-link {{ (Request::segment(2) == 'app') ? 'active' : '' }}">
                         <i class="fa fa-mobile nav-icon"></i>
@@ -181,7 +186,6 @@
                         <p>Admob Ads</p>
                     </a>
                 </li>
-
 
             @endif
 
