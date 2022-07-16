@@ -24,6 +24,7 @@ class PermissionsController extends Controller
 
     public function store(Request $request)
     {
+        $request->merge(['role_id' => 1]);
         $customMessages = [
             'unique' => ':attribute already exist.'
         ];
@@ -33,9 +34,6 @@ class PermissionsController extends Controller
             $this->validate($request, [
                 'name' => 'required|unique:roles,name,\'.$request->id',
                 'role_id' => 'required|integer',
-
-//				'phone' => 'required',
-//				'is_status' => 'required',
             ], $customMessages);
         }
         else
@@ -43,16 +41,11 @@ class PermissionsController extends Controller
             $this->validate($request, [
                 'name' => 'required|unique:permissions,name',
                 'role_id' => 'required|integer',
-
-//				'is_status' => 'required',
             ], $customMessages);
         }
 
         $input = array();
         $input['name'] = $request->name;
-
-
-
 
         $permission =   \Spatie\Permission\Models\Permission::updateOrCreate(
             [
@@ -74,6 +67,8 @@ class PermissionsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+
     public function edit(Request $request)
     {
         $with = [

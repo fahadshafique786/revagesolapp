@@ -49,7 +49,7 @@
 
 	 <!-- boostrap model -->
     <div class="modal fade" id="ajax-model" aria-hidden="true" data-backdrop="static">
-      <div class="modal-dialog modal-lg">
+      <div class="modal-dialog modal-sm">
         <div class="modal-content">
           <div class="modal-header">
             <h4 class="modal-title" id="ajaxheadingModel"></h4>
@@ -59,19 +59,10 @@
             <form action="javascript:void(0)" id="addEditForm" name="addEditForm" class="form-horizontal" method="POST" enctype="multipart/form-data">
               <input type="hidden" name="id" id="id">
               <div class="form-group row">
-                <div class="col-sm-6">
+                <div class="col-sm-12">
 					<label for="name" class="control-label">Name</label>
 					<input type="text" class="form-control" id="name" name="name" placeholder="Enter Name" value="" maxlength="50" required="">
-                    <span class="text-danger" id="user_nameError"></span>
-                </div>
-				<div class="col-sm-6">
-					<label for="name" class="control-label">Attach Roles</label><br/>
-                    <select class="js-example-basic-single" id="roles" name="role_id"  required>
-                        @foreach($roles as $role)
-                        <option value="{{$role->id}}">{{$role->name}}</option>
-                        @endforeach
-                    </select><br/>
-					<span class="text-danger" id="roleError"></span>
+                    <span class="text-danger" id="nameError"></span>
                 </div>
               </div>
 
@@ -165,8 +156,8 @@ function fetchData()
     $('body').on('click', '.editPermission', function () {
         var id = $(this).data('id');
 
-        $('#user_nameError').text('');
-		$('#permissionError').text('');
+        $('#nameError').text('');
+
         $.ajax({
             type:"POST",
             url: "{{ url('admin/edit-permission') }}",
@@ -179,8 +170,7 @@ function fetchData()
               $('#ajax-model').modal('show');
               $('#id').val(res.id);
               $('#name').val(res.name);
-                $('#permissionss').select2('data', res.permissions);
-			//  $('#permissions').val(res.permissions);
+                // $('#permissionss').select2('data', res.permissions);
            }
         });
     });
@@ -223,8 +213,7 @@ function fetchData()
 		var Form_Data = new FormData(this);
         $("#btn-save").html('Please Wait...');
         $("#btn-save"). attr("disabled", true);
-        $('#user_nameError').text('');
-		$('#roleError').text('');
+        $('nameError').text('');
 
         $.ajax({
             type:"POST",
@@ -251,8 +240,7 @@ function fetchData()
                }
 				$("#btn-save").html('<i class="fa fa-save"></i> Save');
 				$("#btn-save"). attr("disabled", false);
-				$('#user_nameError').text(response.responseJSON.errors.name);
-				$('#permissionError').text(response.responseJSON.errors.permissions);
+				$('#nameError').text(response.responseJSON.errors.name);
 			}
         });
     }));
