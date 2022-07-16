@@ -19,7 +19,7 @@ class AppDetailsController extends Controller
 
     public function index(Request $request)
     {
-        $appsList = AppDetails::select('id','appName','appLogo')->get();
+        $appsList = AppDetails::select('id','appName','appLogo','storePackageId')->get();
 
         return view('application.index')
             ->with('apps_list',$appsList);
@@ -53,7 +53,8 @@ class AppDetailsController extends Controller
         if(!empty($application_id))
         {
             $this->validate($request, [
-                'appName' => 'required|unique:app_details,appName,'.$application_id,
+                'appName' => 'required',
+                'storePackageId' => 'required|unique:app_details,storePackageId,'.$application_id,
                 'sports_id' => 'required',
                 'admobAppId' => 'required',
                 'adsIntervalTime' => 'required',
@@ -67,6 +68,8 @@ class AppDetailsController extends Controller
         else
         {
             $this->validate($request, [
+                'appName' => 'required',
+                'storePackageId' => 'required|unique:app_details',
                 'appName' => 'required|unique:app_details',
                 'sports_id' => 'required',
                 'admobAppId' => 'required',

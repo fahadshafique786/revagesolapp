@@ -34,23 +34,28 @@
 
                                      </div>
 
-                                    <label for="staticEmail" class="col-sm-2 col-form-label">App Logo</label>
-                                    <div class="col-sm-4">
-                                        <input type="file" class="" name="appLogo" id="appLogo" value="{{$appData->appLogo}}"  {{ (!$appData->appLogo) ? 'required' : '' }} >
 
+                                    <label for="staticEmail" class="col-sm-2 col-form-label">storePackageId</label>
+
+                                    <div class="col-sm-4">
+                                        <input type="text"  class="form-control" name="storePackageId" id="storePackageId" value="{{$appData->storePackageId}}"  required />
                                     </div>
+
                                 </div>
 
-
                                 <div class="form-group row">
+
                                     <label for="staticEmail" class="col-sm-2 col-form-label">App Name</label>
                                     <div class="col-sm-4">
                                         <input type="text" class="form-control" name="appName" id="appName" value="{{$appData->appName}}" required>
                                     </div>
 
-                                    <label for="staticEmail" class="col-sm-2 col-form-label">admobAppId</label>
+
+
+                                    <label for="staticEmail" class="col-sm-2 col-form-label">App Logo</label>
                                     <div class="col-sm-4">
-                                        <input type="text" class="form-control" name="admobAppId" id="admobAppId" value="{{$appData->admobAppId}}" required>
+                                        <input type="file" class="" name="appLogo" id="appLogo" value="{{$appData->appLogo}}"  {{ (!$appData->appLogo) ? 'required' : '' }} >
+
                                     </div>
                                 </div>
 
@@ -84,10 +89,14 @@
                                         <input type="text" class="form-control" name="startAppId" id="startAppId" value="{{$appData->startAppId}}" required>
                                     </div>
 
-                                    <label for="staticEmail" class="col-sm-2 col-form-label">suspendApp</label>
+
+
+
+                                    <label for="staticEmail" class="col-sm-2 col-form-label">admobAppId</label>
                                     <div class="col-sm-4">
-                                        <input type="text" class="form-control" name="suspendApp" id="suspendApp" value="{{$appData->suspendApp}}" required>
+                                        <input type="text" class="form-control" name="admobAppId" id="admobAppId" value="{{$appData->admobAppId}}" required>
                                     </div>
+
                                 </div>
 
 
@@ -242,10 +251,23 @@
 
                                     </div>
 
-                                    <label for="staticEmail" class="col-sm-2 col-form-label">minimumVersionSupport</label>
+                                    <label for="staticEmail" class="col-sm-2 col-form-label">suspendApp</label>
+
                                     <div class="col-sm-4">
-                                        <input type="text" class="form-control" name="minimumVersionSupport" id="minimumVersionSupport" value="{{$appData->minimumVersionSupport}}" required>
+
+                                        <label for="suspendApp1" class="cursor-pointer">
+                                            <input type="radio" class="" id="suspendApp1" name="suspendApp" value="1" {{($appData->isAdmobAdsShow) ? 'checked' : ''}}  />
+                                            <span class="">Yes</span>
+                                        </label>
+
+                                        <label for="suspendApp0" class="cursor-pointer">
+                                            <input type="radio" class="" id="suspendApp0" name="suspendApp" value="0" {{(!$appData->isAdmobAdsShow) ? 'checked' : ''}} />
+                                            <span class="">No</span>
+                                        </label>
                                     </div>
+
+
+
                                 </div>
 
                                 <div class="form-group row">
@@ -254,11 +276,23 @@
                                         <textarea class="form-control" name="suspendAppMessage" id="suspendAppMessage">{{$appData->suspendAppMessage}}</textarea>
                                     </div>
 
-                                    <div class="col-sm-6 text-right">
-                                        <input type="submit" class="btn bg-dark vertical-bottom" name="submit" id=submitApp"  value="Update" />
+
+
+                                    <label for="staticEmail" class="col-sm-2 col-form-label">minimumVersionSupport</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" class="form-control" name="minimumVersionSupport" id="minimumVersionSupport" value="{{$appData->minimumVersionSupport}}" required>
                                     </div>
 
 
+
+                                </div>
+
+
+                                <div class="form-group row">
+
+                                    <div class="col-sm-12 text-right">
+                                        <input type="submit" class="btn bg-dark vertical-bottom" name="submit" id=submitApp"  value="Update" />
+                                    </div>
 
                                 </div>
 

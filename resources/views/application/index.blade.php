@@ -42,7 +42,7 @@
                                     <div class="card-header">
                                         <div class="col-md-12">
                                             <div class="text-center">
-                                                <h6>{{$obj->appName}}</h6>
+                                                <h6>{{$obj->appName . ' - ' . $obj->storePackageId}}</h6>
                                             </div>
                                         </div>
                                     </div>

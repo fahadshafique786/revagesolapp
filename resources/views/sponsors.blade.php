@@ -35,11 +35,11 @@
 
                             <div class="row">
 
-                                <div class="col-sm-2 pt-4">
+                                <div class="col-sm-4 pt-4">
                                     <select class="form-control" id="filter_app_id" name="filter_app_id" >
                                         <option value="">   Select App </option>
                                         @foreach ($appsList as $obj)
-                                            <option value="{{ $obj->id }}"  {{ (isset($obj->id) && old('id')) ? "selected":"" }}>{{ $obj->appName }}</option>
+                                            <option value="{{ $obj->id }}"  {{ (isset($obj->id) && old('id')) ? "selected":"" }}>{{ $obj->appName . ' - ' . $obj->storePackageId}}</option>
                                         @endforeach
                                     </select>
 
@@ -101,11 +101,11 @@
                                     <select class="form-control" id="app_detail_id" name="app_detail_id" required>
                                         <option value="">   Select App </option>
                                         @foreach ($appsList as $obj)
-                                            <option value="{{ $obj->id }}"  {{ (isset($obj->id) && old('id')) ? "selected":"" }}>{{ $obj->appName }}</option>
+                                            <option value="{{ $obj->id }}"  {{ (isset($obj->id) && old('id')) ? "selected":"" }}>{{ $obj->appName . ' - ' . $obj->storePackageId}}</option>
                                         @endforeach
                                     </select>
 
-                                    <span class="text-danger" id="sports_idError"></span>
+                                    <span class="text-danger" id="app_detail_idError"></span>
 
                                 </div>
 
@@ -139,7 +139,7 @@
                             <div class="form-group row">
 
                                 <div class="col-sm-12">
-
+                                    <label for="isAdShow" class="control-label d-block"> isAdShow </label>
                                     <label for="isAdShow1" class="cursor-pointer">
                                         <input type="radio" class="" id="isAdShow1" name="isAdShow" value="1"  />
                                         <span class="">Yes</span>

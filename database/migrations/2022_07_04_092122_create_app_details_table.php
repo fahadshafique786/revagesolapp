@@ -16,6 +16,7 @@ class CreateAppDetailsTable extends Migration
         Schema::create('app_details', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('sports_id');
+            $table->string('storePackageId')->nullable();
             $table->string('appName')->nullable();
             $table->string('appLogo')->nullable();
             $table->string('admobAppId')->nullable();
