@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\SponsorAds;
 use Illuminate\Http\Request;
 use App\Models\AppDetails;
 use App\Models\Sports;
