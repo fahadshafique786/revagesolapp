@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\AppDetails;
-use App\Models\SponsorAds;
 use Illuminate\Http\Request;
+use App\Models\AppDetails;
+use App\Models\AdmobAds;
 
-class SponsorsController extends Controller
+class AdmobAdsController extends Controller
 {
     public function __construct()
     {
         $this->middleware('auth');
-//        $this->middleware('role_or_permission:super-admin|view-sponsors', ['only' => ['index','FetchSponsorsData']]);
-//        $this->middleware('role_or_permission:super-admin|manage-sponsors',['only' => ['edit','store','destroy']]);
+//        $this->middleware('role_or_permission:super-admin|view-admob_ads', ['only' => ['index','FetchSponsorsData']]);
+//        $this->middleware('role_or_permission:super-admin|manage-admob_ads',['only' => ['edit','store','destroy']]);
     }
 
     /**
@@ -20,11 +20,10 @@ class SponsorsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-
     public function index()
     {
         $appsList = AppDetails::all();
-        return view('sponsors')
+        return view('admob_ads')
             ->with('appsList',$appsList);
     }
 
@@ -55,22 +54,11 @@ class SponsorsController extends Controller
         $input = array();
         $input['adName'] = $request->adName;
         $input['app_detail_id'] = $request->app_detail_id;
-        $input['clickAdToGo'] = $request->clickAdToGo;
+        $input['adUId'] = $request->adUId;
         $input['isAdShow'] = $request->isAdShow;
 
 
-        if($request->hasFile('adUrlImage'))
-        {
-            $fileobj				= $request->file('adUrlImage');
-            $file_extension_name 	= $fileobj->getClientOriginalExtension('adUrlImage');
-            $file_unique_name 		= strtolower($request->adName).'-'.time().rand(1000,9999).'.'.$file_extension_name;
-            $destinationPath		= public_path('/uploads/sponsor_ads/');
-            $fileobj->move($destinationPath,$file_unique_name);
-
-            $input['adUrlImage'] = $file_unique_name;
-        }
-
-        $user   =   SponsorAds::updateOrCreate(
+        $user   =   AdmobAds::updateOrCreate(
             [
                 'id' => $request->id
             ],
@@ -90,37 +78,37 @@ class SponsorsController extends Controller
     public function edit(Request $request)
     {
         $where = array('id' => $request->id);
-        $data  = SponsorAds::where($where)->first();
+        $data  = AdmobAds::where($where)->first();
         return response()->json($data);
     }
 
     /**
      * Remove the specified resource from storage.
-      * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response
      */
 
     public function destroy(Request $request)
     {
-        SponsorAds::where('id',$request->id)->delete();
+        AdmobAds::where('id',$request->id)->delete();
         return response()->json(['success' => true]);
     }
 
-    public function fetchSponsorAdsList(Request  $request)
+    public function fetchAdmobAdsList(Request  $request)
     {
 
         if(request()->ajax()) {
 
             $response = array();
-            $Filterdata = SponsorAds::select('sponsor_ads.*','app_details.appName');
+            $Filterdata = AdmobAds::select('admob_ads.*','app_details.appName');
 
 
             if(isset($request->filter_app_id) && !empty($request->filter_app_id)){
-                $Filterdata = $Filterdata->where('sponsor_ads.app_detail_id',$request->filter_app_id);
+                $Filterdata = $Filterdata->where('admob_ads.app_detail_id',$request->filter_app_id);
             }
 
             $Filterdata = $Filterdata->join('app_details', function ($join) {
-                $join->on('app_details.id', '=', 'sponsor_ads.app_detail_id');
-            })->orderBy('sponsor_ads.id','asc')->get();
+                $join->on('app_details.id', '=', 'admob_ads.app_detail_id');
+            })->orderBy('admob_ads.id','asc')->get();
 
 
 
@@ -130,15 +118,12 @@ class SponsorsController extends Controller
                 foreach($Filterdata as $index => $obj)
                 {
 
-                    $images =  (!empty($obj->adUrlImage)) ? '<img class="dataTable-image" src="'.url("/uploads/sponsor_ads/").'/'.$obj->adUrlImage.'" />' : '<a href="javascript:void(0)" class="" ><i class="fa fa-image text-xl"></i></a>';
-
                     $response[$i]['srno'] = $i + 1;
                     $response[$i]['appName'] = $obj->appName;
                     $response[$i]['name'] = $obj->adName;
-                    $response[$i]['adUrlImage'] = $images;
-                    $response[$i]['url'] = $obj->clickAdToGo;
+                    $response[$i]['adUId'] = $obj->adUId;
                     $response[$i]['isAdShow'] = getBooleanStr($obj->isAdShow,true);
-                    if(auth()->user()->hasRole('super-admin') || auth()->user()->can('manage-sponsors'))
+                    if(auth()->user()->hasRole('super-admin') || auth()->user()->can('manage-admob_ads'))
                     {
                         $response[$i]['action'] = '<a href="javascript:void(0)" class="btn edit" data-id="'. $obj->id .'"><i class="fa fa-edit  text-info"></i></a>
 											<a href="javascript:void(0)" class="btn delete " data-id="'. $obj->id .'"><i class="fa fa-trash-alt text-danger"></i></a>';
@@ -157,6 +142,5 @@ class SponsorsController extends Controller
                 ->make(true);
         }
     }
-
 
 }

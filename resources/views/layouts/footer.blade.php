@@ -139,10 +139,10 @@
 
     $(document).ready(function() {
 
-        window.history.pushState(null, "", window.location.href);
-        window.onpopstate = function() {
-            window.history.pushState(null, "", window.location.href);
-        };
+        // window.history.pushState(null, "", window.location.href);
+        // window.onpopstate = function() {
+        //     window.history.pushState(null, "", window.location.href);
+        // };
 
         $(".EnableDisableFileUpload").click(function(){
              if($(this).val() === '1'){

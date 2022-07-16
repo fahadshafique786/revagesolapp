@@ -13,6 +13,7 @@ use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\ServersController;
 use App\Http\Controllers\AppDetailsController;
 use App\Http\Controllers\SponsorsController;
+use App\Http\Controllers\AdmobAdsController;
 use \Illuminate\Support\Facades\Auth;
 
 /*
@@ -136,6 +137,14 @@ Route::group(
         Route::post('/fetch-sponsor-data/', [SponsorsController::class, 'fetchSponsorAdsList']);
         Route::post('/edit-sponsor-ads', [SponsorsController::class, 'edit']);
         Route::post('/delete-sponsor-ads', [SponsorsController::class, 'destroy']);
+
+
+        /******* Sponsor Ads Module  ***********/
+        Route::get('/admob_ads', [AdmobAdsController::class, 'index']);;
+        Route::post('/add-update-admob_ads', [AdmobAdsController::class, 'store']);
+        Route::post('/fetch-admob_ads-data/', [AdmobAdsController::class, 'fetchAdmobAdsList']);
+        Route::post('/edit-admob-ads', [AdmobAdsController::class, 'edit']);
+        Route::post('/delete-admob-ads', [AdmobAdsController::class, 'destroy']);
 
 
 //        Route::get('/app/create', [SponsorsController::class, 'create'])->name('app.create');

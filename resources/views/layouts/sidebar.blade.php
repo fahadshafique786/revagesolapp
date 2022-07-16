@@ -175,6 +175,12 @@
                         <p>Sponsors</p>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="{{ url('admin/admob_ads') }}" class="nav-link {{ (Request::segment(2) == 'admob_ads') ? 'active' : '' }}">
+                        <i class="fa fa-ad nav-icon"></i>
+                        <p>Admob Ads</p>
+                    </a>
+                </li>
 
 
             @endif
