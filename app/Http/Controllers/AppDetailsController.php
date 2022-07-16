@@ -12,8 +12,8 @@ class AppDetailsController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-//        $this->middleware('role_or_permission:super-admin|view-sports', ['only' => ['index','fetchsportsdata']]);
-//        $this->middleware('role_or_permission:super-admin|manage-sports',['only' => ['edit','store','editProfile','updateRole','destroy']]);
+        $this->middleware('role_or_permission:super-admin|view-applications', ['only' => ['index']]);
+        $this->middleware('role_or_permission:super-admin|manage-applications',['only' => ['create','edit','store','destroy']]);
     }
 
 
@@ -50,7 +50,6 @@ class AppDetailsController extends Controller
 
     public function store(Request $request,$application_id = false)
     {
-//        dd($request->all());
         if(!empty($application_id))
         {
             $this->validate($request, [

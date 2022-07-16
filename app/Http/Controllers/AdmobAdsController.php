@@ -11,8 +11,8 @@ class AdmobAdsController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-//        $this->middleware('role_or_permission:super-admin|view-admob_ads', ['only' => ['index','FetchSponsorsData']]);
-//        $this->middleware('role_or_permission:super-admin|manage-admob_ads',['only' => ['edit','store','destroy']]);
+        $this->middleware('role_or_permission:super-admin|view-admob_ads', ['only' => ['index','fetchAdmobAdsList']]);
+        $this->middleware('role_or_permission:super-admin|manage-admob_ads',['only' => ['edit','store','destroy']]);
     }
 
     /**
