@@ -11,6 +11,7 @@ class AppDetails extends Model
 
     protected $casts = [
         'id' => 'string',
+        'sports_id' => 'string',
     ];
 
     protected $fillable = [
