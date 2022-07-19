@@ -103,6 +103,8 @@
 	$link_label_array1['teams']['icon']  = "team.png";
 	$link_label_array1['schedules']['icon'] = "schedule.png";
 	$link_label_array1['leagues']['icon'] = "league.png";
+	$link_label_array1['servers']['icon'] = "server.png";
+	$link_label_array1['app']['icon'] = "app.png";
 
 @endphp
 
@@ -125,15 +127,16 @@
 					<img src="{{ asset('dist/img/sidebar-icons/schedule.png') }}" class="elevation-2 icon-bg vertical-baseline "/>
 				@elseif(Request::segment(2) == 'leagues')
 					<img src="{{ asset('dist/img/sidebar-icons/league.png') }}" class="elevation-2  icon-bg vertical-baseline"/>
-				@elseif(Request::segment(2) == 'users' || Request::segment(2) == 'permissions'  || Request::segment(2) == 'roles' )
-                        <i class="fas fa-users icon-bg  vertical-super"></i>
 				@elseif(Request::segment(2) == 'servers')
-						<i class="fas fa-server vertical-super icon-bg"></i>
-				@elseif(Request::segment(2) == 'app')
-						<i class="fas fa fa-mobile vertical-super icon-bg"></i>
-				@elseif(Request::segment(2) == 'sponsors' || Request::segment(2) == 'admob_ads')
-						<i class="fas fa fa-ad vertical-super icon-bg"></i>
-
+					<img src="{{ asset('dist/img/sidebar-icons/server.png') }}" class="elevation-2  icon-bg vertical-baseline"/>
+                @elseif(Request::segment(2) == 'app')
+                    <img src="{{ asset('dist/img/sidebar-icons/application.png') }}" class="elevation-2  icon-bg vertical-baseline"/>
+                @elseif(Request::segment(2) == 'users' || Request::segment(2) == 'permissions'  || Request::segment(2) == 'roles' )
+                        <i class="fas fa-users icon-bg  vertical-super"></i>
+                @elseif(Request::segment(2) == 'sponsors')
+                    <img src="{{ asset('dist/img/sidebar-icons/sponsor-ad.png') }}" class="elevation-2  icon-bg vertical-baseline"/>
+                @elseif(Request::segment(2) == 'admob_ads')
+                    <img src="{{ asset('dist/img/sidebar-icons/admob-ad.png') }}" class="elevation-2  icon-bg vertical-baseline"/>
 				@endif
 
 
