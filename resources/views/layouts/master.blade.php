@@ -91,7 +91,7 @@
 	$link_label_array['sports'] = "Sports";
 	$link_label_array['teams'] = "Teams";
 	$link_label_array['schedules'] = "Schedules";
-	$link_label_array['leagues'] = "Leagues";
+	$link_label_array['leagues'] = "LeaguesApi";
 	$link_label_array['servers'] = "Servers";
 	$link_label_array['roles'] = "Roles";
 	$link_label_array['permissions'] = "Permissions";

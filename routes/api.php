@@ -2,7 +2,10 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\API\ApiAppDetails;
+use App\Http\Controllers\API\Applications;
+use App\Http\Controllers\API\SportsApi;
+use App\Http\Controllers\API\LeaguesApi;
+use App\Http\Controllers\API\TeamsApi;
 
 
 /*
@@ -16,7 +19,10 @@ use App\Http\Controllers\API\ApiAppDetails;
 |
 */
 
-Route::get('app-details', [ApiAppDetails::class, 'index']);
+Route::get('app-details', [Applications::class, 'index']);
+Route::get('sports', [SportsApi::class, 'index']);
+Route::post('leagues', [LeaguesApi::class, 'index']);
+Route::post('teams', [TeamsApi::class, 'index']);
 
 
 

@@ -80,7 +80,7 @@ Route::group(
         Route::post('/delete-permission', [PermissionsController::class, 'destroy']);
 
 
-        /******* Leagues Module ***********/
+        /******* LeaguesApi Module ***********/
         Route::get('/leagues', [LeaguesController::class, 'index']);
         Route::post('/fetch-leagues-data', [LeaguesController::class, 'fetchleaguesdata']);
         Route::post('/add-update-leagues', [LeaguesController::class, 'store']);

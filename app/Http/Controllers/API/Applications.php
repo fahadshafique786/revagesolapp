@@ -8,7 +8,7 @@ use App\Models\SponsorAds;
 use App\Models\AdmobAds;
 use Illuminate\Routing\Controller as BaseController;
 
-class ApiAppDetails extends BaseController
+class Applications extends BaseController
 {
     public function __construct()
     {
@@ -45,7 +45,7 @@ class ApiAppDetails extends BaseController
         }
 
         // unset($dataArray[0]->id);
-        $dataObject[0]->suspendAppMessage = $dataObject[0]->suspendAppMessage = "";
+        $dataObject[0]->suspendAppMessage = (!empty($dataObject[0]->suspendAppMessage)) ? $dataObject[0]->suspendAppMessage : "";
         $response['AppDetails'] = $dataObject[0];
         $response['AppDetails']->admobAds = $ads_list;
         $response['AppDetails']->sponsorAdsList = $sponsor_list;

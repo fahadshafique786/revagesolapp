@@ -14,6 +14,11 @@ class Sports extends Model
      * @var array<int, string>
      */
 
+    protected $casts = [
+        'id' => 'string',
+    ];
+
+
     protected $fillable = [
         'icon',
         'name',
