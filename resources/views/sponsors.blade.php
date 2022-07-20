@@ -298,7 +298,7 @@
             $('#addNew').click(function () {
                 $('#id').val("");
                 $('#addEditForm').trigger("reset");
-                $("#password").prop("required",true);
+                $("#adNameError").text(' ');
                 $('#ajaxheadingModel').html("Add Sponsor Ads");
                 $("form#addEditForm")[0].reset();
                 $('#ajax-model').modal('show');
@@ -358,6 +358,7 @@
             });
 
             $("#addEditForm").on('submit',(function(e) {
+                $("#adNameError").text(' ');
                 e.preventDefault();
                 var Form_Data = new FormData(this);
                 $("#btn-save").html('Please Wait...');
@@ -388,6 +389,7 @@
                     },
                     error:function (response) {
 
+                        console.log(response);
                         if(response.status == 422){
                             Toast.fire({
                                 icon: 'error',
