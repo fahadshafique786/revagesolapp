@@ -19,7 +19,7 @@ use App\Http\Controllers\API\TeamsApi;
 |
 */
 
-Route::get('app-details', [Applications::class, 'index']);
+Route::post('app-details', [Applications::class, 'index']);
 Route::get('sports', [SportsApi::class, 'index']);
 Route::post('leagues', [LeaguesApi::class, 'index']);
 Route::post('teams', [TeamsApi::class, 'index']);

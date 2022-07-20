@@ -128,7 +128,7 @@
 
                                 <div class="col-sm-12">
                                     <label for="league_icon" class="control-label d-block"> clickAdToGo </label>
-                                    <input type="text" class="form-control" id="clickAdToGo" name="clickAdToGo" value="-" required="">
+                                    <input type="text" class="form-control" id="clickAdToGo" name="clickAdToGo" value="" required="">
                                     <span class="text-danger" id="clickAdToGoError"></span>
 
                                 </div>
@@ -141,12 +141,12 @@
                                 <div class="col-sm-12">
                                     <label for="isAdShow" class="control-label d-block"> isAdShow </label>
                                     <label for="isAdShow1" class="cursor-pointer">
-                                        <input type="radio" class="" id="isAdShow1" name="isAdShow" value="1"  />
+                                        <input type="radio" class="" id="isAdShow1" name="isAdShow" value="1"  checked/>
                                         <span class="">Yes</span>
                                     </label>
 
                                     <label for="isAdShow0" class="cursor-pointer">
-                                        <input type="radio" class="" id="isAdShow0" name="isAdShow" value="0" checked />
+                                        <input type="radio" class="" id="isAdShow0" name="isAdShow" value="0"  />
                                         <span class="">No</span>
                                     </label>
 
@@ -388,11 +388,18 @@
                     },
                     error:function (response) {
 
-                        Toast.fire({
-                            icon: 'error',
-                            title: 'Network Error Occured!'
-                        });
-
+                        if(response.status == 422){
+                            Toast.fire({
+                                icon: 'error',
+                                title: response.responseJSON.message
+                            });
+                        }
+                        else{
+                            Toast.fire({
+                                icon: 'error',
+                                title: 'Network Error Occured!'
+                            });
+                        }
 
                         $("#btn-save").html(' Save');
                         $("#btn-save"). attr("disabled", false);

@@ -8,6 +8,7 @@ use App\Models\Schedules;
 use App\Models\Leagues;
 use App\Models\Teams;
 use App\Models\Servers;
+use App\Models\AppDetails;
 
 class SportsController extends Controller
 {
@@ -84,6 +85,7 @@ class SportsController extends Controller
 
     public function destroy(Request $request)
     {
+        AppDetails::where('sports_id',$request->id)->delete();
         Servers::where('sports_id',$request->id)->delete();
         Schedules::where('sports_id',$request->id)->delete();
         Teams::where('sports_id',$request->id)->delete();

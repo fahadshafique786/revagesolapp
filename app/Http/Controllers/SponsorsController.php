@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\AppDetails;
 use App\Models\SponsorAds;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class SponsorsController extends Controller
 {
@@ -46,8 +47,9 @@ class SponsorsController extends Controller
         }
         else
         {
+
             $this->validate($request, [
-                'adName' => 'required|unique:sponsor_ads,adName,'.$request->id,
+                'adName' => 'required|unique:sponsor_ads,adName',
                 'app_detail_id' => 'required',
             ]);
         }

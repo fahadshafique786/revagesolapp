@@ -47,7 +47,7 @@ class AdmobAdsController extends Controller
         else
         {
             $this->validate($request, [
-                'adName' => 'required|unique:admob_ads',
+                'adName' => 'required|unique:admob_ads,adName',
                 'app_detail_id' => 'required',
                 'adUId' => 'required',
             ]);
