@@ -60,7 +60,7 @@
                                 <thead>
                                 <tr>
                                     <th scope="col" width="10px">#</th>
-                                    <th scope="col">App Package</th>
+                                    <th scope="col">Application</th>
                                     <th scope="col">Name</th>
                                     <th scope="col">adUrlImage</th>
                                     <th scope="col">clickAdToGo</th>
@@ -127,7 +127,7 @@
                             <div class="form-group row">
 
                                 <div class="col-sm-12">
-                                    <label for="league_icon" class="control-label d-block"> URL </label>
+                                    <label for="league_icon" class="control-label d-block"> clickAdToGo </label>
                                     <input type="text" class="form-control" id="clickAdToGo" name="clickAdToGo" value="-" required="">
                                     <span class="text-danger" id="clickAdToGoError"></span>
 
@@ -160,7 +160,7 @@
                             <div class="form-group row">
 
                                 <div class="col-sm-12">
-                                    <label for="league_icon" class="control-label d-block">Ads Image </label>
+                                    <label for="league_icon" class="control-label d-block">Ad Image </label>
 
                                     <input type="file" class="" id="adUrlImage" name="adUrlImage" onchange="allowonlyImg(this)">
                                     <span class="text-danger" id="adUrlImageError"></span>
