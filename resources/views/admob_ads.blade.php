@@ -294,6 +294,7 @@
 
                 var id = $(this).data('id');
                 $('#nameError').text('');
+                $('#adNameError').text(' ');
                 $('#emailError').text('');
                 $.ajax({
                     type:"POST",

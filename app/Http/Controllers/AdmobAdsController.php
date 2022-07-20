@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\AppDetails;
 use App\Models\AdmobAds;
+use Response;
 
 class AdmobAdsController extends Controller
 {
@@ -38,19 +39,49 @@ class AdmobAdsController extends Controller
     {
         if(!empty($request->id))
         {
-            $this->validate($request, [
-                'adName' => 'required|unique:admob_ads,adName,'.$request->id,
-                'app_detail_id' => 'required',
-                'adUId' => 'required',
-            ]);
+//            $this->validate($request, [
+//                'adName' => 'required|unique:admob_ads,adName,'.$request->id,
+//                'app_detail_id' => 'required',
+//                'adUId' => 'required',
+//            ]);
+
+            $validation = AdmobAds::where('adName',$request->adName)
+                ->where('app_detail_id',$request->app_detail_id)
+                ->where('id','!=',$request->id);
+
+            $validationResponse = [];
+
+            if($validation->exists()){
+                $validationResponse = [];
+                $validationResponse['message'] = "The given data was invalid.";
+                $validationResponse['errors']['adName'] = "The ad name already exists with current App!";
+
+                return Response::json($validationResponse,422);
+            }
+
         }
         else
         {
-            $this->validate($request, [
-                'adName' => 'required|unique:admob_ads,adName',
-                'app_detail_id' => 'required',
-                'adUId' => 'required',
-            ]);
+//            $this->validate($request, [
+//                'adName' => 'required|unique:admob_ads,adName',
+//                'app_detail_id' => 'required',
+//                'adUId' => 'required',
+//            ]);
+
+            $validation = AdmobAds::where('adName',$request->adName)
+                ->where('app_detail_id',$request->app_detail_id);
+
+            $validationResponse = [];
+
+            if($validation->exists()){
+                $validationResponse = [];
+                $validationResponse['message'] = "The given data was invalid.";
+                $validationResponse['errors']['adName'] = "The ad name already exists with current App!";
+
+                return Response::json($validationResponse,422);
+            }
+
+
         }
 
         $input = array();

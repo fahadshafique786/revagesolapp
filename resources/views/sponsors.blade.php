@@ -306,6 +306,7 @@
 
             $('body').on('click', '.edit', function () {
                 var id = $(this).data('id');
+                $('#adNameError').text(' ');
                 $('#nameError').text('');
                 $('#emailError').text('');
                 $.ajax({
