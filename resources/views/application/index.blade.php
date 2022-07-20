@@ -42,7 +42,12 @@
                                     <div class="card-header">
                                         <div class="col-md-12">
                                             <div class="text-center">
-                                                <h6>{{$obj->appName . ' - ' . $obj->storePackageId}}</h6>
+                                                <h5><strong>{{$obj->sports_name}}</strong></h5>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="text-center">
+                                                <h6>{{$obj->appName . ' - ' . $obj->PackageId}}</h6>
                                             </div>
                                         </div>
                                     </div>

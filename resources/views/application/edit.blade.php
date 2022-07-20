@@ -35,10 +35,10 @@
                                      </div>
 
 
-                                    <label for="staticEmail" class="col-sm-2 col-form-label">storePackageId</label>
+                                    <label for="staticEmail" class="col-sm-2 col-form-label">PackageId</label>
 
                                     <div class="col-sm-4">
-                                        <input type="text"  class="form-control" name="storePackageId" id="storePackageId" value="{{$appData->storePackageId}}"  required />
+                                        <input type="text"  class="form-control" name="PackageId" id="PackageId" value="{{$appData->PackageId}}"  required />
                                     </div>
 
                                 </div>
@@ -62,7 +62,7 @@
                                 <div class="form-group row">
                                     <label for="staticEmail" class="col-sm-2 col-form-label">adsIntervalTime</label>
                                     <div class="col-sm-4">
-                                        <input type="text" class="form-control" name="adsIntervalTime" id="adsIntervalTime" value="{{$appData->adsIntervalTime}}" required>
+                                        <input type="number" class="form-control" name="adsIntervalTime" id="adsIntervalTime" value="{{$appData->adsIntervalTime}}" required>
                                     </div>
 
                                     <label for="staticEmail" class="col-sm-2 col-form-label">checkIpAddressApiUrl</label>
@@ -280,7 +280,7 @@
 
                                     <label for="staticEmail" class="col-sm-2 col-form-label">minimumVersionSupport</label>
                                     <div class="col-sm-4">
-                                        <input type="text" class="form-control" name="minimumVersionSupport" id="minimumVersionSupport" value="{{$appData->minimumVersionSupport}}" required>
+                                        <input type="number" class="form-control" name="minimumVersionSupport" id="minimumVersionSupport" value="{{$appData->minimumVersionSupport}}" required>
                                     </div>
 
 
@@ -366,6 +366,9 @@
                             title: 'Application has been updated successfully!'
                         })
 
+                        setTimeout(function(){
+                            window.location.href = "{{ url('admin/app/')}}";
+                        },850);
 
                     },
                     error: function (response) {

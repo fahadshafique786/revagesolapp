@@ -39,7 +39,7 @@
                                     <select class="form-control" id="filter_app_id" name="filter_app_id" >
                                         <option value="">   Select App </option>
                                         @foreach ($appsList as $obj)
-                                            <option value="{{ $obj->id }}"  {{ (isset($obj->id) && old('id')) ? "selected":"" }}>{{ $obj->appName . ' - ' . $obj->storePackageId}}</option>
+                                            <option value="{{ $obj->id }}"  {{ (isset($obj->id) && old('id')) ? "selected":"" }}>{{ $obj->appName . ' - ' . $obj->PackageId}}</option>
                                         @endforeach
                                     </select>
 
@@ -100,7 +100,7 @@
                                     <select class="form-control" id="app_detail_id" name="app_detail_id" required>
                                         <option value="">   Select App </option>
                                         @foreach ($appsList as $obj)
-                                            <option value="{{ $obj->id }}"  {{ (isset($obj->id) && old('id')) ? "selected":"" }}>{{ $obj->appName . ' - ' . $obj->storePackageId}}</option>
+                                            <option value="{{ $obj->id }}"  {{ (isset($obj->id) && old('id')) ? "selected":"" }}>{{ $obj->appName . ' - ' . $obj->PackageId}}</option>
                                         @endforeach
                                     </select>
 

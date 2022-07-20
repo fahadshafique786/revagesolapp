@@ -32,6 +32,15 @@ LOGIN PAGE
 .card.card-outline {
     background: rgba(255,255,255,0.9);
 }
+.card.custom {
+    min-height: 260px !important;
+}
+
+.custom.card .card-header {
+    min-height: 104px !important;
+}
+
+
 
 .custom-nav-dark,
 .primary-bg-dark{
@@ -178,14 +187,13 @@ input[disabled]{
 }
 
 .card.custom {
-    border-color: #000 !important;
     position: relative;
     width: 100%;
-    border: none;
+    border: 2px solid #ddd !important;
     margin-bottom: 30px;
-    -webkit-box-shadow: 0 6px 0 0 rgb(0 0 0 / 1%), 0 15px 32px 0 rgb(0 0 0 / 6%);
-    -moz-box-shadow: 0 6px 0 0 rgba(0, 0, 0, 0.01), 0 15px 32px 0 rgba(0, 0, 0, 0.06);
-    box-shadow: 0 6px 0 0 rgb(0 0 0 / 1%), 0 15px 32px 0 rgb(0 0 0 / 6%);
+    box-shadow: 5px 4px 7px #c2cfe3 !important;
+    -webkit-box-shadow: 5px 4px 7px #c2cfe3 !important;
+    -moz-box-shadow: 5px 4px 7px #c2cfe3 !important;
     -moz-transition: all 0.5s ease-in-out;
     -o-transition: all 0.5s ease-in-out;
     -webkit-transition: all 0.5s ease-in-out;

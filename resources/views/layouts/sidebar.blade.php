@@ -175,17 +175,18 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ url('admin/sponsors') }}" class="nav-link {{ (Request::segment(2) == 'sponsors') ? 'active' : '' }}">
-                        <img src="{{ asset('dist/img/sidebar-icons/sponsor-ad.png') }}" class="elevation-2 "/>
-                        <p>Sponsors</p>
-                    </a>
-                </li>
-                <li class="nav-item">
                     <a href="{{ url('admin/admob_ads') }}" class="nav-link {{ (Request::segment(2) == 'admob_ads') ? 'active' : '' }}">
                         <img src="{{ asset('dist/img/sidebar-icons/admob-ad.png') }}" class="elevation-2 "/>
                         <p>Admob Ads</p>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="{{ url('admin/sponsors') }}" class="nav-link {{ (Request::segment(2) == 'sponsors') ? 'active' : '' }}">
+                        <img src="{{ asset('dist/img/sidebar-icons/sponsor-ad.png') }}" class="elevation-2 "/>
+                        <p>Sponsors</p>
+                    </a>
+                </li>
+
 
             @endif
 
