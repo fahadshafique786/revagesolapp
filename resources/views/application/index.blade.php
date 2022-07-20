@@ -54,7 +54,7 @@
                                     <div class="card-block text-center">
                                         <div style="height: 92px; " class="col-md-12">
                                             <div class="text-center">
-                                                <img style="height: 72px; width: 72px" src="{{ ($obj->appLogo) ? $obj->appLogo : asset('uploads/apps/appLogo.png') }}" alt="App Logo">
+                                                <img style="height: 72px; width: 72px" src="{{ ($obj->appLogo) ? asset('uploads/apps/'.$obj->appLogo) : asset('uploads/apps/appLogo.png') }}" alt="App Logo">
                                             </div>
                                         </div>
                                         <div class="row">

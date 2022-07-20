@@ -60,7 +60,7 @@ class LeaguesController extends Controller
             $destinationPath		= public_path('/uploads/leagues/');
             $fileobj->move($destinationPath,$file_unique_name);
 
-            $input['icon'] = url('uploads/leagues').'/'.$file_unique_name;
+            $input['icon'] = $file_unique_name;
         }
 
         $user   =   Leagues::updateOrCreate(
@@ -118,7 +118,7 @@ class LeaguesController extends Controller
                 foreach($Filterdata as $index => $leagues)
                 {
 
-                    $sport_logo =  (!empty($leagues->icon)) ? '<img class="dataTable-image" src="'.$leagues->icon.'" />' : '<a href="javascript:void(0)" class="" ><i class="fa fa-image text-xl"></i></a>';
+                    $sport_logo =  (!empty($leagues->icon)) ? '<img class="dataTable-image" src="'.url("/uploads/leagues/").'/'.$leagues->icon.'" />' : '<a href="javascript:void(0)" class="" ><i class="fa fa-image text-xl"></i></a>';
 
                     $response[$i]['srno'] = $i + 1;
                     $response[$i]['icon'] = $sport_logo;

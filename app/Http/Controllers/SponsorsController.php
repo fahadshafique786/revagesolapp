@@ -69,8 +69,7 @@ class SponsorsController extends Controller
             $destinationPath		= public_path('/uploads/sponsor_ads/');
             $fileobj->move($destinationPath,$file_unique_name);
 
-//            $input['adUrlImage'] = $file_unique_name;
-            $input['adUrlImage'] = url('uploads/sponsor_ads').'/'.$file_unique_name;
+            $input['adUrlImage'] = $file_unique_name;
         }
 
         $user   =   SponsorAds::updateOrCreate(
@@ -133,7 +132,7 @@ class SponsorsController extends Controller
                 foreach($Filterdata as $index => $obj)
                 {
 
-                    $images =  (!empty($obj->adUrlImage)) ? '<img class="dataTable-image" src="'.$obj->adUrlImage.'" />' : '<a href="javascript:void(0)" class="" ><i class="fa fa-image text-xl"></i></a>';
+                    $images =  (!empty($obj->adUrlImage)) ? '<img class="dataTable-image" src="'.url("/uploads/sponsor_ads/").'/'.$obj->adUrlImage.'" />' : '<a href="javascript:void(0)" class="" ><i class="fa fa-image text-xl"></i></a>';
 
                     $response[$i]['srno'] = $i + 1;
                     $response[$i]['appName'] = $obj->appName . ' - ' . $obj->PackageId;

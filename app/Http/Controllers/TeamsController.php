@@ -72,7 +72,7 @@ class TeamsController extends Controller
             $destinationPath		= public_path('/uploads/teams');
             $fileobj->move($destinationPath,$file_unique_name);
 
-            $input['icon'] = url('uploads/teams').'/'.$file_unique_name;
+            $input['icon'] = $file_unique_name;
         }
 
         $teams   =   Teams::updateOrCreate(
@@ -124,7 +124,7 @@ class TeamsController extends Controller
                 foreach($Filterdata as $index => $team)
                 {
 
-                    $sport_logo =  (!empty($team->icon)) ? '<img class="dataTable-image" src="'.$team->icon.'" />' : '<a href="javascript:void(0)" class="" ><i class="fa fa-image text-xl"></i></a>';
+                    $sport_logo =  (!empty($team->icon)) ? '<img class="dataTable-image" src="'.url("/uploads/teams/").'/'.$team->icon.'" />' : '<a href="javascript:void(0)" class="" ><i class="fa fa-image text-xl"></i></a>';
 
                     $response[$i]['srno'] = $i + 1;
                     $response[$i]['icon'] = $sport_logo;
