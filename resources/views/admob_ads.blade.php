@@ -60,7 +60,7 @@
                                 <thead>
                                 <tr>
                                     <th scope="col" width="10px">#</th>
-                                    <th scope="col">App Package</th>
+                                    <th scope="col">Application</th>
                                     <th scope="col">Name</th>
                                     <th scope="col">adUId</th>
                                     <th scope="col">isAdShow</th>
@@ -376,11 +376,18 @@
 
                     },
                     error:function (response) {
-
-                        Toast.fire({
-                            icon: 'error',
-                            title: 'Network Error Occured!'
-                        });
+                        if(response.status == 422){
+                            Toast.fire({
+                                icon: 'error',
+                                title: response.responseJSON.message
+                            });
+                        }
+                        else{
+                            Toast.fire({
+                                icon: 'error',
+                                title: 'Network Error Occured!'
+                            });
+                        }
 
 
                         $("#btn-save").html(' Save');

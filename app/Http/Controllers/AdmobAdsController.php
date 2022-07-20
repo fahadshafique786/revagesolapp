@@ -39,15 +39,17 @@ class AdmobAdsController extends Controller
         if(!empty($request->id))
         {
             $this->validate($request, [
-                'adName' => 'required|unique:sponsor_ads,adName,'.$request->id,
+                'adName' => 'required|unique:admob_ads,adName,'.$request->id,
                 'app_detail_id' => 'required',
+                'adUId' => 'required',
             ]);
         }
         else
         {
             $this->validate($request, [
-                'adName' => 'required|unique:sponsor_ads,adName,'.$request->id,
+                'adName' => 'required|unique:admob_ads',
                 'app_detail_id' => 'required',
+                'adUId' => 'required',
             ]);
         }
 
@@ -99,7 +101,7 @@ class AdmobAdsController extends Controller
         if(request()->ajax()) {
 
             $response = array();
-            $Filterdata = AdmobAds::select('admob_ads.*','app_details.appName');
+            $Filterdata = AdmobAds::select('admob_ads.*','app_details.appName','app_details.PackageId as PackageId');
 
 
             if(isset($request->filter_app_id) && !empty($request->filter_app_id)){
@@ -119,7 +121,7 @@ class AdmobAdsController extends Controller
                 {
 
                     $response[$i]['srno'] = $i + 1;
-                    $response[$i]['appName'] = $obj->appName;
+                    $response[$i]['appName'] = $obj->appName . ' - ' . $obj->PackageId;
                     $response[$i]['name'] = $obj->adName;
                     $response[$i]['adUId'] = $obj->adUId;
                     $response[$i]['isAdShow'] = getBooleanStr($obj->isAdShow,true);

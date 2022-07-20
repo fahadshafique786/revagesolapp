@@ -111,7 +111,7 @@ class SponsorsController extends Controller
         if(request()->ajax()) {
 
             $response = array();
-            $Filterdata = SponsorAds::select('sponsor_ads.*','app_details.appName');
+            $Filterdata = SponsorAds::select('sponsor_ads.*','app_details.appName','app_details.PackageId as PackageId');
 
 
             if(isset($request->filter_app_id) && !empty($request->filter_app_id)){
@@ -133,7 +133,7 @@ class SponsorsController extends Controller
                     $images =  (!empty($obj->adUrlImage)) ? '<img class="dataTable-image" src="'.url("/uploads/sponsor_ads/").'/'.$obj->adUrlImage.'" />' : '<a href="javascript:void(0)" class="" ><i class="fa fa-image text-xl"></i></a>';
 
                     $response[$i]['srno'] = $i + 1;
-                    $response[$i]['appName'] = $obj->appName;
+                    $response[$i]['appName'] = $obj->appName . ' - ' . $obj->PackageId;
                     $response[$i]['name'] = $obj->adName;
                     $response[$i]['adUrlImage'] = $images;
                     $response[$i]['url'] = $obj->clickAdToGo;
