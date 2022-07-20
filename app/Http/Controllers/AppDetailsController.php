@@ -97,7 +97,8 @@ class AppDetailsController extends Controller
             $destinationPath		= public_path('/uploads/apps/');
             $fileobj->move($destinationPath,$file_unique_name);
 
-            $input['appLogo'] = $file_unique_name;
+//            $input['appLogo'] = $file_unique_name;
+            $input['appLogo'] = url('uploads/apps').'/'.$file_unique_name;
         }
 
         $user   =   AppDetails::updateOrCreate(
