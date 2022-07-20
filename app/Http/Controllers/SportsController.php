@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AdmobAds;
+use App\Models\SponsorAds;
 use Illuminate\Http\Request;
 use App\Models\Sports;
 use App\Models\Schedules;
@@ -85,7 +87,17 @@ class SportsController extends Controller
 
     public function destroy(Request $request)
     {
+        $getApplications = AppDetails::where('sports_id',$request->id)->get();
+        foreach($getApplications as $obj){
+
+            AdmobAds::where('app_detail_id',$obj->id)->delete();
+            SponsorAds::where('app_detail_id',$obj->id)->delete();
+        }
+
+
         AppDetails::where('sports_id',$request->id)->delete();
+
+
         Servers::where('sports_id',$request->id)->delete();
         Schedules::where('sports_id',$request->id)->delete();
         Teams::where('sports_id',$request->id)->delete();
