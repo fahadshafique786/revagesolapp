@@ -158,7 +158,7 @@
 				@if(auth()->user()->can('view-servers')  || auth()->user()->hasRole('super-admin'))
 					<li class="nav-item">
 						<a href="{{ url('admin/servers') }}" class="nav-link {{ (Request::segment(2) == 'servers') ? 'active' : '' }}">
-							<i class="far fa fa-server nav-icon"></i>
+                            <img src="{{ asset('dist/img/sidebar-icons/server2.png') }}" class="elevation-2 "/>
 							<p>Live Servers</p>
 						</a>
 					</li>
@@ -170,19 +170,19 @@
 
                 <li class="nav-item">
                     <a href="{{ url('admin/app') }}" class="nav-link {{ (Request::segment(2) == 'app') ? 'active' : '' }}">
-                        <i class="fa fa-mobile nav-icon"></i>
+                        <img src="{{ asset('dist/img/sidebar-icons/application.png') }}" class="elevation-2 "/>
                         <p>Applications</p>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="{{ url('admin/sponsors') }}" class="nav-link {{ (Request::segment(2) == 'sponsors') ? 'active' : '' }}">
-                        <i class="fa fa-ad nav-icon"></i>
+                        <img src="{{ asset('dist/img/sidebar-icons/sponsor-ad.png') }}" class="elevation-2 "/>
                         <p>Sponsors</p>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="{{ url('admin/admob_ads') }}" class="nav-link {{ (Request::segment(2) == 'admob_ads') ? 'active' : '' }}">
-                        <i class="fa fa-ad nav-icon"></i>
+                        <img src="{{ asset('dist/img/sidebar-icons/admob-ad.png') }}" class="elevation-2 "/>
                         <p>Admob Ads</p>
                     </a>
                 </li>
@@ -197,11 +197,7 @@
 			<li class="nav-item"><a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a></li>
 			<li><a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a></li>
 		@else
-{{--			<li class="nav-item"><a class="nav-link {{ (Request::segment(2) == 'categories') ? 'active' : '' }}" href="{{ url('admin/categories') }}">Categories</a></li>--}}
-{{--			<li class="nav-item"><a class="nav-link {{ (Request::segment(2) == 'faqs') ? 'active' : '' }}" href="{{ url('admin/faqs') }}">FAQS</a></li>--}}
-{{--			<li class="nav-item"><a class="nav-link {{ (Request::segment(2) == 'tutorials') ? 'active' : '' }}" href="{{ url('admin/tutorials') }}">Tutorials</a></li>--}}
-{{--			<li class="nav-item"><a class="nav-link {{ (Request::segment(2) == 'blogs') ? 'active' : '' }}" href="{{ url('admin/blogs') }}">Blogs</a></li>--}}
-{{--			<li class="nav-item"><a class="nav-link {{ (Request::segment(2) == 'questions') ? 'active' : '' }}" href="{{ url('admin/questions') }}">Questions</a></li>--}}
+
 		@endguest
 
 
