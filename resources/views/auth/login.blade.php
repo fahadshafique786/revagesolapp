@@ -78,4 +78,26 @@ else{
     </div>
     <!-- /.login-box -->
 
+    <script>
+
+        window.addEventListener("pageshow", (event) => {
+            // alert("Redirect to Dashboard");
+{{--            alert({{\Illuminate\Support\Facades\Auth::check()}})--}}
+
+            @if(\Illuminate\Support\Facades\Auth::check())
+                window.location.href = {{route('dashboard')}};
+                @endif
+
+
+            const historyTraversal =
+                event.persisted ||
+                (typeof window.performance != "undefined" &&
+                    window.performance.navigation.type === 2);
+
+            if (historyTraversal) {
+                window.location.reload();
+            }
+        });
+
+    </script>
 @endsection

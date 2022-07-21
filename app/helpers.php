@@ -1,5 +1,6 @@
 <?php
 use App\Models\Sports;
+use App\Models\AppDetails;
 
 if ( ! function_exists('getBoolean')) {
     function getBoolean($val, $StringResponse = false)
@@ -204,6 +205,7 @@ if ( ! function_exists('getTotalSports'))
 if ( ! function_exists('getTotalApp'))
     {
     function getTotalApp($count = 0){
+        $count = AppDetails::all()->count();
         return $count;
     }
 

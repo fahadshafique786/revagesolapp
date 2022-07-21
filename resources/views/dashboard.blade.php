@@ -77,11 +77,8 @@
     <!-- /.content -->
 
     <script>
-        $(window).unload( function ()
-        {
-            // alert(88888);
-            // put your code here
-        });
+
+
     </script>
 
 @endsection

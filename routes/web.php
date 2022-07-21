@@ -27,15 +27,23 @@ use \Illuminate\Support\Facades\Auth;
 |
 */
 
+
 Route::get('/', function () {
     if(!empty(Auth::user())){
-//        echo Auth::user()->name;
         return redirect()->action('App\Http\Controllers\HomeController@index');
     }
     else{
-        return view('auth.login');
+        return redirect()->route('login');
+//        view('auth.login');
     }
 });
+
+
+//Route::get('/', ['middleware' => 'guest', function()
+//{
+//    return redirect()->route('dashboard');
+//    // Redirected If Authenticated
+//}]);
 
 Auth::routes();
 
