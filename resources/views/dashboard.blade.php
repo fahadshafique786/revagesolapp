@@ -13,7 +13,7 @@
                 <h3>{{get_server_memory_usage()}}
                     <sup style="font-size: 20px">%</sup></h3>
                   </h3>
-                  
+
                 <p>RAM Usage</p>
               </div>
               <div class="icon">
@@ -76,5 +76,12 @@
     </section>
     <!-- /.content -->
 
+    <script>
+        $(window).unload( function ()
+        {
+            // alert(88888);
+            // put your code here
+        });
+    </script>
 
 @endsection

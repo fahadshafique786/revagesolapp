@@ -40,7 +40,8 @@
     <!-- Left navbar links -->
     <ul class="navbar-nav">
       <li class="nav-item">
-        <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-arrow-left open" id="headerMenuIconId"></i></a>
+        <a  id="closeSideMenuId" class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-arrow-left close-sidebar"></i></a>
+        <a  id="openSideMenuId" class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars  open-sidebar"></i></a>
       </li>
 
 		</ul>
@@ -49,8 +50,9 @@
     <ul class="navbar-nav ml-auto">
 
         <li class="nav-item">
-            <a class="nav-link" id="fullScreenId" href="#" role="button">
-                <i class="fas fa-expand-arrows-alt"></i>
+            <a class="nav-link"  href="#" role="button">
+                <i id="fullScreenId" class="fas fa-expand-arrows-alt maximize-screen"></i>
+                <i id="defaultScreenId" class="fas fa-compress-arrows-alt minimize-screen"></i>
             </a>
         </li>
 

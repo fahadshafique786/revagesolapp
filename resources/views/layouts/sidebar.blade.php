@@ -106,20 +106,24 @@
                         </a>
                     </li>
                 @endif
+
+                @php $sportsList = \App\Models\Sports::all(); @endphp
+
                 @if(auth()->user()->can('view-teams') ||  auth()->user()->hasRole('super-admin'))
                    <li class="nav-item custom {{Request::segment(2) == 'teams' ? 'menu-open' : ''}}">
                 <a href="#" class="nav-link">
 				<img src="{{ asset('dist/img/sidebar-icons/team.png') }}" class="elevation-2 "/>
                     <p>
                         Teams
-                        <i class="fas fa-angle-left right"></i>
+                        @if(count($sportsList) > 0)
+                            <i class="fas fa-angle-left right"></i>
+                        @endif
                     </p>
                 </a>
                 <ul class="nav nav-treeview">
-                    @php $sportsList = \App\Models\Sports::all(); @endphp
                     @foreach($sportsList as $sport)
                         <li class="nav-item">
-                            <a href="{{ url('admin/teams/'.$sport->id) }}" class="nav-link custom {{Request::segment(3) == $sport->id ? 'active' : ''}}">
+                            <a href="{{ url('admin/teams/'.$sport->id) }}" class="nav-link custom {{(Request::segment(2) == 'teams' && Request::segment(3) == $sport->id) ? 'active' : ''}}">
                                 <i class="far fa fa-minus nav-icon text-sm"></i>
                                 <p class="text-capitalize">{{$sport->name}}</p>
                             </a>
@@ -135,14 +139,16 @@
 							<img src="{{ asset('dist/img/sidebar-icons/schedule.png') }}" class="elevation-2 "/>
                             <p>
                                 Schedule
-                                <i class="fas fa-angle-left right"></i>
+                                @if(count($sportsList) > 0)
+                                    <i class="fas fa-angle-left right"></i>
+                                @endif
                             </p>
                         </a>
 						<ul class="nav nav-treeview">
-							@php $sportsList = \App\Models\Sports::all(); @endphp
+{{--							@php $sportsList = \App\Models\Sports::all(); @endphp--}}
 							@foreach($sportsList as $sport)
 								<li class="nav-item">
-									<a href="{{ url('admin/schedules/'.$sport->id) }}" class="nav-link  custom {{Request::segment(3) == $sport->id ? 'active' : ''}}">
+									<a href="{{ url('admin/schedules/'.$sport->id) }}" class="nav-link  custom {{Request::segment(2) == 'schedules' &&  Request::segment(3) == $sport->id ? 'active' : ''}}">
 										<i class="far fa fa-minus nav-icon text-sm"></i>
 										<p class="text-capitalize">{{$sport->name}}</p>
 									</a>

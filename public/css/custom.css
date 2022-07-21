@@ -566,3 +566,10 @@ input[disabled]{
 .btn-toggle.btn-secondary.active {
     background-color: #ff8300;
 }
+
+
+.minimize-screen,
+#openSideMenuId {
+    display:none
+}
+

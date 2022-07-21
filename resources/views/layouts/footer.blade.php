@@ -168,6 +168,22 @@
         });
 
 
+
+        $("#closeSideMenuId").click(function(){
+
+            $(this).hide();
+            $("#openSideMenuId").show();
+
+        });
+
+
+        $("#openSideMenuId").click(function(){
+
+            $(this).hide();
+            $("#closeSideMenuId").show();
+
+        });
+
 		$('#start_time').datetimepicker({
                 setDate: new Date(),
                 minDate: new Date(),
@@ -377,6 +393,11 @@ $(document).ready(function($){
 
     $("#fullScreenId").click(function(){
 
+        $(this).hide();
+        $("#defaultScreenId").show();
+
+        // alert("fullScreenId");
+
         var elem = document.getElementById("customBody");
 
         if (elem.requestFullscreen) {
@@ -388,6 +409,18 @@ $(document).ready(function($){
         }
 
     });
+
+
+    $("#defaultScreenId").click(function(){
+
+        document.exitFullscreen();
+
+        $(this).hide();
+        $("#fullScreenId").show();
+
+    });
+
+
 
 
 });

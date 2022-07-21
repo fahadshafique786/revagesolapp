@@ -15,7 +15,6 @@ else{
 }
 @endphp
 
-
     <div class="login-box m-auto">
         <!-- /.login-logo -->
         <div class="card card-outline card-">
