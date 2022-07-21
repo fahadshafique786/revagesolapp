@@ -15,12 +15,22 @@ class SportsApi extends BaseController
 
     public function index()
     {
-        $data = Sports::select()
-            ->orderBy('id','asc')
-            ->get();
-        $response = [];
-        $response['SportsList'] = $data;
+        $response = ['code'=>'200','message'=>'Success!'];
+        $responseData = null;
 
+        $data = Sports::select()
+            ->orderBy('id','asc');
+
+        if($data->exists()) {
+            $data = $data->get();
+            $responseData['SportsList'] = $data;
+        }
+        else{
+            $response['code'] = 400;
+            $response['message'] = 'Sports List not found!';
+        }
+
+        $response['data'] = $responseData;
 
         echo json_encode($response);
         exit();
