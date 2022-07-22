@@ -38,6 +38,7 @@
                                 <div class="col-sm-2 pt-4">
                                     <select class="form-control" id="sports_filter" name="sports_filter" >
                                         <option value="">   Select Sports </option>
+                                        <option value="-1" selected>   All </option>
                                         @foreach ($sports_list as $sport)
                                             <option value="{{ $sport->id }}"  {{ (isset($sport->id) && old('id')) ? "selected":"" }}>{{ $sport->name }}</option>
                                         @endforeach
@@ -165,17 +166,17 @@
             if(sports_filter != '')
             {
                 $('#DataTbl').DataTable().destroy();
-                fetchData(sports_filter);
+                if(sports_filter != '-1'){ // for all...
+                    fetchData(sports_filter);
+                }
+                else{
+                    fetchData();
+                }
             }
-            else
-            {
+            else {
                 alert('Select  Filter Option');
-                $('#DataTbl').DataTable().destroy();
-                fetchData();
             }
         });
-
-
 
         var Table_obj = "";
 
@@ -224,6 +225,11 @@
             });
 
         }
+
+        function callDataTableWithFilters(){
+            fetchData($('#sports_filter').val());
+        }
+
 
         $(document).ready(function($){
 
@@ -275,7 +281,7 @@
                         data: { id: id },
                         dataType: 'json',
                         success: function(res){
-                            fetchData();
+                            callDataTableWithFilters();
                         }
                     });
                 }
@@ -300,10 +306,14 @@
                     processData: false,
                     dataType: 'json',
                     success: function(res){
-                        fetchData();
+
+
                         $('#ajax-model').modal('hide');
                         $("#btn-save").html('Save');
                         $("#btn-save"). attr("disabled", false);
+
+                        callDataTableWithFilters();
+
                     },
                     error:function (response) {
                         $("#btn-save").html(' Save');

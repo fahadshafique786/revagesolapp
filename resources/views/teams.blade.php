@@ -29,6 +29,7 @@
                                 <div class="col-sm-2 pt-4">
                                     <select class="form-control" id="league_filter" name="league_filter" >
                                         <option value="">   Select League </option>
+                                        <option value="-1" selected>   All </option>
                                         @foreach ($leagues_list as $obj)
                                             <option value="{{ $obj->id }}"  {{ (isset($obj->id) && old('id')) ? "selected":"" }}>{{ $obj->name }}</option>
                                         @endforeach
@@ -170,13 +171,17 @@
             if(league_filter != '')
             {
                 $('#DataTbl').DataTable().destroy();
-                fetchData(league_filter);
+                if(league_filter != '-1'){ // for all...
+                    fetchData(league_filter);
+                }
+                else{
+                    fetchData();
+                }
+
             }
             else
             {
                 alert('Select Filter Option');
-                $('#DataTbl').DataTable().destroy();
-                fetchData();
             }
         });
 
@@ -226,6 +231,11 @@
             });
 
         }
+
+        function callDataTableWithFilters(){
+            fetchData($('#league_filter').val());
+        }
+
 
         $(document).ready(function($){
 
@@ -280,7 +290,7 @@
                         data: { id: id },
                         dataType: 'json',
                         success: function(res){
-                            fetchData();
+                            callDataTableWithFilters();
                         }
                     });
                 }
@@ -304,10 +314,13 @@
                     processData: false,
                     dataType: 'json',
                     success: function(res){
-                        fetchData();
+
                         $('#ajax-model').modal('hide');
                         $("#btn-save").html('Save');
                         $("#btn-save"). attr("disabled", false);
+
+                        callDataTableWithFilters();
+
                     },
                     error:function (response) {
                         $("#btn-save").html(' Save');

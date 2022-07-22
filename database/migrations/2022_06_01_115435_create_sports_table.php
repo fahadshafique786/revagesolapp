@@ -18,8 +18,8 @@ class CreateSportsTable extends Migration
             $table->string('icon')->nullable();
             $table->string('name')->nullable();
             $table->enum('sports_type',['single','double'])->default('single');
-            $table->enum('image_required',['yes','no'])->default('no');
-            $table->enum('multi_league',['yes','no'])->default('no');
+            $table->enum('image_required',['yes','no','0','1'])->default('0');
+            $table->enum('multi_league',['yes','no','0','1'])->default('0');
             $table->timestamps();
         });
     }

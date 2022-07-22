@@ -110,14 +110,14 @@
                                 <div class="col-sm-12">
                                     <label for="name" class="control-label d-block">Multi League</label>
                                     <label for="multi_league_yes" class="cursor-pointer">
-                                        <input type="radio" class="" id="multi_league_yes" name="multi_league" value="yes" checked/>
+                                        <input type="radio" class="" id="multi_league0" name="multi_league" value="1" checked/>
                                         <span class="">Yes</span>
                                     </label>
 
                                     &nbsp;&nbsp;&nbsp;&nbsp;
 
                                     <label for="multi_league_no" class="cursor-pointer">
-                                        <input type="radio" class="" id="multi_league_no" name="multi_league"  value="no" />
+                                        <input type="radio" class="" id="multi_league1" name="multi_league"  value="0" />
                                         <span class="">No</span>
                                     </label>
 
@@ -290,9 +290,13 @@
                         $('#id').val(res.id);
                         $('#name').val(res.name);
                         $('#sport_logo_hidden').val(res.icon);
-                        $("#multi_league_"+res.multi_league).prop("checked",true);
-                        $("#sports_type_"+res.sports_type).prop("checked",true);
-                        $("#image_required_"+res.image_required).prop("checked",true);
+
+                        alert(res.image_required + " :: " + res.multi_league);
+
+
+                        $("#multi_league"+res.multi_league).prop("checked",true);
+                        $("#sports_type"+res.sports_type).prop("checked",true);
+                        $("#image_required"+res.image_required).prop("checked",true);
                     }
                 });
             });
