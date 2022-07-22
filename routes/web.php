@@ -15,6 +15,7 @@ use App\Http\Controllers\AppDetailsController;
 use App\Http\Controllers\SponsorsController;
 use App\Http\Controllers\AdmobAdsController;
 use \Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\CustomAuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,7 +31,7 @@ use \Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
     if(!empty(Auth::user())){
-        return redirect()->action('App\Http\Controllers\HomeController@index');
+        return redirect()->route('dashboard');
     }
     else{
         return redirect()->route('login');
@@ -45,7 +46,18 @@ Route::get('/', function () {
 //    // Redirected If Authenticated
 //}]);
 
-Auth::routes();
+//Auth::routes();
+
+
+#Remember me functionality in Laravel
+Route::get('/user-register',[CustomAuthController::class,'registerform'])->name('user.register');
+Route::post('/post-registration',[CustomAuthController::class,'postRegistration'])->name('post.register');
+
+Route::get('/login',[CustomAuthController::class,'loginform'])->name('login');
+Route::post('/verify-login',[CustomAuthController::class,'checklogin'])->name('post.login');
+
+Route::post('logout', [CustomAuthController::class, 'logout'])->name('logout');
+
 
 Route::group(
     [

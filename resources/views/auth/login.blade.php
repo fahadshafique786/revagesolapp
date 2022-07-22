@@ -24,10 +24,10 @@ else{
             <div class="card-body">
                 <h2 class="login-box-msg text-bold">Sign <span class="site-color">In</span></h2>
 
-                <form method="POST" action="{{ route('login') }}">
+                <form method="POST" action="{{ route('post.login') }}">
                     @csrf
                     <div class="input-group mb-3">
-                        <input id="email" type="email" placeholder="Email Address" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+                        <input id="email" type="email" placeholder="Email Address" class="form-control @error('email') is-invalid @enderror" name="email" value="{{$login_email}}" required autocomplete="email" autofocus>
 
                         @error('email')
                         <span class="invalid-feedback" role="alert">
@@ -36,7 +36,7 @@ else{
                         @enderror
                     </div>
                     <div class="input-group mb-3">
-                        <input id="password" type="password" placeholder="Password"  class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
+                        <input id="password" type="password" placeholder="Password"  class="form-control @error('password') is-invalid @enderror" value="{{$login_pass}}" name="password" required autocomplete="current-password">
 
                         @error('password')
                         <span class="invalid-feedback" role="alert">
@@ -47,10 +47,11 @@ else{
                     <div class="row">
                         <div class="col-8">
                             <div class="icheck-primary">
-                                <input class="form-check-input-o" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-
+{{--                                <input class="form-check-input-o" type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}>--}}
+                                <input type="checkbox" name="rememberme" id="remember" {{$is_remember}}   />
                                 <label class="form-check-label" for="remember">
-                                    {{ __('Remember Me') }}
+
+                                    {{ ('Remember me') }}
                                 </label>
                             </div>
                         </div>
