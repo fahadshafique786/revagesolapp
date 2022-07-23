@@ -118,7 +118,7 @@ class PermissionsController extends Controller
                         // if(auth()->user()->hasRole('superadmin'))
                     {
                         $response[$i]['action'] = '<a href="javascript:void(0)" class="btn editPermission" data-id="'. $permission->id .'"><i class="fa fa-edit  text-info"></i></a>
-											<a href="javascript:void(0)" class="btn delete" data-id="'. $permission->id .'"><i class="fa fa-trash text-danger"></i></a>';
+						';
                     }
                     else
                     {

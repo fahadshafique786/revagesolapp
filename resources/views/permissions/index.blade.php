@@ -191,7 +191,7 @@ function fetchData()
             cancelButtonText: 'No, cancel!',
             reverseButtons: true
         }).then((result) => {
-            if (result.isConfirmed) {
+            if (result.value) {
 
 
                 var id = $(this).data('id');
