@@ -291,7 +291,7 @@
                         $('#name').val(res.name);
                         $('#sport_logo_hidden').val(res.icon);
 
-                        alert(res.image_required + " :: " + res.multi_league);
+                        // alert(res.image_required + " :: " + res.multi_league);
 
 
                         $("#multi_league"+res.multi_league).prop("checked",true);

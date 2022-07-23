@@ -252,6 +252,12 @@
                 $("#password").prop("required",true);
                 $('#ajaxheadingModel').html("Add Team");
                 $('#ajax-model').modal('show');
+
+
+                if($("#league_filter").val() > 0){
+                    $("#leagues_id").val($("#league_filter").val());
+                }
+
             });
 
             $('body').on('click', '.edit', function () {

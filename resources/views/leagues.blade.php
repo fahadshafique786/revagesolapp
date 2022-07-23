@@ -242,10 +242,19 @@
             });
             $('#addNew').click(function () {
                 $('#id').val("");
+
+
                 $('#addEditForm').trigger("reset");
                 $("#password").prop("required",true);
                 $('#ajaxheadingModel').html("Add League");
+
                 $('#ajax-model').modal('show');
+
+                if($("#sports_filter").val() > 0){
+                    $("#sports_id").val($("#sports_filter").val());
+                }
+
+
             });
 
             $('body').on('click', '.edit', function () {

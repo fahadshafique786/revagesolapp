@@ -300,6 +300,10 @@ input[disabled]{
 .btn-toggle.active {
     background-color: #29b5a8;
 }
+
+.isLiveStatusSwitch[aria-pressed=false]{
+    background: #d52f5e !important;
+}
 .btn-toggle.btn-lg {
     margin: 0 5rem;
     padding: 0;

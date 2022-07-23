@@ -41,9 +41,7 @@
 {{--                                    <div class="handle"></div>--}}
 {{--                                </button>--}}
 
-{{--                                <button type="button" class="btn hide btn-sm btn-toggle" data-toggle="button" aria-pressed="false" autocomplete="off">--}}
-{{--                                    <div class="handle"></div>--}}
-{{--                                </button>--}}
+
 
 
 
@@ -202,7 +200,16 @@
 @push('scripts')
     <script type="text/javascript">
 
+        function getToggleCall(e){
+            console.log(e);
+            alert("getToggleCall");
+        }
 
+        // $(".SwitchScheduleStatus").on('click',function(){
+        //
+        //     let bools = $(this).attr('aria-pressed');
+        //     alert(bools);
+        // });
 
         $('#filter').click(function(){
             var league_filter = $('#league_filter').val();
@@ -254,12 +261,13 @@
             }
         }
 
-
-
-        $(document).delegate('.isLiveStatusSwitch', 'switchChange.bootstrapSwitch', function(event,state){
+        $(document).delegate('.isLiveStatusSwitch', 'click', function(event,state){
 
             var schedule_id = $(this).attr('data-schedule-id');
-            var is_live  = (state) ? 1 : 0;
+
+            let bools = $(this).attr('aria-pressed');
+
+            var is_live  = (bools == "true" ) ? 1 : 0;
 
             $.ajax({
                 type:"POST",
@@ -267,7 +275,7 @@
                 data: { schedule_id: schedule_id , is_live :  is_live},
                 dataType: 'json',
                 success: function(res){
-                    fetchData();
+                    callDataTableWithFilters();
                 }
             });
 
@@ -275,7 +283,6 @@
 
 
         var Table_obj = "";
-
         function fetchData(filter_league = "")
         {
             $("input[data-bootstrap-switch]").each(function(){
@@ -370,6 +377,12 @@
             },1500);
         }
 
+
+        function callDataTableWithFilters(){
+            fetchData($('#league_filter').val());
+        }
+
+
         $(document).ready(function($){
 
             fetchData();
@@ -384,7 +397,20 @@
                 $('#addEditForm').trigger("reset");
                 $("#password").prop("required",true);
                 $('#ajaxheadingModel').html("Add Schedule");
+
+                if($("#league_filter").val() > 0){
+
+                   $("#leagues_id").val($("#league_filter").val());
+
+                }
+
+                setTimeout(function(){
+                    getTeamsByLeagues($("#leagues_id").val());
+                },800);
+
                 $('#ajax-model').modal('show');
+
+
             });
 
             $('body').on('click', '.edit', function () {
@@ -437,7 +463,7 @@
                         data: { id: id },
                         dataType: 'json',
                         success: function(res){
-                            fetchData();
+                            callDataTableWithFilters();
                         }
                     });
                 }
@@ -468,10 +494,15 @@
                     processData: false,
                     dataType: 'json',
                     success: function(res){
-                        fetchData();
+
+
                         $('#ajax-model').modal('hide');
                         $("#btn-save").html('Save');
                         $("#btn-save"). attr("disabled", false);
+
+                        callDataTableWithFilters();
+
+
                     },
                     error:function (response) {
                         $("#btn-save").html(' Save');

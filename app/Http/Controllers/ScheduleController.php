@@ -146,12 +146,16 @@ class ScheduleController extends Controller
                     $response[$i]['is_live'] = getBooleanStr($obj->is_live,true);
                     if(auth()->user()->hasRole('super-admin') || auth()->user()->can('manage-schedules'))
                     {
-                        $liveSwitch = ($obj->is_live) ? 'checked' : '';
+//                        $liveSwitch = ($obj->is_live) ? 'checked' : '';
+                        $liveSwitch = ($obj->is_live) ? 'active focus' : '';
+                        $switchBool = ($obj->is_live) ? 'true' : 'false';
                         $response[$i]['action'] = '
 
 
+                                <button type="button" class="btn hide btn-sm btn-toggle SwitchScheduleStatus isLiveStatusSwitch '.$liveSwitch.' "  data-id="is_live_status-'.$obj->id.'" data-schedule-id="'.$obj->id.'"  data-toggle="button" aria-pressed="'.$switchBool.'" autocomplete="off">
+                                    <div class="handle"></div>
+                                </button>
 
-                            <input type="checkbox" class="isLiveStatusSwitch" data-id="is_live_status-'.$obj->id.'" data-schedule-id="'.$obj->id.'" '.$liveSwitch.' data-bootstrap-switch data-off-color="danger" data-on-color="success">
                             <a href="javascript:void(0)" class="btn edit" data-id="'. $obj->id .'"><i class="fa fa-edit  text-info"></i></a>
 							<a href="javascript:void(0)" class="btn delete " data-id="'. $obj->id .'"><i class="fa fa-trash-alt text-danger"></i></a>';
                     }
@@ -162,6 +166,7 @@ class ScheduleController extends Controller
                     $i++;
                 }
             }
+//                            <input type="checkbox" class="isLiveStatusSwitch" data-id="is_live_status-'.$obj->id.'" data-schedule-id="'.$obj->id.'" '.$liveSwitch.' data-bootstrap-switch data-off-color="danger" data-on-color="success">
 
             return datatables()->of($response)
                 ->addIndexColumn()
