@@ -128,13 +128,19 @@ class ScheduleController extends Controller
                 {
                     $iteration = $i+1;
 
-                    $linkedServer  = ScheduledServers::where('schedule_id',$obj->id);
-                    if($linkedServer->exists()){
-                        $serverLink =  '<a target="_blank" href="'.url("admin/servers/".$obj->id).'" class=""> <i class="fa fa-server text-md text-success"></i> <span class="text-dark text-bold">'.$iteration.'</span>  </a>';
+                    $serverLink = $iteration;
+
+                    if(auth()->user()->hasRole('super-admin') || auth()->user()->can('manage-servers')){
+
+                        $linkedServer  = ScheduledServers::where('schedule_id',$obj->id);
+                        if($linkedServer->exists()){
+                            $serverLink =  '<a target="_blank" href="'.url("admin/servers/".$obj->id).'" class=""> <i class="fa fa-server text-md text-success"></i> <span class="text-dark text-bold">'.$iteration.'</span>  </a>';
+                        }
+                        else{
+                            $serverLink = '<a target="_blank" href="'.url("admin/servers/".$obj->id).'" class=""> <i class="fa fa-server text-md text-danger"></i> <span class="text-dark text-bold">'.$iteration.'</span>  </a>';
+                        }
                     }
-                    else{
-                        $serverLink = '<a target="_blank" href="'.url("admin/servers/".$obj->id).'" class=""> <i class="fa fa-server text-md text-danger"></i> <span class="text-dark text-bold">'.$iteration.'</span>  </a>';
-                    }
+
 
                     $response[$i]['srno'] = $serverLink;
                     $response[$i]['label'] = $obj->label;

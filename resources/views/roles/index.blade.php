@@ -220,7 +220,7 @@ function fetchData()
         })
     });
 
-    
+
     $("#addEditForm").on('submit',(function(e) {
 		e.preventDefault();
 		var Form_Data = new FormData(this);
