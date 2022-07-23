@@ -99,8 +99,6 @@ class RolesController extends Controller
      */
     public function destroy(Request $request)
     {
-      //  $input['deleted_by'] = auth()->user()->id;
-       // Role::where('id',$request->id);
         $user = Role::where('id',$request->id)->delete();
 
         return response()->json(['success' => true]);

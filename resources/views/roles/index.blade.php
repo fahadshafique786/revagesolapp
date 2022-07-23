@@ -203,8 +203,7 @@ function fetchData()
             cancelButtonText: 'No, cancel!',
             reverseButtons: true
         }).then((result) => {
-            if (result.isConfirmed) {
-
+            if (result.value) {
 
                 var id = $(this).data('id');
 
@@ -220,6 +219,8 @@ function fetchData()
             }
         })
     });
+
+    
     $("#addEditForm").on('submit',(function(e) {
 		e.preventDefault();
 		var Form_Data = new FormData(this);
