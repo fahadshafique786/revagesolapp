@@ -50,7 +50,7 @@
     <ul class="navbar-nav ml-auto">
 
         <li class="nav-item">
-            <a class="nav-link"  href="#" role="button">
+            <a class="nav-link"  href="javascript:void(0)" role="button">
                 <i id="fullScreenId" class="fas fa-expand-arrows-alt maximize-screen"></i>
                 <i id="defaultScreenId" class="fas fa-compress-arrows-alt minimize-screen"></i>
             </a>
@@ -93,7 +93,7 @@
 	$link_label_array['sports'] = "Sports";
 	$link_label_array['teams'] = "Teams";
 	$link_label_array['schedules'] = "Schedules";
-	$link_label_array['leagues'] = "LeaguesApi";
+	$link_label_array['leagues'] = "Leagues";
 	$link_label_array['servers'] = "Servers";
 	$link_label_array['roles'] = "Roles";
 	$link_label_array['permissions'] = "Permissions";
@@ -105,7 +105,7 @@
 	$link_label_array1['teams']['icon']  = "team.png";
 	$link_label_array1['schedules']['icon'] = "schedule.png";
 	$link_label_array1['leagues']['icon'] = "league.png";
-	$link_label_array1['servers']['icon'] = "server.png";
+	$link_label_array1['servers']['icon'] = "serverss.png";
 	$link_label_array1['app']['icon'] = "app.png";
 
 @endphp

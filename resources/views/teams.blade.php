@@ -251,12 +251,18 @@
                 $('#addEditForm').trigger("reset");
                 $("#password").prop("required",true);
                 $('#ajaxheadingModel').html("Add Team");
-                $('#ajax-model').modal('show');
-
 
                 if($("#league_filter").val() > 0){
+
                     $("#leagues_id").val($("#league_filter").val());
+
                 }
+
+                setTimeout(function(){
+                    getTeamsByLeagues($("#leagues_id").val());
+                },800);
+
+                $('#ajax-model').modal('show');
 
             });
 

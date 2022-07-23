@@ -391,6 +391,14 @@ $(document).ready(function($){
     }));
 
 
+    document.addEventListener('keydown', function(event){
+        if(event.key === "Escape"){
+            alert(123123);
+            //do something
+        }
+    });
+
+
     $("#fullScreenId").click(function(){
 
         $(this).hide();
@@ -409,6 +417,8 @@ $(document).ready(function($){
         }
 
     });
+
+
 
 
     $("#defaultScreenId").click(function(){

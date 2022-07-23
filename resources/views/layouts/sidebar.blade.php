@@ -164,7 +164,7 @@
 				@if(auth()->user()->can('view-servers')  || auth()->user()->hasRole('super-admin'))
 					<li class="nav-item">
 						<a href="{{ url('admin/servers') }}" class="nav-link {{ (Request::segment(2) == 'servers') ? 'active' : '' }}">
-                            <img src="{{ asset('dist/img/sidebar-icons/server2.png') }}" class="elevation-2 "/>
+                            <img src="{{ asset('dist/img/sidebar-icons/serverss.png') }}" class="elevation-2 "/>
 							<p>Live Servers</p>
 						</a>
 					</li>

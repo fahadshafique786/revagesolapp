@@ -48,6 +48,7 @@
                                 <div class="col-sm-2 pt-4">
                                     <select class="form-control" id="league_filter" name="league_filter" >
                                         <option value="">   Select League </option>
+                                        <option value="-1">   All </option>
                                         @foreach ($leaguesList as $obj)
                                             <option value="{{ $obj->id }}"  {{ (isset($obj->id) && old('id')) ? "selected":"" }}>{{ $obj->name }}</option>
                                         @endforeach
@@ -200,24 +201,17 @@
 @push('scripts')
     <script type="text/javascript">
 
-        function getToggleCall(e){
-            console.log(e);
-            alert("getToggleCall");
-        }
-
-        // $(".SwitchScheduleStatus").on('click',function(){
-        //
-        //     let bools = $(this).attr('aria-pressed');
-        //     alert(bools);
-        // });
-
         $('#filter').click(function(){
             var league_filter = $('#league_filter').val();
             if(league_filter != '')
             {
                 $('#DataTbl').DataTable().destroy();
-                fetchData(league_filter);
-            }
+                if(league_filter != '-1'){ // for all...
+                    fetchData(league_filter);
+                }
+                else{
+                    fetchData();
+                }            }
             else
             {
                 alert('Select Filter Option');

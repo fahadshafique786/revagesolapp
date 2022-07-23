@@ -227,7 +227,12 @@
             if(sports_filter != '' || leagues_filter != '')
             {
                 $('#DataTbl').DataTable().destroy();
-                fetchData(sports_filter,leagues_filter);
+                if(sports_filter != '-1'){ // for all...
+                    fetchData(sports_filter,leagues_filter);
+                }
+                else{
+                    fetchData();
+                }
             }
             else
             {
@@ -241,7 +246,6 @@
 
 
         var Table_obj = "";
-
         function fetchData(filter_sports = "",filter_leagues = "")
         {
             $.ajaxSetup({
@@ -309,6 +313,11 @@
 
         }
 
+        function callDataTableWithFilters(){
+            fetchData($('#sports_filter').val(),$('#leagues_filter').val());
+        }
+
+
         $(document).ready(function($){
 
             fetchData();
@@ -325,7 +334,25 @@
                 $('#nameError').text('');
                 $('#leagues_idError').text('');
                 $('#sports_idError').text('');
-                $('#ajax-model').modal('show');
+
+
+
+                if($("#sports_filter").val() > 0){
+
+                    $("#sports_id").val($("#sports_filter").val());
+
+                }
+
+                setTimeout(function(){
+                    getLeaguesOptionBySports($("#sports_id").val(),'leagues_id');
+                },500);
+
+                setTimeout(function(){
+                    $("#leagues_id").val($("#leagues_filter").val());
+                    $('#ajax-model').modal('show');
+                },1000);
+
+
             });
 
             $('body').on('click', '.edit', function () {
@@ -384,7 +411,7 @@
                         data: { id: id },
                         dataType: 'json',
                         success: function(res){
-                            fetchData();
+                            callDataTableWithFilters();
                         }
                     });
                 }
@@ -412,7 +439,9 @@
                     processData: false,
                     dataType: 'json',
                     success: function(res){
-                        fetchData();
+
+                        callDataTableWithFilters();
+
                         $('#ajax-model').modal('hide');
                         $("#btn-save").html('Save');
                         $("#btn-save"). attr("disabled", false);
@@ -424,9 +453,8 @@
                         $('#nameError').text(response.responseJSON.errors.name);
                         $('#sports_idError').text(response.responseJSON.errors.sports_id);
                         $('#leagues_idError').text(response.responseJSON.errors.leagues_id);
-                        // $('#linkError').text(response.responseJSON.errors.link);
-                        // $('#isHeaderError').text(response.responseJSON.errors.isHeader);
-                        // $('#isPremiumError').text(response.responseJSON.errors.isPremium);
+
+
                     }
                 });
             }));
