@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AdmobAds;
 use Illuminate\Http\Request;
 use App\Models\AppDetails;
 use App\Models\Sports;
@@ -23,6 +24,8 @@ class AppDetailsController extends Controller
             ->join('sports', function ($join) {
                 $join->on('sports.id', '=', 'app_details.sports_id');
             })->get();
+
+//        dd($appsList);
 
         return view('application.index')
             ->with('apps_list',$appsList);
@@ -113,7 +116,9 @@ class AppDetailsController extends Controller
 
     public function destroy(Request $request)
     {
+        AdmobAds::where('app_detail_id',$request->id)->delete();
         SponsorAds::where('app_detail_id',$request->id)->delete();
+
         AppDetails::where('id',$request->id)->delete();
 
         return response()->json(['success' => true]);

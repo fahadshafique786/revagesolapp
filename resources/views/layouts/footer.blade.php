@@ -333,6 +333,32 @@ $(function () {
 
 
 $(document).ready(function($){
+
+
+    document.addEventListener('fullscreenchange', exitHandler);
+    document.addEventListener('webkitfullscreenchange', exitHandler);
+    document.addEventListener('mozfullscreenchange', exitHandler);
+    document.addEventListener('MSFullscreenChange', exitHandler);
+
+    function exitHandler() {
+        if (!document.fullscreenElement && !document.webkitIsFullScreen && !document.mozFullScreen && !document.msFullscreenElement) {
+
+            $("#defaultScreenId").hide();
+            $("#fullScreenId").show();
+
+        }
+    }
+
+
+    //
+    //
+    // document.addEventListener('keyup', function(event){
+    //     if(event.key === "Escape"){
+    //         alert(123123);
+    //         //do something
+    //     }
+    // });
+
 	$.ajaxSetup({
         headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -391,12 +417,6 @@ $(document).ready(function($){
     }));
 
 
-    document.addEventListener('keydown', function(event){
-        if(event.key === "Escape"){
-            alert(123123);
-            //do something
-        }
-    });
 
 
     $("#fullScreenId").click(function(){

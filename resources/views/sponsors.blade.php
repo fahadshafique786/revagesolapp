@@ -38,6 +38,7 @@
                                 <div class="col-sm-4 pt-4">
                                     <select class="form-control" id="filter_app_id" name="filter_app_id" >
                                         <option value="">   Select App </option>
+                                        <option value="-1">   All </option>
                                         @foreach ($appsList as $obj)
                                             <option value="{{ $obj->id }}"  {{ (isset($obj->id) && old('id')) ? "selected":"" }}>{{ $obj->appName . ' - ' . $obj->PackageId}}</option>
                                         @endforeach
@@ -203,7 +204,12 @@
             if(filter_app_id != '')
             {
                 $('#DataTbl').DataTable().destroy();
-                fetchData(filter_app_id);
+                if(filter_app_id != '-1'){ // for all...
+                    fetchData(filter_app_id);
+                }
+                else{
+                    fetchData();
+                }
             }
             else
             {
@@ -277,6 +283,11 @@
 
         }
 
+        function callDataTableWithFilters(){
+            fetchData($('#filter_app_id').val());
+        }
+
+
         $(document).ready(function($){
 
             var Toast = Swal.mixin({
@@ -301,6 +312,12 @@
                 $("#adNameError").text(' ');
                 $('#ajaxheadingModel').html("Add Sponsor Ads");
                 $("form#addEditForm")[0].reset();
+
+
+                if($("#filter_app_id").val() > 0){
+                    $("#app_detail_id").val($("#filter_app_id").val());
+                }
+
                 $('#ajax-model').modal('show');
             });
 
@@ -345,7 +362,8 @@
                                 icon: 'success',
                                 title: 'Sponsor Ads has been removed!'
                             });
-                            fetchData();
+
+                            callDataTableWithFilters();
                         },
                         error:function (response) {
 
@@ -375,7 +393,10 @@
                     processData: false,
                     dataType: 'json',
                     success: function(res){
-                       fetchData();
+
+                        callDataTableWithFilters();
+
+
                         $('#ajax-model').modal('hide');
                         $("#btn-save").html('Save');
                         $("#btn-save"). attr("disabled", false);
