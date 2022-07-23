@@ -57,7 +57,7 @@
                                 <div class="form-group row">
                                     <label for="staticEmail" class="col-sm-2 col-form-label">adsIntervalTime</label>
                                     <div class="col-sm-4">
-                                        <input type="number" class="form-control" name="adsIntervalTime" id="adsIntervalTime" value="" required>
+                                        <input type="text" class="form-control" name="adsIntervalTime" id="adsIntervalTime" value="" required>
                                     </div>
 
                                     <label for="staticEmail" class="col-sm-2 col-form-label">checkIpAddressApiUrl</label>
@@ -273,7 +273,7 @@
 
                                     <label for="staticEmail" class="col-sm-2 col-form-label">minimumVersionSupport</label>
                                     <div class="col-sm-4">
-                                        <input type="number" class="form-control" name="minimumVersionSupport" id="minimumVersionSupport" value="" required>
+                                        <input type="text" class="form-control" name="minimumVersionSupport" id="minimumVersionSupport" value="" required>
                                     </div>
 
                                 </div>
@@ -313,6 +313,17 @@
     <script type="text/javascript">
 
         $(document).ready(function($){
+
+            $('#adsIntervalTime,#minimumVersionSupport').keypress(function (e) {
+
+                var charCode = (e.which) ? e.which : event.keyCode
+
+                if (String.fromCharCode(charCode).match(/[^0-9+.]/g))
+
+                    return false;
+
+            });
+
 
             var Toast = Swal.mixin({
                 toast: true,
@@ -376,7 +387,7 @@
                         var resp = response.responseJSON;
 
                         if(response.status == 422){
-                            
+
                             $('html, body').animate({
                                 scrollTop: eval($("#PackageIdError").offset().top - 170)
                             }, 1000);
