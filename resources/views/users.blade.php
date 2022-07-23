@@ -66,7 +66,7 @@
                 </div>
 				<div class="col-sm-6">
 					<label for="name" class="control-label">User Name</label>
-					<input type="text" class="form-control" id="user_name" name="user_name" placeholder="Enter User Name" value="" maxlength="50" required="">
+					<input type="text" class="form-control" id="user_name" name="user_name"  placeholder="Enter User Name" value="" maxlength="50" required="">
 					<span class="text-danger" id="user_nameError"></span>
                 </div>
               </div>
@@ -101,7 +101,7 @@
               </div>
 
               <div class="col-sm-offset-2 col-sm-12 text-right">
-                <button type="submit" class="btn btn-dark" id="btn-save" >
+                <button type="submit" class=" mb-3 btn btn-dark" id="btn-save" >
                     <i class="fa fa-save"></i>&nbsp; Save
                 </button>
               </div>
@@ -206,15 +206,24 @@ function fetchData()
 			  $('#id').val("");
 			  $('#addEditForm').trigger("reset");
               $('#ajaxheadingModel').html("Edit User");
-              $('#ajax-model').modal('show');
+
               $('#id').val(res.id);
               $('#name').val(res.name);
 			  $('#user_name').val(res.user_name);
 			  $('#email').val(res.email);
-			 // $('#phone').val(res.phone);
-              $('#user_role').val(res.role);
-             //   $('#user_role').select2('data', res.role);
-           }
+
+
+                setTimeout(function(){
+
+                    $('#user_role').select2('val', res.role_id);
+
+                    $('#ajax-model').modal('show');
+
+                },800);
+
+
+
+            }
         });
     });
     $('body').on('click', '.delete', function () {

@@ -63,7 +63,7 @@
 			</a>
 
 
-			<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+			<div class="dropdown-menu custom" aria-labelledby="navbarDropdown">
 
 				<a class="dropdown-item profile" href="javascript:void(0)">
 					Profile

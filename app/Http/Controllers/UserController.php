@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Hash;
 use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\DB;
 
 
 class UserController extends Controller
@@ -103,8 +104,21 @@ class UserController extends Controller
      */
     public function edit(Request $request)
     {
+//        $with = [
+//            'roles',
+//        ];
+
 		$where = array('id' => $request->id);
         $user  = User::where($where)->first();
+        $da  = DB::table('model_has_roles')
+            ->select('role_id')
+            ->where('model_id',$request->id)
+            ->first();
+
+
+        $user->role_id = $da->role_id;
+
+//        dd($user->id,$user->role_id,$da->role_id);
         return response()->json($user);
     }
 
@@ -174,16 +188,10 @@ class UserController extends Controller
 
 	public function editProfile(Request $request)
     {
-//        $with = [
-//            'permissions',
-//            'roles',
-//            'roles.permissions'
-//        ];
-//
+
 		$id = auth()->user()->id;
 		$where = array('id' => $id);
         $user  = User::where($where)->first();
-//        $user  = User::with('with')->where($where)->first();
 
         return response()->json($user);
     }
@@ -198,7 +206,7 @@ class UserController extends Controller
 
 		$this->validate($request, [
 			'name' => 'required',
-			'user_name' => 'required|unique:users,user_name,'.$id,
+//			'user_name' => 'required|unique:users,user_name,'.$id,
 //			'email' => 'required|email|unique:users,email,'.$id,
 			//'phone' => 'required',
 //            'role_id'=>'required|array'
@@ -206,18 +214,15 @@ class UserController extends Controller
 
 		$input = array();
 		$input['name'] = $request->name;
-		$input['user_name'] = $request->user_name;
-//		$input['email'] = $request->email;
-//		$input['updated_by'] = $id;
+
 
 		if(!empty($request->password))
 			$input['password'] = Hash::make($request->password);
 
-//		$input['phone'] = $request->phone;
-
 		$where = array('id' => $id);
         $user   =   User::where($where)->update($input);
-//        $user->syncRoles($request->role_id);
+
+        //        $user->syncRoles($request->role_id);
 
         return response()->json(['success' => true]);
 

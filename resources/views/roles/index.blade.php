@@ -29,10 +29,7 @@
 										<th scope="col">#</th>
 										<th scope="col">Name</th>
 										<th scope="col">Permissions</th>
-										{{--<th scope="col">Email</th>--}}
-{{--										<th scope="col">Phone</th>--}}
-{{--										<th scope="col">Status</th>--}}
-										<th scope="col">Action</th>
+										<th scope="col" width="100px">Action</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -49,7 +46,7 @@
 
 	 <!-- boostrap model -->
     <div class="modal fade" id="ajax-model" aria-hidden="true" data-backdrop="static">
-      <div class="modal-dialog modal-lg">
+      <div class="modal-dialog modal-md">
         <div class="modal-content">
           <div class="modal-header">
             <h4 class="modal-title" id="ajaxheadingModel"></h4>
@@ -59,12 +56,12 @@
             <form action="javascript:void(0)" id="addEditForm" name="addEditForm" class="form-horizontal" method="POST" enctype="multipart/form-data">
               <input type="hidden" name="id" id="id">
               <div class="form-group row">
-                <div class="col-sm-6">
+                <div class="col-sm-12 mb-3">
 					<label for="name" class="control-label">Name</label>
 					<input type="text" class="form-control" id="name" name="name" placeholder="Enter Name" value="" maxlength="50" required="">
                     <span class="text-danger" id="user_nameError"></span>
                 </div>
-				<div class="col-sm-6">
+				<div class="col-sm-12">
 					<label for="name" class="control-label">Permissions</label><br/>
                     <select class="js-example-basic-multiple" id="permissionss" name="permissions[]" multiple="multiple" required>
                         @foreach($permissions as $permission)
@@ -81,9 +78,6 @@
                 </button>
               </div>
             </form>
-          </div>
-          <div class="modal-footer">
-
           </div>
         </div>
       </div>
@@ -179,10 +173,28 @@ function fetchData()
               $('#ajax-model').modal('show');
               $('#id').val(res.id);
               $('#name').val(res.name);
-                console.log('res.permissions');
+
+
                 console.log(res.permissions);
-                $('#permissionss').select2.val('data', res.permissions);
-			//  $('#permissions').val(res.permissions);
+
+
+                $.each(res.permissions,function(key,obj){
+
+                    console.log(key + " ::: " + obj.id);
+                    // $("#permissionss").append($('<option>', {value: obj.id, text: obj.name}));
+
+                    $("#permissionss").select2("val", $("#permissionss").select2("val").concat(obj.id));
+
+
+                    // $("#permissionss").select().append()
+
+                });
+
+
+                // $('#permissionss').select2.val('data', res.permissions);
+    			//  $('#permissions').val(res.permissions);
+
+
            }
         });
     });

@@ -87,8 +87,9 @@ class RolesController extends Controller
             'permissions',
         ];
         $where = array('id' => $request->id);
-        $user  =Role::with($with)->where($where)->first();
-        return response()->json($user);
+        $rolesData  = Role::with($with)->where($where)->first();
+        return response()->json($rolesData);
+        exit();
     }
 
     /**
@@ -97,6 +98,7 @@ class RolesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
     public function destroy(Request $request)
     {
         $user = Role::where('id',$request->id)->delete();

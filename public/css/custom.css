@@ -135,8 +135,19 @@ LOGIN PAGE
     color: white !important;
 }
 .select2-container--default .select2-selection--multiple .select2-selection__choice__remove{
-    color: black !important;
+    color: white !important;
 }
+
+.select2-container--default .select2-selection--multiple .select2-selection__choice{
+    letter-spacing: 1px !important;
+}
+
+.custom > a.dropdown-item:hover {
+    background: #17a2b8;
+    color: #fff !important;
+}
+
+
 .select2.select2-container.select2-container--default{
     width: 100% !important;
 }
@@ -577,3 +588,13 @@ input[disabled]{
     display:none
 }
 
+
+.profile-nav-tabs .nav-link {
+    color: #131313 !important;
+}
+
+
+.profile-nav-tabs .nav-link.active {
+    background: #17a2b8;
+    color: #fff !important;
+}

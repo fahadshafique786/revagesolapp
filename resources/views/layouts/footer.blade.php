@@ -375,7 +375,7 @@ $(document).ready(function($){
             success: function(res){
 			  $("#profile_password").prop("required",false);
 			  $('#profile_addEditForm').trigger("reset");
-              $('#profile_ajaxheadingModel').html("Profile");
+              $('#profile_ajaxheadingModel').html("Update Profile");
               $('#profile_ajax-model').modal('show');
               $('#profile_name').val(res.name);
 			  $('#profile_user_name').val(res.user_name);
@@ -461,47 +461,115 @@ $(document).ready(function($){
 
 	 <!-- boostrap model -->
     <div class="modal fade" id="profile_ajax-model" aria-hidden="true" data-backdrop="static">
-      <div class="modal-dialog modal-lg">
+      <div class="modal-dialog modal-md">
         <div class="modal-content">
           <div class="modal-header">
             <h4 class="modal-title" id="profile_ajaxheadingModel"></h4>
 			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
           </div>
           <div class="modal-body">
-            <form action="javascript:void(0)" id="profile_addEditForm" name="addEditForm" class="form-horizontal" method="POST" enctype="multipart/form-data">
-              <div class="form-group row">
-                <div class="col-sm-6">
-					<label for="name" class="control-label">Name</label>
-					<input type="text" class="form-control" id="profile_name" name="name" placeholder="Enter Name" value="" maxlength="50" required="">
-                </div>
-				<div class="col-sm-6">
-					<label for="name" class="control-label">User Name</label>
-					<input type="text" class="form-control" id="profile_user_name" name="user_name" placeholder="Enter User Name" value="" maxlength="50" required="">
-					<span class="text-danger" id="profile_user_nameError"></span>
-                </div>
-              </div>
-			  <div class="form-group row">
-                <div class="col-sm-6">
-					<label for="name" class="control-label">Email</label>
-					<input type="email" disabled class="form-control" id="profile_email" name="email" placeholder="Enter Email" value="" maxlength="50" required="">
-					<span class="text-danger" id="profile_emailError"></span>
-                </div>
-				<div class="col-sm-6">
-					<label for="name" class="control-label">Password</label>
-					<input type="text" class="form-control" id="profile_password" name="password" placeholder="Enter Password" value="" minlength="8" maxlength="50" required="">
-                </div>
+
+              <ul class="nav nav-tabs profile-nav-tabs" id="custom-content-above-tab" role="tablist">
+                  <li class="nav-item">
+                      <a class="nav-link active" id="custom-content-above-home-tab" data-toggle="pill" href="#custom-content-above-profile" role="tab" aria-controls="custom-content-above-profile" aria-selected="true">Profile</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" id="custom-content-above-changepassword-tab" data-toggle="pill" href="#custom-content-above-changepassword" role="tab" aria-controls="custom-content-above-changepassword" aria-selected="false">Change Password</a>
+                  </li>
+              </ul>
+
+
+              <div class="tab-content" id="custom-content-above-tabContent">
+                  <div class="tab-pane fade show active" id="custom-content-above-profile" role="tabpanel" aria-labelledby="custom-content-above-home-tab">
+
+                      <!----==== BEGIN ::  Update Profile Form ====---->
+
+                      <form action="javascript:void(0)" id="profile_addEditForm" name="addEditForm" class="form-horizontal" method="POST" enctype="multipart/form-data">
+                          <div class="form-group row">
+                              <div class="col-sm-12 mb-3 mt-3">
+                                  <label for="name" class="control-label">Name</label>
+                                  <input type="text" class="form-control" id="profile_name" name="name" placeholder="Enter Name" value="" maxlength="50" required="">
+                              </div>
+                              <div class="col-sm-12">
+                                  <label for="name" class="control-label">User Name</label>
+                                  <input type="text" class="form-control" id="profile_user_name" disabled name="user_name" placeholder="Enter User Name" value="" maxlength="50" required="">
+                                  <span class="text-danger" id="profile_user_nameError"></span>
+                              </div>
+                          </div>
+                          <div class="form-group row">
+                              <div class="col-sm-12 mb-3">
+                                  <label for="name" class="control-label">Email</label>
+                                  <input type="email" disabled class="form-control" id="profile_email" name="email" placeholder="Enter Email" value="" maxlength="50" required="">
+                                  <span class="text-danger" id="profile_emailError"></span>
+                              </div>
+                          </div>
+
+                          <div class="form-group row">
+                              <div class="col-sm-12">
+                                  <label for="name" class="control-label">Upload Image</label>
+                              </div>
+                              <div class="col-sm-12">
+                                  <input type="file" class="" id="profile_image" name="profile_image"  />
+                              </div>
+                          </div>
+
+                          <div class="col-sm-offset-2 col-sm-12 text-right">
+                              <button type="submit" class="btn btn-dark" id="profile_btn-save" >
+                                  <i class="fa fa-save"></i>&nbsp; Update
+                              </button>
+                          </div>
+                      </form>
+
+                      <!----==== END ::   Update Profile Form ====---->
+
+                  </div>
+                  <div class="tab-pane fade" id="custom-content-above-changepassword" role="tabpanel" aria-labelledby="custom-content-above-changepassword-tab">
+
+
+
+                      <!----==== BEGIN ::  Update Profile Form ====---->
+
+                      <form action="javascript:void(0)" id="changePasswordForm" name="changePasswordForm" class="form-horizontal" method="POST">
+                          <div class="form-group row">
+                              <div class="col-sm-12 mb-3 mt-3">
+                                  <label for="current_password" class="control-label">Current Password</label>
+                                  <input type="password" class="form-control" id="current_password" name="current_password" placeholder="Enter Password"  required="">
+                                  <span class="text-danger" id="current_passwordError"></span>
+                              </div>
+                              <div class="col-sm-12">
+                                  <label for="password" class="control-label">New Password</label>
+                                  <input type="password" class="form-control" id="password" name="password" placeholder="Enter New Password"  required="">
+                                  <span class="text-danger" id="passwordError"></span>
+                              </div>
+                          </div>
+                          <div class="form-group row">
+                              <div class="col-sm-12 mb-3">
+                                  <label for="confirm_password" class="control-label">New Password</label>
+                                  <input type="password" class="form-control" id="confirm_password" name="confirm_password" placeholder="Enter Confirm Password"  required="">
+                                  <span class="text-danger" id="confirm_passwordError"></span>
+                              </div>
+                          </div>
+
+                          <div class="col-sm-offset-2 col-sm-12 text-right">
+                              <button type="submit" class="btn btn-dark" id="profile_btn-save" >
+                                  <i class="fa fa-save"></i>&nbsp; Update
+                              </button>
+                          </div>
+                      </form>
+
+                      <!----==== END ::   Update Profile Form ====---->
+
+
+
+
+                  </div>
               </div>
 
-              <div class="col-sm-offset-2 col-sm-12 text-right">
-                <button type="submit" class="btn btn-dark" id="profile_btn-save" >
-                    <i class="fa fa-save"></i>&nbsp; Save
-                </button>
-              </div>
-            </form>
-          </div>
-          <div class="modal-footer">
+
+
 
           </div>
+
         </div>
       </div>
     </div>

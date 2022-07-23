@@ -36,7 +36,8 @@
 
                                     <label for="staticEmail" class="col-sm-2 col-form-label">PackageId</label>
                                     <div class="col-sm-4">
-                                        <input type="text"  class="form-control" name="PackageId" id="PackageId" value=""  required />
+                                        <input type="text"  class="form-control" name="PackageId" id="PackageId" value="" onkeyup="$('#PackageIdError').text('')"  required />
+                                        <span class="text-danger" id="PackageIdError"></span>
                                     </div>
                                 </div>
 
@@ -330,6 +331,8 @@
 
             $("#addEditForm").on('submit',(function(e) {
 
+                $("#PackageIdError").text(' ');
+
                 e.preventDefault();
 
                 var Form_Data = new FormData(this);
@@ -371,18 +374,24 @@
                         $("input[type=submit]").attr("disabled", false);
 
                         var resp = response.responseJSON;
-                        if(typeof resp !== 'undefined'){
-                            Toast.fire({
-                                icon: 'error',
-                                title: 'Please fill required fields!'
-                            })
+
+                        if(response.status == 422){
+                            $("#PackageIdError").text(resp.errors.PackageId);
                         }
                         else{
                             Toast.fire({
                                 icon: 'error',
                                 title: 'Network Error!'
                             })
+
                         }
+
+                        // if(typeof resp !== 'undefined'){
+                        //     Toast.fire({
+                        //         icon: 'error',
+                        //         title: 'Please fill required fields!'
+                        //     })
+                        // }
 
 
 

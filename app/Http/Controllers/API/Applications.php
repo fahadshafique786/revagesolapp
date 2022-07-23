@@ -19,7 +19,6 @@ class Applications extends BaseController
     {
         $response = ['code'=>'200','message'=>'Success!'];
         $responseData = null;
-//        $responseData = [];
 
         if(isset($request->PackageId)){
 
