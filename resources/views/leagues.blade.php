@@ -13,7 +13,7 @@
                             <div class="row">
                                 <div class="col-6 text-left">
 
-                                        @if(auth()->user()->hasRole('super-admin') || auth()->user()->can('manage-sports'))
+                                        @if(auth()->user()->hasRole('super-admin') || auth()->user()->can('manage-leagues'))
                                             <a class="btn btn-info" href="javascript:void(0)" id="addNew">
                                                 Add League
                                             </a>
@@ -23,7 +23,7 @@
 
                                 <div class="col-6 text-right">
 
-                                    @if(auth()->user()->hasRole('super-admin') || auth()->user()->can('manage-sports'))
+                                    @if(auth()->user()->hasRole('super-admin') || auth()->user()->can('manage-leagues'))
                                         <a class="btn btn-warning" href="javascript:window.location.reload()" id="">
                                             <i class="fa fa-spinner"></i> &nbsp; Refresh Screen
                                         </a>

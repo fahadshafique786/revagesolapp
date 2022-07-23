@@ -42,8 +42,8 @@
                                     <th scope="col">Icon</th>
                                     <th scope="col">Name</th>
                                     <th scope="col">Type</th>
-                                    <th scope="col">Image Required</th>
                                     <th scope="col">Multi League</th>
+                                    <th scope="col">Image Required</th>
                                     <th scope="col">Action</th>
                                 </tr>
                                 </thead>
@@ -109,15 +109,15 @@
 
                                 <div class="col-sm-12">
                                     <label for="name" class="control-label d-block">Multi League</label>
-                                    <label for="multi_league_yes" class="cursor-pointer">
-                                        <input type="radio" class="" id="multi_league0" name="multi_league" value="1" checked/>
+                                    <label for="multi_league1" class="cursor-pointer">
+                                        <input type="radio" class="" id="multi_league1" name="multi_league" value="1" checked/>
                                         <span class="">Yes</span>
                                     </label>
 
                                     &nbsp;&nbsp;&nbsp;&nbsp;
 
-                                    <label for="multi_league_no" class="cursor-pointer">
-                                        <input type="radio" class="" id="multi_league1" name="multi_league"  value="0" />
+                                    <label for="multi_league0" class="cursor-pointer">
+                                        <input type="radio" class="" id="multi_league0" name="multi_league"  value="0" />
                                         <span class="">No</span>
                                     </label>
 
@@ -133,13 +133,13 @@
                                 <div class="col-sm-12">
                                     <label for="name" class="control-label d-block">Image Required</label>
 
-                                    <label for="image_required_yes" class="cursor-pointer">
-                                        <input type="radio" class="EnableDisableFileUpload" id="image_required_yes" name="image_required" value="1" checked/>
+                                    <label for="image_required1" class="cursor-pointer">
+                                        <input type="radio" class="EnableDisableFileUpload" id="image_required1" name="image_required" value="1" checked/>
                                         <span class="">Yes</span>
                                     </label>
                                     &nbsp;&nbsp;&nbsp;&nbsp;
-                                    <label for="image_required_no" class="cursor-pointer">
-                                        <input type="radio" class="EnableDisableFileUpload" id="image_required_no" name="image_required" value="0"  />
+                                    <label for="image_required0" class="cursor-pointer">
+                                        <input type="radio" class="EnableDisableFileUpload" id="image_required0" name="image_required" value="0"  />
                                         <span class="">No</span>
                                     </label>
                                     <span class="text-danger" id="image_requiredError"></span>
@@ -222,16 +222,6 @@
                     { data: 'icon', name: 'icon', searchable:false},
                     { data: 'name', name: 'name' },
                     { data: 'sports_type', name: 'sports_type' },
-                    { data: 'image_required', name: 'image_required' , searchable:false , render: function( data, type, full, meta,rowData ) {
-
-                            if(data=='Yes'){
-                                return "<a href='javascript:void(0)' class='badge badge-success text-xs text-capitalize'>"+data+"</a>" +" ";
-                            }
-                            else{
-                                return "<a href='javascript:void(0)' class='badge badge-danger text-xs text-capitalize'>"+data+"</a>" +" ";
-                            }
-                        },
-                    },
                     { data: 'multi_league', name: 'multi_league' , searchable:false , render: function( data, type, full, meta,rowData ) {
                             if(data=='Yes'){
                                 return "<a href='javascript:void(0)' class='badge badge-success text-xs text-capitalize'>"+data+"</a>" +" ";
@@ -242,6 +232,16 @@
                         },
 
 
+                    },
+                    { data: 'image_required', name: 'image_required' , searchable:false , render: function( data, type, full, meta,rowData ) {
+
+                            if(data=='Yes'){
+                                return "<a href='javascript:void(0)' class='badge badge-success text-xs text-capitalize'>"+data+"</a>" +" ";
+                            }
+                            else{
+                                return "<a href='javascript:void(0)' class='badge badge-danger text-xs text-capitalize'>"+data+"</a>" +" ";
+                            }
+                        },
                     },
                     {data: 'action', name: 'action', orderable: false , searchable:false},
                 ],
