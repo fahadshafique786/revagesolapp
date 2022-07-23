@@ -102,7 +102,7 @@ class LeaguesController extends Controller
             $Filterdata = Leagues::select('leagues.*','sports.name as sport_name');
 
 
-            if(isset($request->filter_sports) && !empty($request->filter_sports)){
+            if(isset($request->filter_sports) && !empty($request->filter_sports)  && ($request->filter_sports != '-1')){
                 $Filterdata = $Filterdata->where('leagues.sports_id',$request->filter_sports);
             }
 

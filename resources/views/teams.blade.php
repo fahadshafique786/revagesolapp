@@ -233,7 +233,9 @@
         }
 
         function callDataTableWithFilters(){
+
             fetchData($('#league_filter').val());
+
         }
 
 

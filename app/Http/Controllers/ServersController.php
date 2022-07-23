@@ -128,11 +128,11 @@ class ServersController extends Controller
             }
 
 
-            if(isset($request->filter_sports) && !empty($request->filter_sports)){
+            if(isset($request->filter_sports) && !empty($request->filter_sports) && ($request->filter_sports != '-1')){
                 $Filterdata = $Filterdata->where('servers.sports_id',$request->filter_sports);
             }
 
-            if(isset($request->filter_leagues) && !empty($request->filter_leagues)){
+            if(isset($request->filter_leagues) && !empty($request->filter_leagues) && ($request->filter_leagues != '-1')){
                 $Filterdata = $Filterdata->where('servers.leagues_id',$request->filter_leagues);
             }
 

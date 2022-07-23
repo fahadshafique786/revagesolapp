@@ -110,7 +110,7 @@ class TeamsController extends Controller
             $Filterdata = Teams::select('teams.*','leagues.name as league_name')
                 ->where('teams.sports_id',$sports_id);
 
-            if(isset($request->filter_league) && !empty($request->filter_league)){
+            if(isset($request->filter_league) && !empty($request->filter_league) && ($request->filter_league != '-1')){
                 $Filterdata = $Filterdata->where('teams.leagues_id',$request->filter_league);
             }
 

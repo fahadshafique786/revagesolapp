@@ -101,7 +101,7 @@ class ScheduleController extends Controller
                 ->where('schedules.sports_id',$sports_id);
 
 
-            if(isset($request->filter_league) && !empty($request->filter_league)){
+            if(isset($request->filter_league) && !empty($request->filter_league) && ($request->filter_league != '-1')){
                 $Filterdata = $Filterdata->where('schedules.leagues_id',$request->filter_league);
             }
 

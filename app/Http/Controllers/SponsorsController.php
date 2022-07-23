@@ -145,7 +145,7 @@ class SponsorsController extends Controller
             $Filterdata = SponsorAds::select('sponsor_ads.*','app_details.appName','app_details.PackageId as PackageId');
 
 
-            if(isset($request->filter_app_id) && !empty($request->filter_app_id)){
+            if(isset($request->filter_app_id) && !empty($request->filter_app_id) && ($request->filter_app_id != '-1')){
                 $Filterdata = $Filterdata->where('sponsor_ads.app_detail_id',$request->filter_app_id);
             }
 
