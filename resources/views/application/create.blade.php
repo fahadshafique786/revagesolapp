@@ -34,7 +34,7 @@
 
                                     </div>
 
-                                    <label for="staticEmail" class="col-sm-2 col-form-label">PackageId</label>
+                                    <label for="staticEmail" class="col-sm-2 col-form-label" id="">PackageId</label>
                                     <div class="col-sm-4">
                                         <input type="text"  class="form-control" name="PackageId" id="PackageId" value="" onkeyup="$('#PackageIdError').text('')"  required />
                                         <span class="text-danger" id="PackageIdError"></span>
@@ -376,6 +376,12 @@
                         var resp = response.responseJSON;
 
                         if(response.status == 422){
+                            
+                            $('html, body').animate({
+                                scrollTop: eval($("#PackageIdError").offset().top - 170)
+                            }, 1000);
+
+
                             $("#PackageIdError").text(resp.errors.PackageId);
                         }
                         else{

@@ -35,10 +35,11 @@
                                      </div>
 
 
-                                    <label for="staticEmail" class="col-sm-2 col-form-label">PackageId</label>
+                                    <label for="staticEmail" class="col-sm-2 col-form-label" id="PackageIdLabel">PackageId</label>
 
                                     <div class="col-sm-4">
-                                        <input type="text"  class="form-control" name="PackageId" id="PackageId" value="{{$appData->PackageId}}"  required />
+                                        <input type="text"  class="form-control" name="PackageId" id="PackageId" value="{{$appData->PackageId}}" onkeyup="$('#PackageIdError').text('')"   required />
+                                        <span class="text-danger" id="PackageIdError"></span>
                                     </div>
 
                                 </div>
@@ -217,6 +218,9 @@
 
                                     </div>
 
+                                    <button id="buttonxyze" type="button"> DONEEE </button>
+
+
                                     <label for="staticEmail" class="col-sm-2 col-form-label">isStartAppAdsShow</label>
                                     <div class="col-sm-4">
 
@@ -307,6 +311,7 @@
                 </div>
 
             </div>
+
             <!-- /.row -->
         </div><!-- /.container-fluid -->
 
@@ -374,20 +379,25 @@
                     error: function (response) {
 
                         $("input[type=submit]").html('Save');
+
                         $("input[type=submit]").attr("disabled", false);
 
                         var resp = response.responseJSON;
-                        if(typeof resp !== 'undefined'){
-                            Toast.fire({
-                                icon: 'error',
-                                title: 'Please fill required fields!'
-                            })
+
+                        if(response.status == 422){
+
+                            $('html, body').animate({
+                                scrollTop: eval($("#PackageIdError").offset().top - 170)
+                            }, 1000);
+
+                            $("#PackageIdError").text(resp.errors.PackageId);
                         }
                         else{
                             Toast.fire({
                                 icon: 'error',
-                                title: 'Network Error Occured!'
+                                title: 'Network Error!'
                             })
+
                         }
 
 
@@ -399,6 +409,8 @@
 
 
         });
+
+
 
     </script>
 
