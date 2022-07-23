@@ -72,7 +72,11 @@ class CustomAuthController extends Controller
         }
         else
         {
-            dd('Invalid credentials!');
+            Session::flash('message', 'Invalid credentials!');
+            Session::flash('alert-class', 'alert-danger');
+
+            return view('auth.login');
+
         }
     }
 

@@ -24,6 +24,11 @@ else{
             <div class="card-body">
                 <h2 class="login-box-msg text-bold">Sign <span class="site-color">In</span></h2>
 
+                @if(Session::has('message'))
+                    <p class="alert {{ Session::get('alert-class', 'alert-info') }}">{{ Session::get('message') }}</p>
+                @endif
+
+
                 <form method="POST" action="{{ route('post.login') }}">
                     @csrf
                     <div class="input-group mb-3">
