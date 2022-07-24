@@ -376,11 +376,15 @@ $(document).ready(function($){
 			  $("#profile_password").prop("required",false);
 			  $('#profile_addEditForm').trigger("reset");
               $('#profile_ajaxheadingModel').html("Update Profile");
-              $('#profile_ajax-model').modal('show');
               $('#profile_name').val(res.name);
 			  $('#profile_user_name').val(res.user_name);
 			  $('#profile_email').val(res.email);
-			  // $('#profile_phone').val(res.phone);
+
+
+
+                $('#profile_ajax-model').modal('show');
+
+
            }
         });
     });
@@ -403,15 +407,74 @@ $(document).ready(function($){
 		    processData: false,
             dataType: 'json',
             success: function(res){
+
 				$('#profile_ajax-model').modal('hide');
-				$("#profile_btn-save").html('<i class="fa fa-save"></i> Save');
+				$("#profile_btn-save").html('<i class="fa fa-save"></i> Update');
 				$("#profile_btn-save"). attr("disabled", false);
+
            },
 		   error:function (response) {
-				$("#profile_btn-save").html('<i class="fa fa-save"></i> Save');
+
+
+				$("#profile_btn-save").html('<i class="fa fa-save"></i> Update');
 				$("#profile_btn-save"). attr("disabled", false);
 				$('#profile_user_nameError').text(response.responseJSON.errors.user_name);
 				$('#profile_emailError').text(response.responseJSON.errors.email);
+
+
+			}
+        });
+    }));
+
+
+	$("#changePasswordForm").on('submit',(function(e) {
+        e.preventDefault();
+
+        $("#passwordError").text('');
+		var Form_Data = new FormData(this);
+
+
+        var current_password = $("#current_password").val();
+        var password = $("#password").val();
+        var confirm_password = $("#confirm_password").val();
+
+        if(password != confirm_password ){
+
+            $("#passwordError").text('Password & Confirm password does not match!')
+            return false;
+        }
+
+        $("#changePasswordSubmit").html('Please Wait...');
+        $("#changePasswordSubmit"). attr("disabled", true);
+
+        $.ajax({
+            type:"POST",
+            url: "{{ url('admin/update-password') }}",
+            data: Form_Data,
+			mimeType: "multipart/form-data",
+		    contentType: false,
+		    cache: false,
+		    processData: false,
+            dataType: 'json',
+            success: function(res){
+
+				$("#changePasswordSubmit").html('<i class="fa fa-save"></i> Update');
+				$("#changePasswordSubmit"). attr("disabled", false);
+
+                // $('#profile_ajax-model').modal('hide');
+
+           },
+		   error:function (response) {
+
+                console.log(response);
+
+				$("#changePasswordSubmit").html('<i class="fa fa-save"></i> Update');
+				$("#changePasswordSubmit"). attr("disabled", false);
+
+				// $('#passwordError').text(response.responseJSON.errors.password);
+				// $('#current_passwordError').text(response.responseJSON.errors.current_password);
+
+
 			}
         });
     }));
@@ -424,8 +487,6 @@ $(document).ready(function($){
         $(this).hide();
         $("#defaultScreenId").show();
 
-        // alert("fullScreenId");
-
         var elem = document.getElementById("customBody");
 
         if (elem.requestFullscreen) {
@@ -437,8 +498,6 @@ $(document).ready(function($){
         }
 
     });
-
-
 
 
     $("#defaultScreenId").click(function(){
@@ -473,7 +532,7 @@ $(document).ready(function($){
                   <li class="nav-item">
                       <a class="nav-link active" id="custom-content-above-home-tab" data-toggle="pill" href="#custom-content-above-profile" role="tab" aria-controls="custom-content-above-profile" aria-selected="true">Profile</a>
                   </li>
-                  <li class="nav-item">
+                  <li class="nav-item hide d-none">
                       <a class="nav-link" id="custom-content-above-changepassword-tab" data-toggle="pill" href="#custom-content-above-changepassword" role="tab" aria-controls="custom-content-above-changepassword" aria-selected="false">Change Password</a>
                   </li>
               </ul>
@@ -545,13 +604,14 @@ $(document).ready(function($){
                           <div class="form-group row">
                               <div class="col-sm-12 mb-3">
                                   <label for="confirm_password" class="control-label">New Password</label>
-                                  <input type="password" class="form-control" id="confirm_password" name="confirm_password" placeholder="Enter Confirm Password"  required="">
+                                  <input type="password" class="form-control" id="confirm_password" name="" placeholder="Enter Confirm Password"  required="">
                                   <span class="text-danger" id="confirm_passwordError"></span>
                               </div>
                           </div>
 
                           <div class="col-sm-offset-2 col-sm-12 text-right">
-                              <button type="submit" class="btn btn-dark" id="profile_btn-save" >
+                              <input type="hidden" name="user_id" value="{{\Illuminate\Support\Facades\Auth::user()->id}}" readonly>
+                              <button type="submit" class="btn btn-dark" id="changePasswordSubmit">
                                   <i class="fa fa-save"></i>&nbsp; Update
                               </button>
                           </div>

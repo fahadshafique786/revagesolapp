@@ -8,8 +8,10 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Hash;
+use Illuminate\Testing\Fluent\Concerns\Has;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\DB;
+use Response;
 
 
 class UserController extends Controller
@@ -228,4 +230,55 @@ class UserController extends Controller
 
 
     }
+
+	public function changePassword(Request $request)
+    {
+		$this->validate($request, [
+			'password' => 'required',
+		]);
+
+        $validationResponse = [];
+
+		if(!empty($request->current_password)){
+
+            $current_password = bcrypt($request->current_password);
+            //            $current_password = Hash::make($request->current_password);
+
+		    dd($current_password);
+
+		    $checkPassword = User::where('password',$current_password)
+            ->where('id',$request->user_id);
+
+
+            if($checkPassword->exists()){
+
+                /******* Update Password ********/
+
+                $input = array();
+                $input['password'] = Hash::make($request->password);
+
+                $user   =   User::where('id',$request->user_id)->update($input);
+
+                return response()->json(['success' => true]);
+
+            }
+		    else{
+
+                $validationResponse['message'] = "The given data was invalid.";
+                $validationResponse['errors']['current_password'] = "Current Password not matched!";
+
+                return Response::json($validationResponse,422);
+                exit();
+
+            }
+
+		    exit();
+        }
+
+
+
+
+    }
+
+
 }

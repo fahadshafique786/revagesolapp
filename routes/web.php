@@ -76,6 +76,7 @@ Route::group(
         Route::post('/delete-user', [UserController::class, 'destroy']);
         Route::post('/edit-profile', [UserController::class, 'editProfile']);
         Route::post('/update-profile', [UserController::class, 'updateProfile']);
+        Route::post('/update-password', [UserController::class, 'changePassword']);
 
         /******* Sports Module ***********/
 
