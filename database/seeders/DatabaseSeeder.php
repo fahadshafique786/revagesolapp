@@ -78,6 +78,24 @@ class DatabaseSeeder extends Seeder
             ],
             [
                 'name'=>'manage-servers',
+            ],
+            [
+                'name'=>'view-applications',
+            ],
+            [
+                'name'=>'manage-applications',
+            ],
+            [
+                'name'=>'view-sponsor_ads',
+            ],
+            [
+                'name'=>'manage-sponsor_ads',
+            ],
+            [
+                'name'=>'view-admob_ads',
+            ],
+            [
+                'name'=>'manage-admob_ads',
             ]
         );
 

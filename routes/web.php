@@ -160,18 +160,19 @@ Route::group(
         Route::post('/delete-sponsor-ads', [SponsorsController::class, 'destroy']);
 
 
-        /******* Sponsor Ads Module  ***********/
+        /******* Admob Ads Module  ***********/
         Route::get('/admob_ads', [AdmobAdsController::class, 'index']);;
         Route::post('/add-update-admob_ads', [AdmobAdsController::class, 'store']);
         Route::post('/fetch-admob_ads-data/', [AdmobAdsController::class, 'fetchAdmobAdsList']);
         Route::post('/edit-admob-ads', [AdmobAdsController::class, 'edit']);
         Route::post('/delete-admob-ads', [AdmobAdsController::class, 'destroy']);
 
+        /******* API Credentials Module  ***********/
+        Route::get('/credentials', [AdmobAdsController::class, 'index']);;
+        Route::post('/add-update-admob_ads', [AdmobAdsController::class, 'store']);
+        Route::post('/fetch-admob_ads-data/', [AdmobAdsController::class, 'fetchAdmobAdsList']);
+        Route::post('/edit-admob-ads', [AdmobAdsController::class, 'edit']);
+        Route::post('/delete-admob-ads', [AdmobAdsController::class, 'destroy']);
 
-//        Route::get('/app/create', [SponsorsController::class, 'create'])->name('app.create');
-//        Route::get('/app/{app_id}', [SponsorsController::class, 'edit'])->name('app.edit');
-//        Route::post('/add-update-apps', [SponsorsController::class, 'store']);
-//        Route::post('/add-update-apps/{app_id}', [SponsorsController::class, 'store']);
-//        Route::post('/delete-app', [SponsorsController::class, 'destroy']);
 
     });

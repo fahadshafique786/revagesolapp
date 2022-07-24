@@ -204,6 +204,12 @@
                 </li>
                 @endif
 
+                <li class="nav-item">
+                    <a href="{{ url('admin/credentials') }}" class="nav-link {{ (Request::segment(2) == 'credentials') ? 'active' : '' }}">
+                        <i class=" fa fa-lock"></i>
+                        <p>APIs Credentials</p>
+                    </a>
+                </li>
 
             @endif
 

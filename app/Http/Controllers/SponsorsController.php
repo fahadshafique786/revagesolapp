@@ -41,11 +41,6 @@ class SponsorsController extends Controller
     {
         if(!empty($request->id))
         {
-//            $this->validate($request, [
-//                'adName' => 'required|unique:sponsor_ads,adName,'.$request->id,
-//                'app_detail_id' => 'required',
-//            ]);
-
             $validation = SponsorAds::where('adName',$request->adName)
                 ->where('app_detail_id',$request->app_detail_id)
                 ->where('id','!=',$request->id);
