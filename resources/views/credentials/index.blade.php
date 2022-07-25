@@ -114,7 +114,7 @@
 
                                 <div class="col-sm-12">
                                     <label for="secret_key" class="control-label">Secret key</label>
-                                    <input type="text" class="form-control" id="secret_key" name="secret_key" placeholder=" required="">
+                                    <input type="text" class="form-control" id="secret_key" name="secret_key" placeholder="" required="">
 
                                     <span class="text-danger" id="secret_keyError"></span>
 
