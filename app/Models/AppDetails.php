@@ -36,7 +36,7 @@ class AppDetails extends Model
         'startAppId',
         'newAppPackage',
         'ourAppPackage',
-        'suspendApp',
+        'isSuspendApp',
         'suspendAppMessage'
 
     ];

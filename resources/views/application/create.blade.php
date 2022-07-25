@@ -245,17 +245,17 @@
                                     </div>
 
 
-                                    <label for="staticEmail" class="col-sm-2 col-form-label">suspendApp</label>
+                                    <label for="staticEmail" class="col-sm-2 col-form-label">isSuspendApp</label>
 
                                     <div class="col-sm-4">
 
                                         <label for="suspendApp1" class="cursor-pointer">
-                                            <input type="radio" class="" id="suspendApp1" name="suspendApp" value="1"  />
+                                            <input type="radio" class="" id="suspendApp1" name="isSuspendApp" value="1"  />
                                             <span class="">Yes</span>
                                         </label>
 
                                         <label for="suspendApp0" class="cursor-pointer">
-                                            <input type="radio" class="" id="suspendApp0" name="suspendApp" value="0" checked />
+                                            <input type="radio" class="" id="suspendApp0" name="isSuspendApp" value="0" checked />
                                             <span class="">No</span>
                                         </label>
                                     </div>

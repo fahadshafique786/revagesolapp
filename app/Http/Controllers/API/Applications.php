@@ -56,7 +56,7 @@ class Applications extends BaseController
                 $dataObject[0]->suspendAppMessage = (!empty($dataObject[0]->suspendAppMessage)) ? $dataObject[0]->suspendAppMessage : "";
                 $responseData['AppDetails'] = $dataObject[0];
                 $responseData['AppDetails']->admobAds = $ads_list;
-                $responseData['AppDetails']->sponsorAdsList = $sponsor_list;
+                $responseData['AppDetails']->sponsorAds = $sponsor_list;
 
 
                 foreach($responseData as $index => $obj){
@@ -73,7 +73,7 @@ class Applications extends BaseController
                     $obj->isSponsorAdsShow = getBoolean($obj->isSponsorAdsShow);
                     $obj->isStartAppAdsShow = getBoolean($obj->isStartAppAdsShow);
                     $obj->isStartAppOnline = getBoolean($obj->isStartAppOnline);
-                    $obj->suspendApp = getBoolean($obj->suspendApp);
+                    $obj->isSuspendApp = getBoolean($obj->isSuspendApp);
 
                 }
 

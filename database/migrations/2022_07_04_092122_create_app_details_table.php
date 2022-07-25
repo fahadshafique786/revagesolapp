@@ -35,7 +35,7 @@ class CreateAppDetailsTable extends Migration
             $table->string('startAppId')->default('0000');
             $table->string('newAppPackage')->nullable();
             $table->string('ourAppPackage')->nullable();
-            $table->enum('suspendApp',['0','1'])->default('0');
+            $table->enum('isSuspendApp',['0','1'])->default('0');
             $table->string('suspendAppMessage')->nullable();
             $table->timestamps();
         });
