@@ -20,10 +20,10 @@ class Applications extends BaseController
         $response = ['code'=>200,'message'=>'Success!'];
         $responseData = null;
 
-        if(isset($request->PackageId)){
+        if(isset($request->package_id)){
 
             $dataObject = AppDetails::select()
-                ->where('PackageId',$request->PackageId)
+                ->where('PackageId',$request->package_id)
                 ->orderBy('id','asc');
 
             if($dataObject->exists()){
