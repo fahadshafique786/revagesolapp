@@ -135,28 +135,6 @@
 
                             </div>
 
-                            <div class="form-group row">
-
-                                <div class="col-sm-12">
-                                    <label for="isAdShow" class="control-label d-block"> isAdShow </label>
-
-                                    <label for="isAdShow1" class="cursor-pointer">
-                                        <input type="radio" class="" id="isAdShow1" name="isAdShow" value="1"  />
-                                        <span class="">Yes</span>
-                                    </label>
-
-                                    <label for="isAdShow0" class="cursor-pointer">
-                                        <input type="radio" class="" id="isAdShow0" name="isAdShow" value="0" checked />
-                                        <span class="">No</span>
-                                    </label>
-
-
-                                </div>
-
-
-                            </div>
-
-
                             <div class="col-sm-12 text-center">
                                 <button type="submit" class="btn btn-info full-width-button" id="btn-save" >
                                     Save
@@ -318,7 +296,6 @@
                         $('#app_detail_id').val(res.app_detail_id);
                         $('#adName').val(res.adName);
                         $('#adUId').val(res.adUId);
-                        $('#isAdShow'+res.isAdShow).prop('checked',true);
                         $('#ajax-model').modal('show');
 
                     }
@@ -406,7 +383,7 @@
                         $("#btn-save"). attr("disabled", false);
                         $('#secret_keyError').text(response.responseJSON.errors.adName);
                         $('#stream_keyError').text(response.responseJSON.errors.adUId);
-                        $('#isAdShowError').text(response.responseJSON.errors.isAdShow);
+
                     }
                 });
             }));
