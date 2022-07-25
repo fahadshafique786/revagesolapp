@@ -15,7 +15,7 @@ class CreateAppCredentialsTable extends Migration
     {
         Schema::create('app_credentials', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('app_details_id');
+            $table->unsignedBigInteger('app_detail_id');
             $table->string('package_id')->nullable();
             $table->string('secret_key')->nullable();
             $table->string('stream_key')->nullable();

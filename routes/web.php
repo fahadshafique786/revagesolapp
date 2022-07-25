@@ -16,6 +16,7 @@ use App\Http\Controllers\SponsorsController;
 use App\Http\Controllers\AdmobAdsController;
 use \Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\CustomAuthController;
+use App\Http\Controllers\AppCredentialsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -168,11 +169,11 @@ Route::group(
         Route::post('/delete-admob-ads', [AdmobAdsController::class, 'destroy']);
 
         /******* API Credentials Module  ***********/
-        Route::get('/credentials', [AdmobAdsController::class, 'index']);;
-        Route::post('/add-update-admob_ads', [AdmobAdsController::class, 'store']);
-        Route::post('/fetch-admob_ads-data/', [AdmobAdsController::class, 'fetchAdmobAdsList']);
-        Route::post('/edit-admob-ads', [AdmobAdsController::class, 'edit']);
-        Route::post('/delete-admob-ads', [AdmobAdsController::class, 'destroy']);
+        Route::get('/credentials', [AppCredentialsController::class, 'index']);;
+        Route::post('/add-update-credentials', [AppCredentialsController::class, 'store']);
+        Route::post('/fetch-credentials-data/', [AppCredentialsController::class, 'fetchAppCredentialsList']);
+        Route::post('/edit-credentials', [AppCredentialsController::class, 'edit']);
+        Route::post('/delete-credentials', [AppCredentialsController::class, 'destroy']);
 
 
     });

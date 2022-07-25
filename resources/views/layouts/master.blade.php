@@ -100,6 +100,7 @@
 	$link_label_array['app'] = "Applications";
 	$link_label_array['sponsors'] = "Sponsor Ads";
 	$link_label_array['admob_ads'] = "Admob Ads";
+	$link_label_array['credentials'] = "App Credentials";
 
 	$link_label_array1['sports']['icon'] = "sports.png";
 	$link_label_array1['teams']['icon']  = "team.png";
@@ -137,6 +138,8 @@
                         <i class="fas fa-users icon-bg  vertical-super"></i>
                 @elseif(Request::segment(2) == 'sponsors')
                     <img src="{{ asset('dist/img/sidebar-icons/sponsor-ad.png') }}" class="elevation-2  icon-bg vertical-baseline"/>
+                @elseif(Request::segment(2) == 'admob_ads')
+                    <img src="{{ asset('dist/img/sidebar-icons/admob-ad.png') }}" class="elevation-2  icon-bg vertical-baseline"/>
                 @elseif(Request::segment(2) == 'admob_ads')
                     <img src="{{ asset('dist/img/sidebar-icons/admob-ad.png') }}" class="elevation-2  icon-bg vertical-baseline"/>
 				@endif

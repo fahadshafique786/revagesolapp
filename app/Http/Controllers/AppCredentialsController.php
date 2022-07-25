@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\AppCredentials;
 use Illuminate\Http\Request;
+use App\Models\AppDetails;
 
 class AppCredentialsController extends Controller
 {
@@ -16,7 +17,7 @@ class AppCredentialsController extends Controller
     public function index()
     {
         $appsList = AppDetails::all();
-        return view('sponsors')
+        return view('credentials.index')
             ->with('appsList',$appsList);
     }
 
