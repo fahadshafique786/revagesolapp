@@ -113,10 +113,10 @@
                             <div class="form-group row">
 
                                 <div class="col-sm-12">
-                                    <label for="name" class="control-label">Name</label>
-                                    <input type="text" class="form-control" id="adName" name="adName" placeholder="Enter Ads Name" value="" maxlength="50" required="">
+                                    <label for="secret_key" class="control-label">Secret key</label>
+                                    <input type="text" class="form-control" id="secret_key" name="secret_key" placeholder="Enter Ads Name" value="" maxlength="50" required="">
 
-                                    <span class="text-danger" id="adNameError"></span>
+                                    <span class="text-danger" id="secret_keyError"></span>
 
                                 </div>
 
@@ -126,9 +126,9 @@
                             <div class="form-group row">
 
                                 <div class="col-sm-12">
-                                    <label for="league_icon" class="control-label d-block"> adUId </label>
-                                    <input type="text" class="form-control" id="adUId" name="adUId" value="" required="">
-                                    <span class="text-danger" id="adUIdError"></span>
+                                    <label for="stream_key" class="control-label d-block"> Steam key </label>
+                                    <input type="text" class="form-control" id="stream_key" name="stream_key" value="" required="">
+                                    <span class="text-danger" id="stream_keyError"></span>
 
                                 </div>
 
@@ -298,9 +298,10 @@
             $('body').on('click', '.edit', function () {
 
                 var id = $(this).data('id');
-                $('#nameError').text('');
-                $('#adNameError').text(' ');
-                $('#emailError').text('');
+                $('#secret_keyError').text('');
+                $('#stream_keyError').text(' ');
+
+
                 $.ajax({
                     type:"POST",
                     url: "{{ url('admin/edit-credentials') }}",
@@ -403,8 +404,8 @@
 
                         $("#btn-save").html(' Save');
                         $("#btn-save"). attr("disabled", false);
-                        $('#adNameError').text(response.responseJSON.errors.adName);
-                        $('#adUIdError').text(response.responseJSON.errors.adUId);
+                        $('#secret_keyError').text(response.responseJSON.errors.adName);
+                        $('#stream_keyError').text(response.responseJSON.errors.adUId);
                         $('#isAdShowError').text(response.responseJSON.errors.isAdShow);
                     }
                 });
