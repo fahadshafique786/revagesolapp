@@ -44,7 +44,7 @@ class AppCredentialsController extends Controller
         else
         {
 
-            $validation = SponsorAds::where('secret_key',$request->secret_key)
+            $validation = AppCredentials::where('secret_key',$request->secret_key)
                 ->where('app_detail_id',$request->app_detail_id);
 
             $validationResponse = [];
