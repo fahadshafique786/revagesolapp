@@ -114,7 +114,7 @@
 
                                 <div class="col-sm-12">
                                     <label for="secret_key" class="control-label">Secret key</label>
-                                    <input type="text" class="form-control" id="secret_key" name="secret_key" placeholder="Enter Ads Name" value="" maxlength="50" required="">
+                                    <input type="text" class="form-control" id="secret_key" name="secret_key" placeholder=" required="">
 
                                     <span class="text-danger" id="secret_keyError"></span>
 
@@ -222,7 +222,7 @@
                     { data: 'srno', name: 'srno' , searchable:false},
                     { data: 'appName', name: 'appName' },
                     { data: 'secret_key', name: 'secret_key' },
-                    { data: 'secret_key', name: 'secret_key' },
+                    { data: 'stream_key', name: 'stream_key' },
 
                     {data: 'action', name: 'action', orderable: false , searchable:false},
                 ],
@@ -294,8 +294,8 @@
                         $('#id').val(res.id);
 
                         $('#app_detail_id').val(res.app_detail_id);
-                        $('#adName').val(res.adName);
-                        $('#adUId').val(res.adUId);
+                        $('#secret_key').val(res.secret_key);
+                        $('#stream_key').val(res.stream_key);
                         $('#ajax-model').modal('show');
 
                     }

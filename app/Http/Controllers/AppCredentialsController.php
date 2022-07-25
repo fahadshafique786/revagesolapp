@@ -60,7 +60,7 @@ class AppCredentialsController extends Controller
         }
 
         $input = array();
-        $input['secret_key'] = $request->adName;
+        $input['secret_key'] = $request->secret_key;
         $input['stream_key'] = $request->stream_key;
         $input['app_detail_id'] = $request->app_detail_id;
 
