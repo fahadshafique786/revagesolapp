@@ -9,10 +9,10 @@ class AppDetails extends Model
 {
     use HasFactory;
 
-    protected $casts = [
-        'id' => 'string',
-        'sports_id' => 'string',
-    ];
+//    protected $casts = [
+//        'id' => 'string',
+//        'sports_id' => 'string',
+//    ];
 
     protected $fillable = [
 

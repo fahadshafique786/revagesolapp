@@ -327,17 +327,25 @@
             /****** Add or Update Form Submit ::  Function **********/
 
             $("#addEditForm").on('submit',(function(e) {
+
                 e.preventDefault();
+
                 var Form_Data = new FormData(this);
+
                 $("#btn-save").html('Please Wait...');
+
                 $("#btn-save"). attr("disabled", true);
+
                 $('#nameError').text('');
+
                 $('#sports_typeError').text('');
+
                 $('#multi_leagueError').text('');
+
                 $('#sport_logoError').text('');
 
 
-                    if($("#image_required_yes").prop('checked') && !$("#sport_logo_hidden").val()){
+                    if($("#image_required1").prop('checked') && !$("#sport_logo_hidden").val()){
 
                         if(!$("#sport_logo").val()){
                             alert("Please select sports logo!")

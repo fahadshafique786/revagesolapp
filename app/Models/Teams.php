@@ -9,12 +9,12 @@ class Teams extends Model
 {
     use HasFactory;
 
-    protected $casts = [
-        'id' => 'string',
-        'sports_id' => 'string',
-        'leagues_id' => 'string',
-        'points' => 'string',
-    ];
+//    protected $casts = [
+//        'id' => 'string',
+//        'sports_id' => 'string',
+//        'leagues_id' => 'string',
+//        'points' => 'string',
+//    ];
 
 
     protected $fillable = [

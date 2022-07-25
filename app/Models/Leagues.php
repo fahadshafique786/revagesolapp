@@ -9,11 +9,11 @@ class Leagues extends Model
 {
     use HasFactory;
 
-    protected $casts = [
-        'id' => 'string',
-        'sports_id' => 'string',
-        'icon' => 'string',
-    ];
+//    protected $casts = [
+//        'id' => 'string',
+//        'sports_id' => 'string',
+//        'icon' => 'string',
+//    ];
 
     protected $fillable = [
         'icon',
