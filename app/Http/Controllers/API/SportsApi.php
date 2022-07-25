@@ -15,7 +15,7 @@ class SportsApi extends BaseController
 
     public function index()
     {
-        $response = ['code'=>'200','message'=>'Success!'];
+        $response = ['code'=>200,'message'=>'Success!'];
         $responseData = null;
 
         $data = Sports::select()

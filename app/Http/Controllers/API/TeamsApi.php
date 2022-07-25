@@ -16,7 +16,7 @@ class TeamsApi extends BaseController
 
     public function index(Request $request)
     {
-        $response = ['code'=>'200','message'=>'Success!'];
+        $response = ['code'=>200,'message'=>'Success!'];
         $responseData = null;
 
         if(isset($request->league_id)){
