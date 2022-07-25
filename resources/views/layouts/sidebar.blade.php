@@ -204,7 +204,7 @@
                 </li>
                 @endif
 
-                <li class="nav-item">
+                <li class="nav-item d-none hide ">
                     <a href="{{ url('admin/credentials') }}" class="nav-link {{ (Request::segment(2) == 'credentials') ? 'active' : '' }}">
                         <i class=" fa fa-lock"></i>
                         <p>APIs Credentials</p>
