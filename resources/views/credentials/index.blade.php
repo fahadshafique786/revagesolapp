@@ -283,7 +283,7 @@
                 $('#id').val("");
                 $('#addEditForm').trigger("reset");
                 $("#password").prop("required",true);
-                $('#ajaxheadingModel').html("Add Admob Ad");
+                $('#ajaxheadingModel').html("Add Credential ");
                 $("form#addEditForm")[0].reset();
 
 
