@@ -130,7 +130,7 @@
 				@elseif(Request::segment(2) == 'leagues')
 					<img src="{{ asset('dist/img/sidebar-icons/league.png') }}" class="elevation-2  icon-bg vertical-baseline"/>
 				@elseif(Request::segment(2) == 'servers')
-					<img src="{{ asset('dist/img/sidebar-icons/server.png') }}" class="elevation-2  icon-bg vertical-baseline"/>
+					<img src="{{ asset('dist/img/sidebar-icons/serverss.png') }}" class="elevation-2  icon-bg vertical-baseline"/>
                 @elseif(Request::segment(2) == 'app')
                     <img src="{{ asset('dist/img/sidebar-icons/application.png') }}" class="elevation-2  icon-bg vertical-baseline"/>
                 @elseif(Request::segment(2) == 'users' || Request::segment(2) == 'permissions'  || Request::segment(2) == 'roles' )
