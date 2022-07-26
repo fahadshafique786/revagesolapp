@@ -110,17 +110,25 @@
                 @php $sportsList = \App\Models\Sports::all(); @endphp
 
                 @if(auth()->user()->can('view-teams') ||  auth()->user()->hasRole('super-admin'))
-                   <li class="nav-item custom {{Request::segment(2) == 'teams' ? 'menu-open' : ''}}">
-                <a href="#" class="nav-link">
-				<img src="{{ asset('dist/img/sidebar-icons/team.png') }}" class="elevation-2 "/>
-                    <p>
-                        Teams
-                        @if(count($sportsList) > 0)
-                            <i class="fas fa-angle-left right"></i>
-                        @endif
-                    </p>
-                </a>
-                <ul class="nav nav-treeview">
+                   <li class="nav-item custom {{(Request::segment(2) == 'teams' && count($sportsList) > 0)  ? 'menu-open' : '' }}">
+                       @if(count($sportsList) > 0)
+                           <a href="javascript:void(0)" class="nav-link">
+                               @else
+                                   <span class="nav-link" disabled="disabled">
+                       @endif
+                        <img src="{{ asset('dist/img/sidebar-icons/team.png') }}" class="elevation-2 "/>
+                            <p>
+                                Teams
+                                @if(count($sportsList) > 0)
+                                    <i class="fas fa-angle-left right"></i>
+                                @endif
+                            </p>
+                           @if(count($sportsList) > 0)
+                                </a>
+                           @else
+                                </span>
+                           @endif
+                    <ul class="nav nav-treeview">
                     @foreach($sportsList as $sport)
                         <li class="nav-item">
                             <a href="{{ url('admin/teams/'.$sport->id) }}" class="nav-link custom {{(Request::segment(2) == 'teams' && Request::segment(3) == $sport->id) ? 'active' : ''}}">
@@ -134,8 +142,12 @@
                 @endif
 
 				@if(auth()->user()->can('view-schedules')  || auth()->user()->hasRole('super-admin'))
-                    <li class="nav-item custom {{Request::segment(2) == 'schedules' ? 'menu-open' : ''}}">
-                        <a href="#" class="nav-link">
+                    <li class="nav-item custom {{(Request::segment(2) == 'schedules' && count($sportsList) > 0 ) ? 'menu-open' : ''}}">
+                        @if(count($sportsList) > 0)
+                            <a href="javascript:void(0)" class="nav-link">
+                                @else
+                                    <span class="nav-link" disabled="disabled">
+                       @endif
 							<img src="{{ asset('dist/img/sidebar-icons/schedule.png') }}" class="elevation-2 "/>
                             <p>
                                 Schedule
@@ -143,9 +155,12 @@
                                     <i class="fas fa-angle-left right"></i>
                                 @endif
                             </p>
-                        </a>
+                       @if(count($sportsList) > 0)
+                            </a>
+                       @else
+                                </span>
+                       @endif
 						<ul class="nav nav-treeview">
-{{--							@php $sportsList = \App\Models\Sports::all(); @endphp--}}
 							@foreach($sportsList as $sport)
 								<li class="nav-item">
 									<a href="{{ url('admin/schedules/'.$sport->id) }}" class="nav-link  custom {{Request::segment(2) == 'schedules' &&  Request::segment(3) == $sport->id ? 'active' : ''}}">

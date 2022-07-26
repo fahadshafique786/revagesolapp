@@ -598,3 +598,9 @@ input[disabled]{
     background: #17a2b8;
     color: #fff !important;
 }
+
+span.nav-link[disabled] {
+    pointer-events: none !important;
+    cursor: not-allowed;
+}
+
