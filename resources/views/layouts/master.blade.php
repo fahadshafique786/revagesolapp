@@ -137,9 +137,9 @@
                 @elseif(Request::segment(2) == 'users' || Request::segment(2) == 'permissions'  || Request::segment(2) == 'roles' )
                         <i class="fas fa-users icon-bg  vertical-super"></i>
                 @elseif(Request::segment(2) == 'sponsors')
-                    <img src="{{ asset('dist/img/sidebar-icons/sponsor-ad.png') }}" class="elevation-2  icon-bg vertical-baseline"/>
+                    <img src="{{ asset('dist/img/sidebar-icons/sponsor.png') }}" class="elevation-2  icon-bg vertical-baseline"/>
                 @elseif(Request::segment(2) == 'admob_ads')
-                    <img src="{{ asset('dist/img/sidebar-icons/admob-ad.png') }}" class="elevation-2  icon-bg vertical-baseline"/>
+                    <img src="{{ asset('dist/img/sidebar-icons/admob.png') }}" class="elevation-2  icon-bg vertical-baseline"/>
                 @elseif(Request::segment(2) == 'admob_ads')
                     <img src="{{ asset('dist/img/sidebar-icons/admob-ad.png') }}" class="elevation-2  icon-bg vertical-baseline"/>
 				@endif
