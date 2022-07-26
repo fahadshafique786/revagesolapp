@@ -17,8 +17,8 @@ class Applications extends BaseController
 
     public function index(Request $request)
     {
-        $response = ['code'=>200,'message'=>'Success!'];
-        $responseData = null;
+        $response = [];
+        $responseData = ['code'=>200,'message'=>'Success!'];
 
         if(isset($request->package_id)){
 
@@ -33,33 +33,33 @@ class Applications extends BaseController
                 $app_detail_id = $dataObject[0]->id;
 
 
-                $ads_list = AdmobAds::where('app_detail_id',$app_detail_id)
+                $adsListObject = AdmobAds::where('app_detail_id',$app_detail_id)
                     ->get();
 
 
-                $sponsor_list = SponsorAds::where('app_detail_id',$app_detail_id)
+                $sponsorListObject = SponsorAds::where('app_detail_id',$app_detail_id)
                     ->get();
 
 
-                foreach($ads_list as $index => $arr){
+                foreach($adsListObject as $index => $arr){
                     $arr->isAdShow = (int) $arr->isAdShow;
                     $arr->isAdShow = getBoolean($arr->isAdShow);
                 }
 
-                foreach($sponsor_list as $index => $arr1){
+                $adsList = $adsListObject;
+
+                foreach($sponsorListObject as $index => $arr1){
 
                     $arr1->isAdShow = (int) $arr1->isAdShow;
                     $arr1->isAdShow = getBoolean($arr1->isAdShow);
                 }
 
-                // unset($dataArray[0]->id);
+                $sponsorList = $sponsorListObject;
+
                 $dataObject[0]->suspendAppMessage = (!empty($dataObject[0]->suspendAppMessage)) ? $dataObject[0]->suspendAppMessage : "";
-                $responseData['AppDetails'] = $dataObject[0];
-                $responseData['AppDetails']->admobAds = $ads_list;
-                $responseData['AppDetails']->sponsorAds = $sponsor_list;
+//                $responseData['data'] = $dataObject;
 
-
-                foreach($responseData as $index => $obj){
+                foreach($dataObject as $index => $obj){
 
                     $obj->adsIntervalTime = (int)($obj->adsIntervalTime);
                     $obj->minimumVersionSupport = (int)($obj->minimumVersionSupport);
@@ -77,20 +77,30 @@ class Applications extends BaseController
 
                 }
 
+                    $responseData['data'] = $dataObject[0];
+                    $responseData['data']->admobAds = $adsList;
+                    $responseData['data']->sponsorAds = $sponsorList;
+
+//                  $responseData['data'][0]->admobAds = $adsList;
+//                  $responseData['data'][0]->sponsorAds = $sponsorList;
+
             }
             else{
-                $response['code'] = 400;
-                $response['message'] = 'Application not found!';
+                $responseData['code'] = 400;
+                $responseData['message'] = 'Application not found!';
             }
 
 
         }
         else{
-            $response['code'] = 400;
-            $response['message'] = 'Package Id required!';
+            $responseData['code'] = 400;
+            $responseData['message'] = 'Package Id required!';
         }
-        $response['data'] = $responseData;
-        echo json_encode($response);
+
+//        dd($responseData['data']->admobAds[0]->adName);
+
+        //        $response = $responseData;
+        echo json_encode($responseData);
     }
 
 
