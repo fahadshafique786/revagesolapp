@@ -12,7 +12,7 @@ class Applications extends BaseController
 {
     public function __construct()
     {
-//        dd("RUN");
+//        verifyToken();
     }
 
     public function index(Request $request)

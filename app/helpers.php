@@ -1,6 +1,10 @@
 <?php
+
+use Illuminate\Http\Request;
 use App\Models\Sports;
 use App\Models\AppDetails;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Response;
 
 if ( ! function_exists('getBoolean')) {
     function getBoolean($val, $StringResponse = false)
@@ -129,26 +133,6 @@ if ( ! function_exists('getServerLoad'))
 
 }
 
-//function getCPU(){
-//    $stat1 = file('/proc/stat');
-//    sleep(1);
-//    $stat2 = file('/proc/stat');
-//    $info1 = explode(" ", preg_replace("!cpu +!", "", $stat1[0]));
-//    $info2 = explode(" ", preg_replace("!cpu +!", "", $stat2[0]));
-//    $dif = array();
-//    $dif['user'] = $info2[0] - $info1[0];
-//    $dif['nice'] = $info2[1] - $info1[1];
-//    $dif['sys'] = $info2[2] - $info1[2];
-//    $dif['idle'] = $info2[3] - $info1[3];
-//    $total = array_sum($dif);
-//    $cpu = array();
-//    foreach($dif as $x=>$y) $cpu[$x] = round($y / $total * 100, 1);
-//
-//    dd()
-//
-//
-//}
-
 if (! function_exists('directoryList')){
     function directoryList ($url) {
         $outp = 0;
@@ -192,7 +176,6 @@ if ( ! function_exists('get_server_memory_usage'))
 
 }
 
-
 if ( ! function_exists('getTotalSports'))
     {
     function getTotalSports(){
@@ -226,6 +209,84 @@ if ( ! function_exists('getServerBandwith'))
             $bool = ($val === 1) ? true : false;
         }
         return $bool;
+    }
+
+}
+
+
+if ( ! function_exists('verifyToken'))
+{
+    function verifyToken(){
+
+        $token = null;
+        $headers = apache_request_headers();
+
+        if(
+            isset($headers['Authorization']) && !empty($headers['Authorization'])  &&
+            isset($headers['PackageId']) && !empty($headers['PackageId']) &&
+            isset($headers['IpAddress']) && !empty($headers['IpAddress'])
+        ){
+
+            $response =  [];
+            $streamKey = "";
+            $secretKey = "";
+
+            $authToken = $headers['Authorization'];
+            $packageId = $headers['PackageId'];
+            $ipAddress = $headers['IpAddress'];
+
+            /*** Split Header Token into the Array ***/
+
+            $authTokenSplitedArray = explode("-",$authToken);
+            $userStartTime = (isset($authTokenSplitedArray[3])) ? $authTokenSplitedArray[3] :  "";
+            $userEndTime = (isset($authTokenSplitedArray[2])) ? $authTokenSplitedArray[2]   :  "";
+            $userSalt = (isset($authTokenSplitedArray[1])) ?  $authTokenSplitedArray[1]     :  "";
+
+
+
+            /*** Get Key From Database By using Package ID ***/
+
+            $appCredentials =   DB::table('app_details')
+                ->select('app_details.id','secret_key','stream_key')
+                    ->join('app_credentials',function($join) {
+                        $join->on('app_details.id','=','app_credentials.app_detail_id');
+                    })
+                ->where('PackageId',$packageId);
+
+            if($appCredentials->exists()){
+                $appCredentials = $appCredentials->first();
+                $streamKey = $appCredentials->stream_key;
+                $secretKey = $appCredentials->secret_key;;
+            }
+
+
+            $userHashString = $streamKey.$ipAddress.$userStartTime.$userEndTime.$secretKey.$userSalt;
+            $hashSha1Generated = sha1($userHashString);
+
+
+            $ourGeneratedToken = $hashSha1Generated.'-'.$userSalt.'-'.$userEndTime.'-'.$userStartTime;
+
+
+            if($ourGeneratedToken != $authToken) {
+                $response['code'] = 403;
+                $response['message'] = "Invalid Token!";
+
+                echo json_encode($response);
+                http_response_code(401);
+                exit();
+            }
+        }
+        else{
+
+            $response['code'] = 401;
+            $response['message'] = "Unauthorized Request!";
+
+            echo json_encode($response);
+            http_response_code(401);
+            exit();
+        }
+
+        return true;
     }
 
 }

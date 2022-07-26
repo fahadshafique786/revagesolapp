@@ -11,7 +11,7 @@ class TeamsApi extends BaseController
 {
     public function __construct()
     {
-
+//        verifyToken();
     }
 
     public function index(Request $request)
