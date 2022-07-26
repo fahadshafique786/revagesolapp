@@ -32,7 +32,7 @@ else{
                 <form method="POST" action="{{ route('post.login') }}">
                     @csrf
                     <div class="input-group mb-3">
-                        <input id="email" type="email" placeholder="Email Address" class="form-control @error('email') is-invalid @enderror" name="email" value="{{$login_email}}" required autocomplete="email" autofocus>
+                        <input id="email" type="text" placeholder="Email Address or Username" class="form-control @error('email') is-invalid @enderror" name="email" value="{{$login_email}}" required autocomplete="email" autofocus>
 
                         @error('email')
                         <span class="invalid-feedback" role="alert">

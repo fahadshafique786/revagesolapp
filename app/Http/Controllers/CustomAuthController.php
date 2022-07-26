@@ -70,12 +70,17 @@ class CustomAuthController extends Controller
             Session::put('user_session', $input['email']);
             return redirect('/admin/dashboard');
         }
+        else if (Auth::attempt(['user_name' => $input['email'], 'password' => $input['password']]))
+        {
+            Session::put('user_session', $input['email']);
+            return redirect('/admin/dashboard');
+        }
         else
         {
             Session::flash('message', 'Invalid credentials!');
             Session::flash('alert-class', 'alert-danger');
 
-            return view('auth.login');
+            return redirect('/login');
 
         }
     }
