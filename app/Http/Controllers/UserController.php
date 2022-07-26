@@ -208,15 +208,25 @@ class UserController extends Controller
 
 		$this->validate($request, [
 			'name' => 'required',
-//			'user_name' => 'required|unique:users,user_name,'.$id,
-//			'email' => 'required|email|unique:users,email,'.$id,
-			//'phone' => 'required',
-//            'role_id'=>'required|array'
 		], $customMessages);
 
 		$input = array();
 		$input['name'] = $request->name;
 
+
+        $profile_image = "";
+        if($request->hasFile('profile_image'))
+        {
+            $fileobj				= $request->file('profile_image');
+            $file_original_name 	= $fileobj->getClientOriginalName('profile_image');
+            $file_extension_name 	= $fileobj->getClientOriginalExtension('profile_image');
+            $file_unique_name 		= str_replace(' ','-',strtolower($request->name).'-'.time().rand(1000,9999).'.'.$file_extension_name);
+            $destinationPath		= public_path('/uploads/users/');
+            $fileobj->move($destinationPath,$file_unique_name);
+
+            $input['profile_image'] = $file_unique_name;
+            $profile_image = url('/uploads/users/'). '/' .$file_unique_name;
+        }
 
 		if(!empty($request->password))
 			$input['password'] = Hash::make($request->password);
@@ -224,9 +234,7 @@ class UserController extends Controller
 		$where = array('id' => $id);
         $user   =   User::where($where)->update($input);
 
-        //        $user->syncRoles($request->role_id);
-
-        return response()->json(['success' => true]);
+        return response()->json(['success' => true,'profile_image' => $profile_image]);
 
 
     }

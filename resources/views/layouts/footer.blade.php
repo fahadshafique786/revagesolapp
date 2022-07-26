@@ -396,9 +396,13 @@ $(document).ready(function($){
             dataType: 'json',
             success: function(res){
 
-				$('#profile_ajax-model').modal('hide');
+                console.log(res);
 				$("#profile_btn-save").html('<i class="fa fa-save"></i> Update');
 				$("#profile_btn-save"). attr("disabled", false);
+
+                $('#profile_ajax-model').modal('hide');
+                $("#UserProfileImg").attr('src',res.profile_image)
+
 
            },
 		   error:function (response) {
