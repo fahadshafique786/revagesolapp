@@ -309,9 +309,6 @@ function allowonlyImportCodeFiles(e){
 
 $(function () {
 
-/*	$(".select2").select2({
-		width: "100%",
-	});*/
 
 	$('.decimal_only').keypress(function(event) {
 		if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
@@ -349,15 +346,6 @@ $(document).ready(function($){
         }
     }
 
-
-    //
-    //
-    // document.addEventListener('keyup', function(event){
-    //     if(event.key === "Escape"){
-    //         alert(123123);
-    //         //do something
-    //     }
-    // });
 
 	$.ajaxSetup({
         headers: {

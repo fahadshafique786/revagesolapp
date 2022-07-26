@@ -174,6 +174,7 @@ Route::group(
         Route::post('/fetch-credentials-data/', [AppCredentialsController::class, 'fetchAppCredentialsList']);
         Route::post('/edit-credentials', [AppCredentialsController::class, 'edit']);
         Route::post('/delete-credentials', [AppCredentialsController::class, 'destroy']);
+        Route::post('/get-applist-options', [AppCredentialsController::class, 'getAppsOptions']);
 
 
     });

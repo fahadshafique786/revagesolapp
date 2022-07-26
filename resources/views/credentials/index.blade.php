@@ -99,7 +99,7 @@
                                     <label for="name" class="control-label">Application</label>
                                     <select class="form-control" id="app_detail_id" name="app_detail_id" required>
                                         <option value="">   Select App </option>
-                                        @foreach ($appsList as $obj)
+                                        @foreach ($remainingAppsList as $obj)
                                             <option value="{{ $obj->id }}"  {{ (isset($obj->id) && old('id')) ? "selected":"" }}>{{ $obj->appName . ' - ' . $obj->PackageId}}</option>
                                         @endforeach
                                     </select>
@@ -158,7 +158,6 @@
 
 @push('scripts')
     <script type="text/javascript">
-
 
         $('#filter').click(function(){
             var filter_app_id = $('#filter_app_id').val();
@@ -234,7 +233,21 @@
 
         function callDataTableWithFilters(){
             fetchData($('#filter_app_id').val());
+            reloadAppsList()
         }
+
+        function reloadAppsList(){
+            $.ajax({
+                type:"POST",
+                url: "{{ url('admin/get-applist-options') }}",
+                success: function(response){
+                    $("#app_detail_id").html(response);
+                }
+
+
+            });
+        }
+
 
 
         $(document).ready(function($){
@@ -277,7 +290,7 @@
 
                 var id = $(this).data('id');
                 $('#secret_keyError').text('');
-                $('#stream_keyError').text(' ');
+                $('#stream_keyError').text('');
 
 
                 $.ajax({
@@ -334,9 +347,14 @@
 
             $("#addEditForm").on('submit',(function(e) {
                 e.preventDefault();
+
                 var Form_Data = new FormData(this);
                 $("#btn-save").html('Please Wait...');
                 $("#btn-save"). attr("disabled", true);
+
+
+                $('#secret_keyError,#stream_keyError').text('');
+
 
                 $.ajax({
                     type:"POST",
@@ -365,6 +383,7 @@
 
                     },
                     error:function (response) {
+                        console.log(response.responseJSON);
                         if(response.status == 422){
                             Toast.fire({
                                 icon: 'error',
@@ -381,8 +400,8 @@
 
                         $("#btn-save").html(' Save');
                         $("#btn-save"). attr("disabled", false);
-                        $('#secret_keyError').text(response.responseJSON.errors.adName);
-                        $('#stream_keyError').text(response.responseJSON.errors.adUId);
+                        $('#secret_keyError').text(response.responseJSON.errors.secret_key);
+                        $('#stream_keyError').text(response.responseJSON.errors.stream_key);
 
                     }
                 });

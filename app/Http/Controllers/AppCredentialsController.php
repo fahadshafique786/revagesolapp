@@ -6,6 +6,7 @@ use App\Models\AppCredentials;
 use Illuminate\Http\Request;
 use App\Models\AppDetails;
 use Response;
+use Illuminate\Support\Facades\DB;
 
 class AppCredentialsController extends Controller
 {
@@ -18,8 +19,20 @@ class AppCredentialsController extends Controller
     public function index()
     {
         $appsList = AppDetails::all();
+        $appListWithoutCredentials = DB::select(DB::raw('
+        SELECT *
+       FROM app_details app
+       WHERE NOT EXISTS (SELECT *
+                                FROM app_credentials ac
+                                WHERE ac.app_detail_id = app.id
+                                      );
+
+
+        '));
+
         return view('credentials.index')
-            ->with('appsList',$appsList);
+            ->with('appsList',$appsList)
+            ->with('remainingAppsList',$appListWithoutCredentials);
     }
 
 
@@ -27,16 +40,28 @@ class AppCredentialsController extends Controller
     {
         if(!empty($request->id))
         {
+            $validationResponse = [];
+
             $validation = AppCredentials::where('secret_key',$request->secret_key)
                 ->where('app_detail_id',$request->app_detail_id)
                 ->where('id','!=',$request->id);
 
-            $validationResponse = [];
 
             if($validation->exists()){
-                $validationResponse = [];
                 $validationResponse['message'] = "The given data was invalid.";
-                $validationResponse['errors']['secret_key'] = "The ad name already exists with current App!";
+                $validationResponse['errors']['secret_key'] = "The secret key already exists!";
+
+                return Response::json($validationResponse,422);
+            }
+
+            $validation = AppCredentials::where('stream_key',$request->stream_key)
+                ->where('app_detail_id',$request->app_detail_id)
+                ->where('id','!=',$request->id);
+
+
+            if($validation->exists()){
+                $validationResponse['message'] = "The given data was invalid.";
+                $validationResponse['errors']['secret_key'] = "The stream key already exists!";
 
                 return Response::json($validationResponse,422);
             }
@@ -45,15 +70,27 @@ class AppCredentialsController extends Controller
         else
         {
 
+            $validationResponse = [];
+
             $validation = AppCredentials::where('secret_key',$request->secret_key)
                 ->where('app_detail_id',$request->app_detail_id);
 
-            $validationResponse = [];
+            if($validation->exists()){
+
+                $validationResponse['message'] = "The given data was invalid.";
+                $validationResponse['errors']['secret_key'] = "This secret key already exists!";
+
+                return Response::json($validationResponse,422);
+
+            }
+
+            $validation = AppCredentials::where('stream_key',$request->stream_key)
+                ->where('app_detail_id',$request->app_detail_id);
 
             if($validation->exists()){
-                $validationResponse = [];
+
                 $validationResponse['message'] = "The given data was invalid.";
-                $validationResponse['errors']['secret_key'] = "The ad name already exists with current App!";
+                $validationResponse['errors']['stream_key'] = "This stream key already exists!";
 
                 return Response::json($validationResponse,422);
             }
@@ -138,4 +175,32 @@ class AppCredentialsController extends Controller
         }
     }
 
+
+    /****** Get Apps List not saved in App Credentials ***********/
+
+
+    public function getAppsOptions(Request $request){
+
+        $appListWithoutCredentials = DB::select(DB::raw('
+        SELECT *
+       FROM app_details app
+       WHERE NOT EXISTS (SELECT *
+                                FROM app_credentials ac
+                                WHERE ac.app_detail_id = app.id
+                                      );
+
+
+        '));
+
+        $options = '<option value="">Select App </option>';
+        if(!empty($appListWithoutCredentials)){
+            foreach($appListWithoutCredentials as $obj){
+                $options .= '<option value="'.$obj->id.'">   '  .   $obj->appName  . ' - '  . $obj->PackageId   .   '    </option>';
+            }
+        }
+
+        return $options;
+    }
+
 }
+
