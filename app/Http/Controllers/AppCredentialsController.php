@@ -131,7 +131,7 @@ class AppCredentialsController extends Controller
         if(request()->ajax()) {
 
             $response = array();
-            $Filterdata = AppCredentials::select('app_credentials.*','app_details.appName','app_details.PackageId as PackageId');
+            $Filterdata = AppCredentials::select('app_credentials.*','app_details.appName','app_details.packageId as packageId');
 
 
             if(isset($request->filter_app_id) && !empty($request->filter_app_id) && ($request->filter_app_id != '-1')){
@@ -152,7 +152,7 @@ class AppCredentialsController extends Controller
 
 
                     $response[$i]['srno'] = $i + 1;
-                    $response[$i]['appName'] = $obj->appName . ' - ' . $obj->PackageId;
+                    $response[$i]['appName'] = $obj->appName . ' - ' . $obj->packageId;
                     $response[$i]['secret_key'] = $obj->secret_key;
                     $response[$i]['stream_key'] = $obj->stream_key;
                     if(auth()->user()->hasRole('super-admin') || auth()->user()->can('manage-app_credentials'))
@@ -195,7 +195,7 @@ class AppCredentialsController extends Controller
         $options = '<option value="">Select App </option>';
         if(!empty($appListWithoutCredentials)){
             foreach($appListWithoutCredentials as $obj){
-                $options .= '<option value="'.$obj->id.'">   '  .   $obj->appName  . ' - '  . $obj->PackageId   .   '    </option>';
+                $options .= '<option value="'.$obj->id.'">   '  .   $obj->appName  . ' - '  . $obj->packageId   .   '    </option>';
             }
         }
 

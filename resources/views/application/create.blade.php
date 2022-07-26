@@ -34,9 +34,9 @@
 
                                     </div>
 
-                                    <label for="staticEmail" class="col-sm-2 col-form-label" id="">PackageId</label>
+                                    <label for="staticEmail" class="col-sm-2 col-form-label" id="">packageId</label>
                                     <div class="col-sm-4">
-                                        <input type="text"  class="form-control" name="PackageId" id="PackageId" value="" onkeyup="$('#PackageIdError').text('')"  required />
+                                        <input type="text"  class="form-control" name="packageId" id="packageId" value="" onkeyup="$('#PackageIdError').text('')"  required />
                                         <span class="text-danger" id="PackageIdError"></span>
                                     </div>
                                 </div>
@@ -393,7 +393,7 @@
                             }, 1000);
 
 
-                            $("#PackageIdError").text(resp.errors.PackageId);
+                            $("#PackageIdError").text(resp.errors.packageId);
                         }
                         else{
                             Toast.fire({

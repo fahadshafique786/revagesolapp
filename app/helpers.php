@@ -251,7 +251,7 @@ if ( ! function_exists('verifyToken'))
                     ->join('app_credentials',function($join) {
                         $join->on('app_details.id','=','app_credentials.app_detail_id');
                     })
-                ->where('PackageId',$packageId);
+                ->where('packageId',$packageId);
 
             if($appCredentials->exists()){
                 $appCredentials = $appCredentials->first();

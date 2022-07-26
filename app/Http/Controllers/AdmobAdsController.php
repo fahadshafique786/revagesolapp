@@ -132,7 +132,7 @@ class AdmobAdsController extends Controller
         if(request()->ajax()) {
 
             $response = array();
-            $Filterdata = AdmobAds::select('admob_ads.*','app_details.appName','app_details.PackageId as PackageId');
+            $Filterdata = AdmobAds::select('admob_ads.*','app_details.appName','app_details.packageId as packageId');
 
 
             if(isset($request->filter_app_id) && !empty($request->filter_app_id) && ($request->filter_app_id != '-1')){
@@ -152,7 +152,7 @@ class AdmobAdsController extends Controller
                 {
 
                     $response[$i]['srno'] = $i + 1;
-                    $response[$i]['appName'] = $obj->appName . ' - ' . $obj->PackageId;
+                    $response[$i]['appName'] = $obj->appName . ' - ' . $obj->packageId;
                     $response[$i]['name'] = $obj->adName;
                     $response[$i]['adUId'] = $obj->adUId;
                     $response[$i]['isAdShow'] = getBooleanStr($obj->isAdShow,true);

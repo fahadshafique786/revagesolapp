@@ -35,10 +35,10 @@
                                      </div>
 
 
-                                    <label for="staticEmail" class="col-sm-2 col-form-label" id="PackageIdLabel">PackageId</label>
+                                    <label for="staticEmail" class="col-sm-2 col-form-label" id="PackageIdLabel">packageId</label>
 
                                     <div class="col-sm-4">
-                                        <input type="text"  class="form-control" name="PackageId" id="PackageId" value="{{$appData->PackageId}}" onkeyup="$('#PackageIdError').text('')"   required />
+                                        <input type="text"  class="form-control" name="packageId" id="packageId" value="{{$appData->packageId}}" onkeyup="$('#PackageIdError').text('')"   required />
                                         <span class="text-danger" id="PackageIdError"></span>
                                     </div>
 
@@ -402,7 +402,7 @@
                                 scrollTop: eval($("#PackageIdError").offset().top - 170)
                             }, 1000);
 
-                            $("#PackageIdError").text(resp.errors.PackageId);
+                            $("#PackageIdError").text(resp.errors.packageId);
                         }
                         else{
                             Toast.fire({

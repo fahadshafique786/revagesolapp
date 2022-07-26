@@ -47,7 +47,7 @@
                                         </div>
                                         <div class="col-md-12">
                                             <div class="text-center">
-                                                <h6>{{$obj->appName . ' - ' . $obj->PackageId}}</h6>
+                                                <h6>{{$obj->appName . ' - ' . $obj->packageId}}</h6>
                                             </div>
                                         </div>
                                     </div>

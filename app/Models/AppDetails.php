@@ -17,7 +17,7 @@ class AppDetails extends Model
     protected $fillable = [
 
         'sports_id',
-        'PackageId',
+        'packageId',
         'appName',
         'appLogo',
         'admobAppId',

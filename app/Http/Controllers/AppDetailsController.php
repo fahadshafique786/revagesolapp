@@ -20,7 +20,7 @@ class AppDetailsController extends Controller
 
     public function index(Request $request)
     {
-        $appsList = AppDetails::select('app_details.id as id','appName','appLogo','PackageId','sports.name as sports_name')
+        $appsList = AppDetails::select('app_details.id as id','appName','appLogo','packageId','sports.name as sports_name')
             ->join('sports', function ($join) {
                 $join->on('sports.id', '=', 'app_details.sports_id');
             })->get();
@@ -60,7 +60,7 @@ class AppDetailsController extends Controller
         {
             $this->validate($request, [
                 'appName' => 'required',
-                'PackageId' => 'required|unique:app_details,PackageId,'.$application_id,
+                'packageId' => 'required|unique:app_details,packageId,'.$application_id,
                 'sports_id' => 'required',
                 'admobAppId' => 'required',
                 'adsIntervalTime' => 'required',
@@ -75,7 +75,7 @@ class AppDetailsController extends Controller
         {
             $this->validate($request, [
                 'appName' => 'required',
-                'PackageId' => 'required|unique:app_details',
+                'packageId' => 'required|unique:app_details',
                 'appName' => 'required',
                 'sports_id' => 'required',
                 'admobAppId' => 'required',
