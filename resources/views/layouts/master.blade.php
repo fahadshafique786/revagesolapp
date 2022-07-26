@@ -139,9 +139,7 @@
                 @elseif(Request::segment(2) == 'sponsors')
                     <img src="{{ asset('dist/img/sidebar-icons/sponsor.png') }}" class="elevation-2  icon-bg vertical-baseline"/>
                 @elseif(Request::segment(2) == 'admob_ads')
-                    <img src="{{ asset('dist/img/sidebar-icons/admob.png') }}" class="elevation-2  icon-bg vertical-baseline"/>
-                @elseif(Request::segment(2) == 'admob_ads')
-                    <img src="{{ asset('dist/img/sidebar-icons/admob-ad.png') }}" class="elevation-2  icon-bg vertical-baseline"/>
+                    <img src="{{ asset('dist/img/sidebar-icons/amobs.png') }}" class="elevation-2  icon-bg vertical-baseline"/>
 				@endif
 
 

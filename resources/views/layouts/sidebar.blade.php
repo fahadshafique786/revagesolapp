@@ -203,7 +203,7 @@
 
                 <li class="nav-item">
                     <a href="{{ url('admin/admob_ads') }}" class="nav-link {{ (Request::segment(2) == 'admob_ads') ? 'active' : '' }}">
-                        <img src="{{ asset('dist/img/sidebar-icons/admob.png') }}" class="elevation-2 "/>
+                        <img src="{{ asset('dist/img/sidebar-icons/amobs.png') }}" class="elevation-2 "/>
                         <p>Admob Ads</p>
                     </a>
                 </li>
