@@ -2,7 +2,7 @@
   <aside class="main-sidebar sidebar-dark-info elevation-4 custom-siderbar-dark">
 
 	<a class="brand-link" href="{{ route('dashboard') }}">
-		<img src="{{ asset('images/logo.png') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
+		<img src="{{ asset('images/logo.png') }}" alt="AdminLTE Logo" class="brand-image"
            style="opacity: .8">
 		<span class="visiblilty-hidden"> {{ config('app.name', 'Revage Solution') }} </span>
 

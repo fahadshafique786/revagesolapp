@@ -604,3 +604,22 @@ span.nav-link[disabled] {
     cursor: not-allowed;
 }
 
+.schedule-nav-tabs .nav-link {
+    color:#005a85 !important;
+    font-weight: bold;
+    margin-right: 0.25rem;
+    border: 2px solid #b4b4b4  !important;
+}
+.schedule-nav-tabs .nav-link:hover {
+    background: #005a85;
+    color: #fff !important;
+    border: 2px solid #005a85 !important;
+    font-weight: bold;
+}
+
+.schedule-nav-tabs .nav-link.active {
+    background: #005a85;
+    color: #fff !important;
+    border: 2px solid #005a85 !important;
+    font-weight: bold;
+}

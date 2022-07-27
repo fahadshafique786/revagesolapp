@@ -576,8 +576,6 @@ $(document).ready(function($){
                   </div>
                   <div class="tab-pane fade" id="custom-content-above-changepassword" role="tabpanel" aria-labelledby="custom-content-above-changepassword-tab">
 
-
-
                       <!----==== BEGIN ::  Update Profile Form ====---->
 
                       <form action="javascript:void(0)" id="changePasswordForm" name="changePasswordForm" class="form-horizontal" method="POST">

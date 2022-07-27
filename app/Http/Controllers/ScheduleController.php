@@ -105,6 +105,14 @@ class ScheduleController extends Controller
                 $Filterdata = $Filterdata->where('schedules.leagues_id',$request->filter_league);
             }
 
+            if(isset($request->active_tab) && ($request->active_tab == 'upcoming-schedules')){
+                $Filterdata = $Filterdata->where('schedules.start_time', '>=', NOW()); // to get those servers having start time greater than current datetime
+            }
+
+            if(isset($request->active_tab) && ($request->active_tab == 'previous-schedules')){
+                $Filterdata = $Filterdata->where('schedules.start_time', '<', NOW()); // to get those servers having start time less than current datetime
+            }
+
             $Filterdata = $Filterdata->join('teams as homeTeam', function ($join) {
                 $join->on('schedules.home_team_id', '=', 'homeTeam.id');
                 })
@@ -114,7 +122,8 @@ class ScheduleController extends Controller
                 ->join('teams as awayTeam', function ($join) {
                     $join->on('schedules.away_team_id', '=', 'awayTeam.id');
                 })
-                ->where('schedules.start_time', '>=', NOW()) // to get those servers having start time greater than current datetime
+
+
                 ->orderBy('schedules.start_time','DESC')
                 ->get();
 

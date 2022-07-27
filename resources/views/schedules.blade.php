@@ -14,7 +14,7 @@
                                 <div class="col-6 text-left">
                                     <div class="pull-left">
 
-                                        @if(auth()->user()->hasRole('super-admin') || auth()->user()->can('manage-sports'))
+                                        @if(auth()->user()->hasRole('super-admin') || auth()->user()->can('manage-schedules'))
                                             <a class="btn btn-info" href="javascript:void(0)" id="addNew">
                                                 Add Schedule
                                             </a>
@@ -37,15 +37,7 @@
 
                             <div class="row">
 
-{{--                                <button type="button" class="btn hide btn-sm btn-toggle active" data-toggle="button" aria-pressed="true" autocomplete="off">--}}
-{{--                                    <div class="handle"></div>--}}
-{{--                                </button>--}}
-
-
-
-
-
-                                <div class="col-sm-2 pt-4">
+                                <div class="col-sm-3 pt-4">
                                     <select class="form-control" id="league_filter" name="league_filter" >
                                         <option value="">   Select League </option>
                                         <option value="-1">   All </option>
@@ -61,31 +53,75 @@
                                     <button type="button" class="btn btn-primary" id="filter"> <i class="fa fa-filter"></i> Apply Filter </button>
                                 </div>
 
-
                             </div>
 
 
 
                         </div>
                         <div class="card-body">
-                            <table class="table table-bordered table-hover" id="DataTbl">
-                                <thead>
-                                <tr>
-                                    <th scope="col" width="10px">#</th>
-                                    <th scope="col">Label</th>
-                                    <th scope="col">League</th>
-                                    <th scope="col">Home</th>
-                                    <th scope="col">Away</th>
-                                    <th scope="col">Score</th>
-                                    <th scope="col">Start(DateTime)</th>
-                                    <th scope="col">Live</th>
-                                    <th scope="col">Action</th>
-                                </tr>
-                                </thead>
-                                <tbody>
 
-                                </tbody>
-                            </table>
+                            <ul class="nav nav-tabs schedule-nav-tabs" id="custom-content-above-tab" role="tablist">
+
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="upcoming-schedules-tab" data-toggle="pill" href="#upcoming-schedules" role="tab" aria-controls="upcoming-schedules" aria-selected="false">Recent Schedules</a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link" id="previous-schedules-tab" data-toggle="pill" href="#previous-schedules" role="tab" aria-controls="previous-schedules"   aria-selected="true">Previous Schedules</a>
+                                </li>
+                            </ul>
+
+                            <div class="tab-content" id="custom-content-above-tabContent">
+                                <div class="tab-pane fade show pt-4 " id="previous-schedules" role="tabpanel" aria-labelledby="previous-schedules-tab">
+
+                                    <!-------------- PREVIOUS SCHDEULES TABLE ------------->
+                                    <table class="table table-bordered table-hover mt-3" id="previous-DataTbl">
+                                        <thead>
+                                        <tr>
+                                            <th scope="col" width="5px">#</th>
+                                            <th scope="col">Label</th>
+                                            <th scope="col">League</th>
+                                            <th scope="col">Home</th>
+                                            <th scope="col">Away</th>
+                                            <th scope="col">Score</th>
+                                            <th scope="col">Start(DateTime)</th>
+                                            <th scope="col">Live</th>
+                                            <th scope="col">Action</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+
+                                        </tbody>
+                                    </table>
+
+                                </div>
+
+                                <div class="tab-pane fade show pt-4 active" id="upcoming-schedules" role="tabpanel" aria-labelledby="upcoming-schedules-tab">
+
+                                    <!-------------- UPCOMING SCHDEULES TABLE ------------->
+                                    <table class="table table-bordered table-hover mt-3" id="DataTbl">
+                                        <thead>
+                                        <tr>
+                                            <th scope="col" width="5px">#</th>
+                                            <th scope="col">Label</th>
+                                            <th scope="col">League</th>
+                                            <th scope="col">Home</th>
+                                            <th scope="col">Away</th>
+                                            <th scope="col">Score</th>
+                                            <th scope="col">Start(DateTime)</th>
+                                            <th scope="col">Live</th>
+                                            <th scope="col">Action</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                            </div>
+
+
                         </div>
                     </div>
                 </div>
@@ -207,20 +243,32 @@
             {
                 $('#DataTbl').DataTable().destroy();
                 if(league_filter != '-1'){ // for all...
-                    fetchData(league_filter);
+
+                    // if(){
+                        fetchData(league_filter);
+                    // }
+                    // else{
+                    //     alert();
+                    // }
+
                 }
                 else{
                     fetchData();
-                }            }
+                }
+            }
             else
             {
                 alert('Select Filter Option');
                 $('#DataTbl').DataTable().destroy();
-                fetchData();
             }
         });
 
+        $(".nav.schedule-nav-tabs li a.nav-link").on('click',function () {
 
+            setTimeout(function(){
+                callDataTableWithFilters();
+            },500);
+        });
         function getTeamsByLeagues(leagues_id){
 
             $.ajax({
@@ -289,15 +337,26 @@
                 }
             });
 
+
+            var activeTabId = $("#custom-content-above-tabContent .tab-pane.active").attr("id");
+
+            if(activeTabId == "upcoming-schedules"){
+
+                var table_id = "DataTbl";
+            }
+            else{
+                var table_id = "previous-DataTbl";
+            }
+
             if(Table_obj != '' && Table_obj != null)
             {
-                $('#DataTbl').dataTable().fnDestroy();
-                $('#DataTbl tbody').empty();
+                $('#'+table_id).dataTable().fnDestroy();
+                $('#'+table_id+' tbody').empty();
                 Table_obj = '';
             }
 
 
-            Table_obj = $('#DataTbl').DataTable({
+            Table_obj = $('#'+table_id).DataTable({
                 processing: true,
                 columnDefs: [
                     { targets: '_all',
@@ -309,7 +368,7 @@
                     url:"{{ url('admin/fetch-schedules-data/'.$sports_id) }}",
                     type:"POST",
                     data:{
-                        filter_league:filter_league
+                        filter_league:filter_league, active_tab : activeTabId
                     },
                     dataSrc: function ( json ) {
                         //Make your callback here.
