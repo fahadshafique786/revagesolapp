@@ -57,7 +57,6 @@ class Applications extends BaseController
                 $sponsorList = $sponsorListObject;
 
                 $dataObject[0]->suspendAppMessage = (!empty($dataObject[0]->suspendAppMessage)) ? $dataObject[0]->suspendAppMessage : "";
-//                $responseData['data'] = $dataObject;
 
                 foreach($dataObject as $index => $obj){
 
@@ -80,9 +79,6 @@ class Applications extends BaseController
                     $responseData['data'] = $dataObject[0];
                     $responseData['data']->admobAds = $adsList;
                     $responseData['data']->sponsorAds = $sponsorList;
-
-//                  $responseData['data'][0]->admobAds = $adsList;
-//                  $responseData['data'][0]->sponsorAds = $sponsorList;
 
             }
             else{
