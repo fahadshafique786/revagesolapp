@@ -221,13 +221,14 @@ if ( ! function_exists('verifyToken'))
         $token = null;
         $headers = apache_request_headers();
 
+        $response =  [];
+
         if(
             isset($headers['Authorization']) && !empty($headers['Authorization'])  &&
             isset($headers['PackageId']) && !empty($headers['PackageId']) &&
             isset($headers['IpAddress']) && !empty($headers['IpAddress'])
         ){
 
-            $response =  [];
             $streamKey = "";
             $secretKey = "";
 
@@ -270,6 +271,7 @@ if ( ! function_exists('verifyToken'))
             if($ourGeneratedToken != $authToken) {
                 $response['code'] = 403;
                 $response['message'] = "Invalid Token!";
+                $response['data'] = null;
 
                 echo json_encode($response);
                 http_response_code(401);
@@ -280,6 +282,7 @@ if ( ! function_exists('verifyToken'))
 
             $response['code'] = 401;
             $response['message'] = "Unauthorized Request!";
+            $response['data'] = null;
 
             echo json_encode($response);
             http_response_code(401);
