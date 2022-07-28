@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
         // \App\Models\User::factory(10)->create();
     $user=  User::create([
             'name' => 'Admin',
-            'user_name' => 'Admin',
+            'user_name' => 'superadmin786',
             'email'=>'superadmin@test.com',
             'password'=>bcrypt('admin123'),
 
@@ -29,7 +29,7 @@ class DatabaseSeeder extends Seeder
             'name'=>'view-dashboard',
             ],
             [
-            'name'=>'manage-dasboard',
+            'name'=>'manage-dashboard',
             ],
             [
                 'name'=>'view-users',
@@ -96,6 +96,12 @@ class DatabaseSeeder extends Seeder
             ],
             [
                 'name'=>'manage-admob_ads',
+            ],
+            [
+                'name'=>'view-app_credentials',
+            ],
+            [
+                'name'=>'manage-app_credentials',
             ]
         );
 
