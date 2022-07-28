@@ -10,9 +10,11 @@ use Illuminate\Routing\Controller as BaseController;
 
 class Applications extends BaseController
 {
-    public function __construct()
+    public function __construct(Request $request)
     {
-//        verifyToken();
+        if($request->enable_token){
+            verifyToken();
+        }
     }
 
     public function index(Request $request)
